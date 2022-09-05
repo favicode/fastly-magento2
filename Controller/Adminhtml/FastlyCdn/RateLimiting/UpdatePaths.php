@@ -149,9 +149,9 @@ class UpdatePaths extends Action
 
             foreach ($snippet as $key => $value) {
                 if ($validPaths == '') {
-                    $value = '';
+                    $value = \str_replace('####RATE_LIMITED_PATHS####', 'req.url.path ~ "(.*)"', $value);
                 } else {
-                    $value = str_replace('####RATE_LIMITED_PATHS####', $strippedValidPaths, $value);
+                    $value = \str_replace('####RATE_LIMITED_PATHS####', $strippedValidPaths, $value);
                 }
 
                 $snippetName = Config::FASTLY_MAGENTO_MODULE . '_rate_limiting_' . $key;

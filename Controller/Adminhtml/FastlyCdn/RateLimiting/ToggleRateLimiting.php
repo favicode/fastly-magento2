@@ -150,9 +150,9 @@ class ToggleRateLimiting extends Action
                 $this->api->createRequest($clone->number, $request);
                 foreach ($snippet as $key => $value) {
                     if ($strippedValidPaths == '') {
-                        $value = '';
+                        $value = \str_replace('####RATE_LIMITED_PATHS####', 'req.url.path ~ "(.*)"', $value);
                     } else {
-                        $value = str_replace('####RATE_LIMITED_PATHS####', $strippedValidPaths, $value);
+                        $value = \str_replace('####RATE_LIMITED_PATHS####', $strippedValidPaths, $value);
                     }
 
                     $snippetData = [
