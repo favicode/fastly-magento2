@@ -178,7 +178,7 @@ define([
                             requests.push([d, value.requests]);
                             averageRequests += value.requests;
                             averageBandwidth += value.bandwidth;
-                            averageError += value.status_5xx;
+                            averageError += value.status_5xx + value.status_4xx;
 
                             if (value.miss !== 0 && value.hits !== 0) {
                                 averageHitRatio += (value.hits / (value.hits + value.miss)) * 100;
@@ -209,7 +209,7 @@ define([
                                 maximumHitRatio = (value.hits / (value.hits + value.miss)) * 100;
                             }
 
-                            if (minimumError > value.status_5xx) {
+                            if (minimumError > (value.status_5xx + value.status_4xx)) {
                                 minimumError = value.status_5xx;
                             }
 
