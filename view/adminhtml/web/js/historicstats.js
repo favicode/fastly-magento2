@@ -167,8 +167,8 @@ define([
                         let minimumHitRatio = 0;
                         let maximumHitRatio = 0;
 
-                        let averageError503 = 0;
-                        let minimumError503 = 0;
+                        let averageError = 0;
+                        let minimumError = 0;
 
                         /* Parse Fastly Historic stats */
                         $.each(data, function (key, value) {
@@ -178,7 +178,7 @@ define([
                             requests.push([d, value.requests]);
                             averageRequests += value.requests;
                             averageBandwidth += value.bandwidth;
-                            averageError503 += value.status_503;
+                            averageError += value.status_5xx;
 
                             if (value.miss !== 0 && value.hits !== 0) {
                                 averageHitRatio += (value.hits / (value.hits + value.miss)) * 100;
@@ -190,7 +190,7 @@ define([
                                 let initHitRatio = (value.hits / (value.hits + value.miss)) * 100;
                                 minimumHitRatio = initHitRatio;
                                 maximumHitRatio = initHitRatio;
-                                minimumError503 = 0;
+                                minimumError = 0;
                             }
 
                             if (minimumRequests > value.requests) {
@@ -209,8 +209,8 @@ define([
                                 maximumHitRatio = (value.hits / (value.hits + value.miss)) * 100;
                             }
 
-                            if (minimumError503 > value.status_503) {
-                                minimumError503 = value.status_503;
+                            if (minimumError > value.status_5xx) {
+                                minimumError = value.status_5xx;
                             }
 
                             /* Bandwidth */
@@ -246,11 +246,11 @@ define([
                         $('#hitratio-number-maximum').html(round(maximumHitRatio, 2) + '%');
 
                         /* Requests stats */
-                        $('#errors-number-total').html(averageError503);
-                        averageError503 = averageError503 / data.length;
-                        averageError503 = round(averageError503, 2);
-                        $('#errors-number-average').html(averageError503);
-                        $('#errors-number-minimum').html(minimumError503);
+                        $('#errors-number-total').html(averageError);
+                        averageError = averageError / data.length;
+                        averageError = round(averageError, 2);
+                        $('#errors-number-average').html(averageError);
+                        $('#errors-number-minimum').html(minimumError);
 
                         google.charts.load('current', {'packages':['corechart']});
                         google.charts.setOnLoadCallback(requestsChart);
