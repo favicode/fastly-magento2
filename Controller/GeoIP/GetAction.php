@@ -21,6 +21,7 @@
 
 namespace Fastly\Cdn\Controller\GeoIP;
 
+use Fastly\Cdn\Helper\GeolocationRedirect;
 use Fastly\Cdn\Helper\StoreMessage;
 use Fastly\Cdn\Model\Config;
 use Fastly\Cdn\Model\Resolver\GeoIP\CountryCodeProviderInterface;
@@ -28,12 +29,15 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Url\DecoderInterface;
 use Magento\Framework\Url\EncoderInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Result\Layout;
 use Magento\Framework\View\Result\LayoutFactory;
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Api\StoreRepositoryInterface;
+use Magento\Store\Model\StoreIsInactiveException;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -84,6 +88,10 @@ class GetAction extends Action
      * @var CountryCodeProviderInterface
      */
     protected $countryCodeProvider;
+    /**
+     * @var GeolocationRedirect
+     */
+    private $geoRedirectHelper;
 
     /**
      * GetAction constructor.
@@ -108,7 +116,8 @@ class GetAction extends Action
         StoreMessage $storeMessage,
         EncoderInterface $urlEncoder,
         DecoderInterface $urlDecoder,
-        CountryCodeProviderInterface $countryCodeProvider
+        CountryCodeProviderInterface $countryCodeProvider,
+        GeolocationRedirect $geoRedirectHelper
     ) {
         parent::__construct($context);
         $this->config = $config;
@@ -123,6 +132,7 @@ class GetAction extends Action
         $this->url = $context->getUrl();
 
         $this->countryCodeProvider = $countryCodeProvider;
+        $this->geoRedirectHelper = $geoRedirectHelper;
     }
 
     /**
@@ -160,7 +170,7 @@ class GetAction extends Action
                         '___from_store' => $currentStoreCode
                     ];
                     if ($targetUrl) {
-                        $queryParams['uenc'] = $this->getTargetUrl($targetUrl, $targetStoreCode, $currentStoreCode);
+                        $queryParams['uenc'] = $this->getNewUenc($targetUrl, $targetStore, $currentStore);
                     }
                     $this->url->addQueryParams($queryParams);
                     $redirectUrl = $this->url->getUrl('stores/store/switch');
@@ -193,35 +203,16 @@ class GetAction extends Action
     }
 
     /**
-     * GetTargetUrl uenc params modificiations
-     *
-     * @param string $targetUrl
-     * @param string $targetStoreCode
-     * @param string $currentStoreCode
-     * @return string
+     * @throws NoSuchEntityException
+     * @throws StoreIsInactiveException
      */
-    private function getTargetUrl($targetUrl, $targetStoreCode, $currentStoreCode): string
+    private function getNewUenc(string $targetUrl, StoreInterface $targetStore, StoreInterface $currentScore): string
     {
         $decodedTargetUrl = $this->urlDecoder->decode($targetUrl);
-        $path = parse_url($decodedTargetUrl, PHP_URL_PATH);
+        $newUenc = $this->geoRedirectHelper
+            ->getNewTargetUrl($decodedTargetUrl, $targetStore, $currentScore);
 
-        /* Fix geoip redirection issue to the same page */
-        $currentStore = $this->storeManager->getStore();
-        $currentBaseUrl = $currentStore->getBaseUrl();
-        $targetStore = $this->storeRepository->getActiveStoreByCode($targetStoreCode);
-        $targetBaseUrl = $targetStore->getBaseUrl();
-        $decodedTargetUrl = \str_ireplace($currentBaseUrl, $targetBaseUrl, $decodedTargetUrl);
-
-        if (\preg_match("#^/$currentStoreCode(?:/|\?|$)#", $path)) {
-
-            $decodedTargetUrl = \preg_replace(
-                "#/$currentStoreCode#",
-                "/$targetStoreCode",
-                $decodedTargetUrl,
-                1
-            );
-        }
-        $encodedUrl = $this->urlEncoder->encode($decodedTargetUrl);
-        return \explode('%', $encodedUrl)[0];
+        $newUencEncoded = $this->urlEncoder->encode($newUenc);
+        return  explode('%', $newUencEncoded)[0];
     }
 }
