@@ -733,6 +733,10 @@ class EnableCommand extends Command
             ];
 
             $this->api->createRequest($clone->number, $request);
+
+            $this->setupDictionary($clone->number, $currActiveVersion);
+            $this->setupAcl($clone->number, $currActiveVersion);
+
             $this->api->validateServiceVersion($clone->number);
             $msg = 'Successfully uploaded VCL. ';
 
@@ -893,7 +897,7 @@ class EnableCommand extends Command
         $snippetNameData = explode('_', $snippetName, 3);
         $containsEmpty = in_array("", $snippetNameData, true);
         $types = ['init', 'recv', 'hit', 'miss', 'pass', 'fetch', 'error', 'log', 'deliver', 'hash', 'none'];
-        $exception = 'Failed to upload VCL snippets. Please make sure the custom VCL snippets 
+        $exception = 'Failed to upload VCL snippets. Please make sure the custom VCL snippets
             follow this naming convention: [vcl_snippet_type]_[priority]_[short_name_description].vcl';
 
         if (count($snippetNameData) < 3) {
@@ -935,5 +939,45 @@ class EnableCommand extends Command
         ];
 
         $this->api->createHeader($clone->number, $headerData);
+    }
+
+    /**
+     * @param $cloneNumber
+     * @param $currActiveVersion
+     * @return void
+     */
+    private function setupDictionary($cloneNumber, $currActiveVersion)
+    {
+        try {
+            $dictionaryName = Config::CONFIG_DICTIONARY_NAME;
+            $dictionary = $this->api->getSingleDictionary($currActiveVersion, $dictionaryName);
+
+            if (!$dictionary) {
+                $params = ['name' => $dictionaryName];
+                $dictionary = $this->api->createDictionary($cloneNumber, $params);
+            }
+        } catch (\Exception) {
+            // do nothing, if dictionary is not created, validate service check will fail
+        }
+    }
+
+    /**
+     * @param $cloneNumber
+     * @param $currActiveVersion
+     * @return void
+     */
+    private function setupAcl($cloneNumber, $currActiveVersion)
+    {
+        try {
+            $aclName = Config::MAINT_ACL_NAME;
+            $acl = $this->api->getSingleAcl($currActiveVersion, $aclName);
+
+            if (!$acl) {
+                $params = ['name' => $aclName];
+                $acl = $this->api->createAcl($cloneNumber, $params);
+            }
+        } catch (\Exception) {
+            // do nothing, if ACL is not created, validate service check will fail
+        }
     }
 }
