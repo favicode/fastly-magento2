@@ -64,4 +64,7 @@
     <event name="controller_action_postdispatch_adminhtml_system_currencysymbol_save">
         <observer name="flush_fastly_cdn" instance="Fastly\Cdn\Observer\InvalidateVarnishObserver"/>
     </event>
+    <event name="cms_page_save_after">
+        <observer name="flush_fastly_html_cache" instance="Fastly\Cdn\Observer\FlushHtmlCacheAfterCmsSave"/>
+    </event>
 </config>

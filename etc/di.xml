@@ -34,6 +34,10 @@
         <plugin name="fastly_adaptive_pixel_ratio_on_pgp" type="Fastly\Cdn\Plugin\GalleryPlugin" />
     </type>
 
+    <type name="Magento\VersionsCms\Model\Hierarchy\Node">
+        <plugin name="fastly_flush_html_cache_after_node_save" type="Fastly\Cdn\Plugin\Cms\NodeSavePlugin" />
+    </type>
+
     <type name="Magento\ConfigurableProduct\Block\Product\View\Type\Configurable">
         <plugin name="fastly_adaptive_pixel_ratio_on_pgp_configurable" type="Fastly\Cdn\Plugin\Block\Product\View\Type\ConfigurablePlugin" />
     </type>
