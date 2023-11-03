@@ -63,6 +63,16 @@ class UpdateSuIps extends Action
     private $filesystem;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * UpdateSuIps constructor.
      * @param Context $context
      * @param Http $request
@@ -140,7 +150,7 @@ class UpdateSuIps extends Action
 
                     if (!filter_var($ipParts[0], FILTER_VALIDATE_IP)) {
                         throw new LocalizedException(__(
-                            'IP validation failed, please make sure that the provided IP values are comma-separated 
+                            'IP validation failed, please make sure that the provided IP values are comma-separated
                             and valid'
                         ));
                     }

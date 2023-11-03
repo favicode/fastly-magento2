@@ -48,6 +48,17 @@ class Store extends Action
     private $config;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Backend::cache');
+    }
+
+
+    /**
      * Store constructor.
      *
      * @param Context $context

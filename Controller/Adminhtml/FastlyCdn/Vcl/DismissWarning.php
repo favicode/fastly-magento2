@@ -39,6 +39,16 @@ class DismissWarning extends Action
     private $typeList;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * DismissWarning constructor.
      * @param ScopeConfigInterface $scopeConfig
      * @param JsonFactory $jsonFactory

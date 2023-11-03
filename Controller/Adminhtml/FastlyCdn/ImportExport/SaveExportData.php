@@ -45,6 +45,16 @@ class SaveExportData extends Action
     private $filesystem;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * SaveExportData constructor.
      * @param Context $context
      * @param Http $request

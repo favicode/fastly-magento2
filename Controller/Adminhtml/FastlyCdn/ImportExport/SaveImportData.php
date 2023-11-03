@@ -54,6 +54,16 @@ class SaveImportData extends Action
     private $vcl;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * SaveExportData constructor.
      * @param Context $context
      * @param Http $request

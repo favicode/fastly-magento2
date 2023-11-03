@@ -41,6 +41,16 @@ class All extends Action
     private $cacheManager;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Backend::cache');
+    }
+
+    /**
      * All constructor.
      *
      * @param Context $context

@@ -63,6 +63,16 @@ class Upload extends Action
     private $customSnippetUpload;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * Upload constructor.
      * @param Context $context
      * @param Http $request

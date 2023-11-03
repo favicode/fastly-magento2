@@ -48,6 +48,16 @@ class GetEndpoints extends Action
     private $api;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * @param Context $context
      * @param Http $request
      * @param JsonFactory $resultJsonFactory

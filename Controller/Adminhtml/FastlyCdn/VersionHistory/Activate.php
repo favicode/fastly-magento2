@@ -35,6 +35,16 @@ class Activate extends Action
     private $typeList;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * Activate constructor.
      * @param Action\Context $context
      * @param JsonFactory $jsonFactory

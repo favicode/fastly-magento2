@@ -49,6 +49,16 @@ class CheckFastlyIoSetting extends Action
     private $api;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * GetBackends constructor.
      *
      * @param Context $context

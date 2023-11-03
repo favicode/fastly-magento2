@@ -7,7 +7,7 @@ use Fastly\Cdn\Model\ResourceModel\Manifest as ManifestResource;
 use Fastly\Cdn\Model\Manifest;
 use Fastly\Cdn\Model\Modly\Manifest as Modly;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Framework\App\Action\Action;
+use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Request\Http;
 use Fastly\Cdn\Model\ResourceModel\Manifest\CollectionFactory;
@@ -59,6 +59,16 @@ class ToggleModules extends Action
     private $vcl;
 
     private $enabledModules = [];
+
+    /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
 
     public function __construct(
         Context $context,

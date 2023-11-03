@@ -48,6 +48,16 @@ class CheckTlsSetting extends Action
     private $resultJsonFactory;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * CheckTlsSetting constructor.
      *
      * @param Context $context

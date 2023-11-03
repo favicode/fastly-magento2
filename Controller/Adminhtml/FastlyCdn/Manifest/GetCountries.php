@@ -42,6 +42,16 @@ class GetCountries extends Action
     private $countryHelper;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * GetCountries constructor.
      *
      * @param Context $context

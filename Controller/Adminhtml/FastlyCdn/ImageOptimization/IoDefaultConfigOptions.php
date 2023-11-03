@@ -57,6 +57,16 @@ class IoDefaultConfigOptions extends Action
     private $config;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * IoDefaultConfigOptions constructor.
      *
      * @param Context $context

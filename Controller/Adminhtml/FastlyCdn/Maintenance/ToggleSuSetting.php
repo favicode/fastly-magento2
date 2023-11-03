@@ -56,6 +56,16 @@ class ToggleSuSetting extends Action
     private $vcl;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * ToggleSuSetting constructor.
      * @param Context $context
      * @param Http $request
@@ -117,7 +127,7 @@ class ToggleSuSetting extends Action
                 if (!$hasIps) {
                     return $result->setData([
                         'status'    => false,
-                        'msg'       => 'Please update Admin IPs list with at least one IP address before enabling 
+                        'msg'       => 'Please update Admin IPs list with at least one IP address before enabling
                         Maintenance Mode.'
                     ]);
                 }
@@ -189,7 +199,7 @@ class ToggleSuSetting extends Action
                 if (!$hasIps) {
                     return [
                         'status'    => false,
-                        'msg'       => 'Please update Admin IPs list with at least one IP address before enabling 
+                        'msg'       => 'Please update Admin IPs list with at least one IP address before enabling
                         Maintenance Mode.'
                     ];
                 }

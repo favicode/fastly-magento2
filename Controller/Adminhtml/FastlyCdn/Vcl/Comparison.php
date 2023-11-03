@@ -42,6 +42,16 @@ class Comparison extends Action
     private $dir;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * Comparison constructor.
      *
      * @param Action\Context $context

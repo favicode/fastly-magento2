@@ -23,7 +23,7 @@ namespace Fastly\Cdn\Controller\Adminhtml\FastlyCdn\CustomSnippet;
 use Fastly\Cdn\Helper\Vcl;
 use Fastly\Cdn\Model\Api;
 use Fastly\Cdn\Model\Config;
-use Magento\Framework\App\Action\Action;
+use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\App\Response\Http\FileFactory;
@@ -92,6 +92,16 @@ class CreateCustomSnippet extends Action
         'deliver',
         'log'
     ];
+
+    /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
 
     /**
      * CreateCustomSnippet constructor.

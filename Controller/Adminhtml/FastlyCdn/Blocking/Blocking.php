@@ -59,6 +59,16 @@ class Blocking extends AbstractBlocking
     private $vcl;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * Blocking constructor.
      *
      * @param Context $context

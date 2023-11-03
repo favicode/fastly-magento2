@@ -62,6 +62,16 @@ class TestConnection extends Action
     private $statisticRepository;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * TestConnection constructor.
      *
      * @param Context $context

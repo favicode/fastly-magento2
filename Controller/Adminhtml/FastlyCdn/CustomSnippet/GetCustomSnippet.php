@@ -21,7 +21,7 @@
 namespace Fastly\Cdn\Controller\Adminhtml\FastlyCdn\CustomSnippet;
 
 use Fastly\Cdn\Model\Config;
-use Magento\Framework\App\Action\Action;
+use Magento\Backend\App\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\RawFactory;
 use Magento\Framework\App\Response\Http\FileFactory;
@@ -62,6 +62,16 @@ class GetCustomSnippet extends Action
      * @var Filesystem
      */
     private $filesystem;
+
+    /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
 
     /**
      * DeleteCustomSnippet constructor.

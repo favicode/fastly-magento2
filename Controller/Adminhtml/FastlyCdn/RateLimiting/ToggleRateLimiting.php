@@ -72,6 +72,16 @@ class ToggleRateLimiting extends Action
     private $systemConfig;
 
     /**
+     * Check the permission to run it
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Magento_Config::config');
+    }
+
+    /**
      * ToggleRateLimiting constructor.
      * @param Context $context
      * @param Http $request
