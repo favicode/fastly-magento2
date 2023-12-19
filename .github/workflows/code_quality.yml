@@ -5,7 +5,7 @@ on:
     branches: [master]
 
 env:
-  MAGENTO_CODING_STANDARD: "v25"
+  MAGENTO_CODING_STANDARD: "v30"
 
 jobs:
   static_code_check:
@@ -78,6 +78,11 @@ jobs:
 
           - magento: "2.4.5"
             php: "8.1"
+            composer: "v2"
+            elasticsearch: "7.17.5"
+
+          - magento: "2.4.6"
+            php: "8.2"
             composer: "v2"
             elasticsearch: "7.17.5"
 
