@@ -56,6 +56,10 @@ abstract class AbstractBlocking extends Action
         );
     }
 
+    /**
+     * @param string $param
+     * @return array
+     */
     protected function getParamArray(string $param): array
     {
         $request = $this->getRequest();

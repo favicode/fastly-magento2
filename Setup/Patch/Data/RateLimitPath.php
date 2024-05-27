@@ -50,7 +50,7 @@ class RateLimitPath implements DataPatchInterface
     /**
      * @inheritDoc
      */
-    public function apply(): self
+    public function apply()
     {
         $tableName = $this->moduleDataSetup->getTable('core_config_data');
         $select = $this->moduleDataSetup->getConnection()->select()->from(

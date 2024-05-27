@@ -51,8 +51,8 @@ class ChangeConstValueInDb implements DataPatchInterface
 
     /**
      * Change old const value from 'fastly' to '42'
-     *
      * @param ModuleDataSetupInterface $setup
+     * @return void
      */
     private function changeConstValueInDb(ModuleDataSetupInterface $setup): void
     {

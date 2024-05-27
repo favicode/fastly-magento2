@@ -163,6 +163,10 @@ class UpdateWafAllowlist extends AbstractWafUpdate
         }
     }
 
+    /**
+     * @param string $param
+     * @return array
+     */
     protected function getParamArray(string $param): array
     {
         $request = $this->getRequest();

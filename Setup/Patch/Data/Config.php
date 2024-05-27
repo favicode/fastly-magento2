@@ -89,7 +89,7 @@ class Config implements DataPatchInterface
     /**
      * @inheritDoc
      */
-    public function apply(): self
+    public function apply()
     {
         if (!$this->checkIsExistConfigValue('system/full_page_cache/fastly/current_version')) {
             $this->configWriter
@@ -141,10 +141,11 @@ class Config implements DataPatchInterface
         return $this;
     }
 
+
     /**
      * Fix GeoIP Mapping convert unserialize to json
-     *
      * @param array $newConfigPaths
+     * @return void
      */
     private function fixGeoIpMapping(array $newConfigPaths): void
     {

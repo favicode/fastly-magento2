@@ -145,7 +145,7 @@ class CountryMapping extends AbstractFieldArray
     /**
      * Get Origin website options
      *
-     * @return array[]
+     * @return array
      */
     protected function getOriginWebsiteOptions(): array
     {
