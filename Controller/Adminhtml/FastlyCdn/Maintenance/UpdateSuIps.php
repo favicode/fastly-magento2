@@ -94,7 +94,6 @@ class UpdateSuIps extends Action
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

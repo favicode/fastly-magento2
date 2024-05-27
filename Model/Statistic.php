@@ -158,8 +158,8 @@ class Statistic extends AbstractModel implements IdentityInterface
      * @param Data $helper
      * @param ProductMetadataInterface $productMetadata
      * @param Http $request
-     * @param AbstractResource|null $resource
-     * @param AbstractDb|null $resourceCollection
+     * @param $resource
+     * @param $resourceCollection
      * @param array $data
      */
     public function __construct(

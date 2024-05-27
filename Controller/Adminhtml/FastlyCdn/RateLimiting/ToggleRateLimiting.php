@@ -108,7 +108,6 @@ class ToggleRateLimiting extends Action
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
@@ -265,7 +264,6 @@ class ToggleRateLimiting extends Action
     }
 
     /**
-     * @return bool|string
      */
     private function processPaths()
     {

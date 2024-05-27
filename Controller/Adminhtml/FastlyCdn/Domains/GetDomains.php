@@ -81,7 +81,6 @@ class GetDomains extends Action
     /**
      * Get all domains for active version
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

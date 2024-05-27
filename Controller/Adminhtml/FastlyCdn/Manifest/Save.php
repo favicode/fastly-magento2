@@ -71,7 +71,6 @@ class Save extends Action
     }
 
     /**
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
@@ -252,7 +251,6 @@ class Save extends Action
 
     /**
      * @param $properties
-     * @return null|string
      */
     private function getValidation($properties)
     {

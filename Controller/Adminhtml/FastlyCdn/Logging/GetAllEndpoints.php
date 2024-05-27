@@ -68,7 +68,6 @@ class GetAllEndpoints extends Action
     }
 
     /**
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

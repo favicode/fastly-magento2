@@ -71,7 +71,6 @@ class GetCountries extends Action
     /**
      * Gte a list of all modules
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

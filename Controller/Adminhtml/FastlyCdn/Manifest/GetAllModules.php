@@ -57,7 +57,6 @@ class GetAllModules extends Action
     /**
      * Get a list of all modules
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

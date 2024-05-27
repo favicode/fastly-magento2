@@ -41,14 +41,8 @@ class LayoutPluginTest extends TestCase
       */
      protected $model;
 
-     /**
-      * @var ResponseInterface|MockObject
-      */
      protected $responseMock;
 
-     /**
-      * @var Layout|MockObject
-      */
      protected $layoutMock;
 
      /**

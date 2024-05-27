@@ -73,7 +73,6 @@ class IsAlreadyConfigured extends Action
     /**
      * Check if the Fastly service is already configured
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

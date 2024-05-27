@@ -8,7 +8,6 @@ trait ValidationTrait
 {
     /**
      * @param $param
-     * @return mixed|null
      */
     private function processRequest($param)
     {
@@ -58,7 +57,6 @@ trait ValidationTrait
 
     /**
      * @param $override
-     * @return string|null
      * @throws LocalizedException
      */
     private function validateOverride($override)

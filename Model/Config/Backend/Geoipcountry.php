@@ -49,10 +49,10 @@ class Geoipcountry extends ArraySerialized
      * @param ScopeConfigInterface $config
      * @param TypeListInterface $cacheTypeList
      * @param SerializerInterface $serializerInterface
-     * @param AbstractResource|null $resource
-     * @param AbstractDb|null $resourceCollection
+     * @param $resource
+     * @param $resourceCollection
      * @param array $data
-     * @param Json|null $serializer
+     * @param $serializer
      */
     public function __construct(
         Context $context,

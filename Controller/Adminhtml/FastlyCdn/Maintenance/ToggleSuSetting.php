@@ -83,7 +83,6 @@ class ToggleSuSetting extends Action
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
@@ -167,7 +166,6 @@ class ToggleSuSetting extends Action
      * @param $dictionaryItems
      * @param $acl
      * @param $hasIps
-     * @return array|bool
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     private function processDictionaryItems($dictionary, $dictionaryItems, $acl, $hasIps)

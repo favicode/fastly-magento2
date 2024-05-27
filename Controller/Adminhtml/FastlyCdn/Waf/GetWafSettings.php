@@ -71,7 +71,6 @@ class GetWafSettings extends Action
     }
 
     /**
-     * @return \Magento\Framework\App\ResponseInterface|Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

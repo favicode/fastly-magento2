@@ -137,7 +137,6 @@ class CreateCustomSnippet extends Action
     /**
      * Validates the custom snippet data and writes the custom snippet VCL file
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

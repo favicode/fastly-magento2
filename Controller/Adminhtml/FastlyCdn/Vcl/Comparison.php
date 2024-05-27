@@ -70,7 +70,6 @@ class Comparison extends Action
     }
 
     /**
-     * @return ResponseInterface|JsonResult|ResultInterface
      */
     public function execute()
     {

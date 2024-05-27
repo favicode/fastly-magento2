@@ -85,8 +85,8 @@ class Notification extends AbstractModel
      * @param ClientFactory $clientFactory
      * @param RequestFactory $requestFactory
      * @param InboxFactory $inboxFactory
-     * @param AbstractResource|null $resource
-     * @param AbstractDb|null $resourceCollection
+     * @param $resource
+     * @param $resourceCollection
      * @param array $data
      */
     public function __construct(

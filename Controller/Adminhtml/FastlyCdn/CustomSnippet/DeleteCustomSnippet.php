@@ -104,7 +104,6 @@ class DeleteCustomSnippet extends Action
     /**
      * Deletes the specified custom snippet VCL file
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

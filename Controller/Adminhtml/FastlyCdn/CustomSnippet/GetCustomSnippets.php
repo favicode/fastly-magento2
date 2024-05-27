@@ -96,7 +96,6 @@ class GetCustomSnippets extends Action
     /**
      * Get custom snippets
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

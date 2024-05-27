@@ -65,7 +65,6 @@ class All extends Action
      *
      * Should be used when "Preserve static assets on purge" is enabled.
      *
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

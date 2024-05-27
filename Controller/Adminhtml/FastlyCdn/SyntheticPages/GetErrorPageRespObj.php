@@ -72,7 +72,6 @@ class GetErrorPageRespObj extends Action
     /**
      * Get Error Page Response Object
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

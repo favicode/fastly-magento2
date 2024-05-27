@@ -53,7 +53,6 @@ class GetPaths extends Action
     }
 
     /**
-     * @return ResponseInterface|\Magento\Framework\Controller\Result\Json|ResultInterface
      */
     public function execute()
     {

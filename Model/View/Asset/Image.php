@@ -335,7 +335,6 @@ class Image extends ImageModel
     }
 
     /**
-     * @return bool|null
      */
     private function isImageVerifyEnabled()
     {

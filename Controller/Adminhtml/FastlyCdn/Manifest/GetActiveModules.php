@@ -54,7 +54,6 @@ class GetActiveModules extends Action
     /**
      * Get all active modules
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

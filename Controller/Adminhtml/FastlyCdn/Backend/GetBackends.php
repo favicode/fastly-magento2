@@ -82,7 +82,6 @@ class GetBackends extends Action
     /**
      * Get all backends for active version
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

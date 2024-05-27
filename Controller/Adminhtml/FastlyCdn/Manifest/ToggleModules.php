@@ -142,7 +142,6 @@ class ToggleModules extends Action
 
     /**
      * @param $enabledModules
-     * @return bool|\Exception
      */
     private function removeManifests($enabledModules)
     {

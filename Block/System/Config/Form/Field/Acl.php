@@ -71,7 +71,6 @@ class Acl extends AbstractFieldArray
      * Render array cell for prototypeJS template
      *
      * @param string $columnName
-     * @return mixed|string
      * @throws \Exception
      */
     public function renderCellTemplate($columnName)

@@ -99,7 +99,6 @@ class CreateBackend extends Action
     }
 
     /**
-     * @return ResponseInterface|Json|ResultInterface
      */
     public function execute()
     {

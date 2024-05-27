@@ -88,7 +88,6 @@ class SaveErrorPageHtml extends Action
     /**
      * Save Error Page Html
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

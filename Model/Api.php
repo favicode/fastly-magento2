@@ -819,7 +819,6 @@ class Api
 
     /**
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getAllConditions($version)
@@ -832,7 +831,6 @@ class Api
 
     /**
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getAllDomains($version)
@@ -846,7 +844,6 @@ class Api
     /**
      * @param $version
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function deleteDomain($version, $name)
@@ -860,7 +857,6 @@ class Api
     /**
      * @param $version
      * @param $data
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function createDomain($version, $data)
@@ -891,7 +887,6 @@ class Api
      * List all backends for a particular service and version.
      *
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getBackends($version)
@@ -908,7 +903,6 @@ class Api
      * @param $params
      * @param $version
      * @param $old_name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function configureBackend($params, $version, $old_name)
@@ -922,7 +916,6 @@ class Api
     /**
      * @param $params
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function createBackend($params, $version)
@@ -936,7 +929,6 @@ class Api
     /**
      * @param $name
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function deleteBackend($name, $version)
@@ -949,7 +941,6 @@ class Api
 
     /**
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getAllLogEndpoints($version)
@@ -973,7 +964,6 @@ class Api
     /**
      * @param $version
      * @param $type
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getLogEndpoints($version, $type)
@@ -996,7 +986,6 @@ class Api
      * @param $version
      * @param $type
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getLogEndpoint($version, $type, $name)
@@ -1009,7 +998,6 @@ class Api
      * @param $version
      * @param $type
      * @param $params
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function createLogEndpoint($version, $type, $params)
@@ -1023,7 +1011,6 @@ class Api
      * @param $type
      * @param $params
      * @param $oldName
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function updateLogEndpoint($version, $type, $params, $oldName)
@@ -1092,7 +1079,6 @@ class Api
      *
      * @param $version
      * @param $params
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function createDictionary($version, $params)
@@ -1108,7 +1094,6 @@ class Api
      *
      * @param $version
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function deleteDictionary($version, $name)
@@ -1123,7 +1108,6 @@ class Api
      * Get dictionary item list
      *
      * @param $dictionaryId
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function dictionaryItemsList($dictionaryId)
@@ -1139,7 +1123,6 @@ class Api
      *
      * @param $version
      * @param $dictionaryName
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getSingleDictionary($version, $dictionaryName)
@@ -1154,7 +1137,6 @@ class Api
      * Get auth dictionary
      *
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getAuthDictionary($version)
@@ -1191,7 +1173,6 @@ class Api
      *
      * @param $dictionaryId
      * @param $params
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function createDictionaryItems($dictionaryId, $params)
@@ -1206,7 +1187,6 @@ class Api
      * List all dictionaries for the version of the service.
      *
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getDictionaries($version)
@@ -1222,7 +1202,6 @@ class Api
      *
      * @param $dictionaryId
      * @param $itemKey
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function deleteDictionaryItem($dictionaryId, $itemKey)
@@ -1256,7 +1235,6 @@ class Api
      * Upsert multiple Dictionary items. Do not try to send more than 100 items at a time.
      *
      * @param $dictionaryId
-     * @param array|object $items
      * @throws LocalizedException
      */
     public function upsertDictionaryItems($dictionaryId, $items)
@@ -1305,7 +1283,6 @@ class Api
      * Get ACL container info
      * @param $version
      * @param $acl
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getSingleAcl($version, $acl)
@@ -1321,7 +1298,6 @@ class Api
      *
      * @param $version
      * @param $params
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function createAcl($version, $params)
@@ -1336,7 +1312,6 @@ class Api
      * Fetch ACL list for particular service and version
      *
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getAcls($version)
@@ -1352,7 +1327,6 @@ class Api
      *
      * @param $version
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function deleteAcl($version, $name)
@@ -1367,7 +1341,6 @@ class Api
      * Fetch ACL entry list for particular ACL
      *
      * @param $aclId
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function aclItemsList($aclId)
@@ -1386,7 +1359,6 @@ class Api
      * @param $negated
      * @param string $comment
      * @param bool $subnet
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function upsertAclItem($aclId, $itemValue, $negated, $comment = 'Added by Magento Module', $subnet = false)
@@ -1412,7 +1384,6 @@ class Api
      *
      * @param $aclId
      * @param $aclItemId
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function deleteAclItem($aclId, $aclItemId)
@@ -1432,7 +1403,6 @@ class Api
      * @param $negated
      * @param string $comment
      * @param bool $subnet
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function updateAclItem($aclId, $aclItemId, $itemValue, $negated, $comment = '', $subnet = false)
@@ -1457,7 +1427,6 @@ class Api
      * Query for historic stats
      *
      * @param array $parameters
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function queryHistoricStats(array $parameters)
@@ -1477,7 +1446,6 @@ class Api
      * method that fetches a VCL for specific version id
      *
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getGeneratedVcl($version)
@@ -1499,7 +1467,6 @@ class Api
     /**
      * Check if image optimization is enabled for the Fastly service
      *
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function checkImageOptimizationStatus()
@@ -1514,7 +1481,6 @@ class Api
      * Get the image optimization default config options
      *
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getImageOptimizationDefaultConfigOptions($version)

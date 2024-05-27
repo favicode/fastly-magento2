@@ -109,7 +109,6 @@ class UpdateWafAllowlist extends AbstractWafUpdate
     /**
      * Upload WAF Bypass snippets
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

@@ -72,7 +72,6 @@ class GetWafPageRespObj extends Action
     /**
      * Get the WAF page content
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

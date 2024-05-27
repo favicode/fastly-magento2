@@ -72,7 +72,6 @@ class SaveExportData extends Action
     }
 
     /**
-     * @return ResponseInterface|Json|ResultInterface
      */
     public function execute()
     {

@@ -69,7 +69,6 @@ class Apply extends Action
     /**
      * Apply range
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
