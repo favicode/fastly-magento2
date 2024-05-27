@@ -76,7 +76,7 @@ class DataCenters
 
            return $this->groupDataCenters($dataCenters);
 
-       } catch (InvalidArgumentException | FileSystemException $e) {
+       } catch (\Throwable $e) {
            $this->logger->error($e->getLogMessage());
            return [];
        }

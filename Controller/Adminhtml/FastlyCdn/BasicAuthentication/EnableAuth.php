@@ -90,7 +90,6 @@ class EnableAuth extends Action
     /**
      * Upload Auth VCL snippets
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

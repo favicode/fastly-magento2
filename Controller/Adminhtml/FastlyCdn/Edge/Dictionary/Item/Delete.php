@@ -88,7 +88,6 @@ class Delete extends Action
     /**
      * Delete dictionary item
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

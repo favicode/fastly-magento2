@@ -88,7 +88,6 @@ class Create extends Action
     /**
      * Create auth
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

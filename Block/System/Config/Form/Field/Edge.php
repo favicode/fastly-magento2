@@ -70,7 +70,6 @@ class Edge extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\Abs
      * Render array cell for prototypeJS template
      *
      * @param string $columnName
-     * @return mixed|string
      * @throws \Exception
      */
     public function renderCellTemplate($columnName)
@@ -96,7 +95,6 @@ class Edge extends \Magento\Config\Block\System\Config\Form\Field\FieldArray\Abs
     /**
      * Get list of store views.
      *
-     * @param bool|false $label
      * @return array
      */
     protected function getOptions($label = false) // @codingStandardsIgnoreLine - required by parent class

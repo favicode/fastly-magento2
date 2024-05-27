@@ -88,7 +88,6 @@ class ListAll extends Action
     /**
      * Get all Auth items for active version
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

@@ -97,7 +97,6 @@ class PushImageSettings extends Action
     /**
      * Upload Image Optimization settings
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

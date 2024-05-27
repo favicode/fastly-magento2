@@ -73,7 +73,6 @@ class CheckFastlyIoSetting extends Action
     /**
      * Get Fastly service image optimization status
      *
-     * @return $this|ResponseInterface|ResultInterface
      */
     public function execute()
     {

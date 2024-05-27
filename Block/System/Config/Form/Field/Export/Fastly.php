@@ -46,7 +46,6 @@ class Fastly extends Field
      * Return element HTML
      *
      * @param AbstractElement $element
-     * @return mixed|string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function _getElementHtml(AbstractElement $element) // @codingStandardsIgnoreLine - required by parent class

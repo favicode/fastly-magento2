@@ -52,7 +52,6 @@ class Reference extends Action
     /**
      * Get version id, and calls API that returns generated VCL for the specific version id
      *
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

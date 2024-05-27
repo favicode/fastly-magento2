@@ -61,7 +61,6 @@ class Activate extends Action
     /**
      * get version id from GET param, aktivate specific version
      *
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

@@ -96,7 +96,6 @@ class Domains extends AbstractFieldArray
     /**
      * Get list of store views.
      *
-     * @param bool|false $label
      * @return array
      */
     protected function getOptions($label = false) // @codingStandardsIgnoreLine - required by parent class

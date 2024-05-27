@@ -71,7 +71,6 @@ class ListAll extends Action
     /**
      * List all image optimization default config options
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

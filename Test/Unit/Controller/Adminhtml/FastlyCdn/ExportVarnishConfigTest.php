@@ -40,19 +40,13 @@ use PHPUnit\Framework\TestCase;
  */
 class ExportVarnishConfigTest extends TestCase
 {
-     /**
-      * @var \Magento\Framework\App\Request\Http|MockObject
-      */
+
      protected $requestMock;
 
-     /**
-      * @var Http|MockObject
-      */
+
      protected $responseMock;
 
-     /**
-      * @var View|MockObject
-      */
+
      protected $viewMock;
 
      /**
@@ -60,14 +54,10 @@ class ExportVarnishConfigTest extends TestCase
       */
      protected $action;
 
-     /**
-      * @var FileFactory|MockObject
-      */
+
      protected $fileFactoryMock;
 
-     /**
-      * @var Config|MockObject
-      */
+
      protected $configMock;
 
      /**

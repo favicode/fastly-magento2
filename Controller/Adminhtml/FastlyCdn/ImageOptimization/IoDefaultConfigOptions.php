@@ -87,7 +87,6 @@ class IoDefaultConfigOptions extends Action
     /**
      * Upload snippet with updated IO default config options
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

@@ -89,7 +89,6 @@ class Delete extends Action
     /**
      * Delete ACL
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

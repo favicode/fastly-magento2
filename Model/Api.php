@@ -1496,7 +1496,6 @@ class Api
      *
      * @param $params
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function configureImageOptimizationDefaultConfigOptions($params, $version)
@@ -1510,7 +1509,6 @@ class Api
     /**
      * Retrieve Fastly service details
      *
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getServiceDetails()
@@ -1530,7 +1528,6 @@ class Api
      *
      * @param string $id
      * @param bool $includeWafFirewallVersions
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getWafSettings(string $id, bool $includeWafFirewallVersions = false)
@@ -1553,12 +1550,11 @@ class Api
      *
      * @param string    $uri    API Endpoint
      * @param string    $method HTTP Method for request
-     * @param mixed[]|string    $body   Content
+     * @param $body   Content
      * @param bool  $test   Use $testApiKey for request
      * @param string    $testApiKey API key to be tested
      * @param bool  $logError   When set to false, prevents writing failed requests to log
      *
-     * @return bool|mixed   Returns false on failiure
      * @throws LocalizedException
      */
     private function _fetch(

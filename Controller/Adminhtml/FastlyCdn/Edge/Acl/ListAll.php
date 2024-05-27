@@ -71,7 +71,6 @@ class ListAll extends Action
     /**
      * Get all ACLs for active version
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

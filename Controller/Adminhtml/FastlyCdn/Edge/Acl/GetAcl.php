@@ -70,7 +70,6 @@ class GetAcl extends Action
     /**
      * Get ACL
      *
-     * @return $this|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {

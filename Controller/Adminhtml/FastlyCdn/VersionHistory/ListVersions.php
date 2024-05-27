@@ -45,7 +45,6 @@ class ListVersions extends Action
     /**
      * Gets all possible versions from Api
      *
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface
      */
     public function execute()
     {
