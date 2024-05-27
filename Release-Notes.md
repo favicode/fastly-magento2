@@ -1,5 +1,31 @@
 # Fastly_Cdn Release Notes
 
+## 1.2.217
+
+- Update to Netacea module https://github.com/fastly/fastly-magento2/pull/690
+
+## 1.2.216
+
+- Fix for GEOIP redirection causes 404 in specific cases https://github.com/fastly/fastly-magento2/pull/694
+
+## 1.2.215
+
+- Fix for checking if current IP is in maintenance IP list https://github.com/fastly/fastly-magento2/pull/692
+
+## 1.2.214
+
+- Rate limiting doesn't work correctly when store codes are involved https://github.com/fastly/fastly-magento2/pull/689
+
+## 1.2.213
+
+- Update Netacea Edge Module to 5.9.0 https://github.com/fastly/fastly-magento2/pull/687
+- Add support for Brotli static compression https://github.com/fastly/fastly-magento2/pull/688
+
+## 1.2.212
+
+- Additional fixes to log shipping menu https://github.com/fastly/fastly-magento2/pull/684
+- Updating to DataDome Fastly Module 2.19.4 https://github.com/fastly/fastly-magento2/pull/685
+
 ## 1.2.211
 
 - Fix for not being able to add log shipping jobs due to bug in Fastly Magento UI https://github.com/fastly/fastly-magento2/pull/683
