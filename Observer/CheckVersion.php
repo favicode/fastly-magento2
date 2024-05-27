@@ -78,7 +78,6 @@ class CheckVersion implements ObserverInterface
      * Predispatch admin user login success
      *
      * @param Observer $observer
-     * @return $this|void
      */
     public function execute(Observer $observer) // @codingStandardsIgnoreLine - unused parameter
     {

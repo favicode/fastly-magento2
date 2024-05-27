@@ -128,7 +128,6 @@ class GetAction extends Action
     /**
      * Get GeoIP action
      *
-     * @return ResponseInterface|ResultInterface|Layout|null
      */
     public function execute()
     {

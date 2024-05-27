@@ -85,7 +85,7 @@ class ConfigImportCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output) // @codingStandardsIgnoreLine - required by parent class
     {
@@ -126,7 +126,6 @@ class ConfigImportCommand extends Command
     }
 
     /**
-     * @return bool|mixed
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     protected function getClonedVersion()

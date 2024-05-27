@@ -554,9 +554,7 @@ class Config extends \Magento\PageCache\Model\Config
 
     const DATACENTER_FILE = 'datacenters.json';
 
-    /**
-     * @var Json|null
-     */
+
     private $serializer;
 
     /**
@@ -647,17 +645,16 @@ class Config extends \Magento\PageCache\Model\Config
     /**
      * Return Fastly service IP
      *
-     * @return string|null
+     * @return string
      */
     public function getServiceId()
     {
-        return $this->_scopeConfig->getValue(self::XML_FASTLY_SERVICE_ID);
+        return (string)$this->_scopeConfig->getValue(self::XML_FASTLY_SERVICE_ID);
     }
 
     /**
      * Return Fastly API token
      *
-     * @return string|null
      */
     public function getApiKey()
     {
@@ -1139,7 +1136,6 @@ class Config extends \Magento\PageCache\Model\Config
      *
      * @param string $countryCode
      * @param int $websiteId
-     * @return int|null
      */
     public function getGeoIpMappingForCountryAndWebsite(string $countryCode, int $websiteId): ?int
     {
@@ -1155,7 +1151,6 @@ class Config extends \Magento\PageCache\Model\Config
      * @param string $mapping
      * @param string $countryCode
      * @param int $websiteId
-     * @return int|null
      */
     private function extractMapping(string $mapping, string $countryCode, int $websiteId): ?int
     {
@@ -1409,8 +1404,6 @@ class Config extends \Magento\PageCache\Model\Config
      * Process blocked items depending on blocking type
      *
      * @param $strippedBlockedItems
-     * @param null|string $blockingType
-     * @return mixed|string
      */
     public function processBlockedItems($strippedBlockedItems, $blockingType = null)
     {

@@ -25,7 +25,6 @@ class Dictionary
     /**
      * @param $cloneNumber
      * @param $currActiveVersion
-     * @return bool|mixed
      */
     public function setupDictionary($cloneNumber, $currActiveVersion)
     {

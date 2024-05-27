@@ -134,7 +134,6 @@ class Image extends ImageModel
     }
 
     /**
-     * @return string|null
      * @throws FileSystemException
      * @throws NoSuchEntityException
      */
@@ -186,7 +185,6 @@ class Image extends ImageModel
     }
 
     /**
-     * @return bool|null
      */
     public function isForceLossyEnabled()
     {

@@ -415,7 +415,7 @@ class EnableCommand extends Command
             $arguments = new ArrayInput(['command' => 'cache:flush', 'types' => ['config']]);
             $this->getApplication()->find('cache:flush')->run($arguments, $output);
 
-        } catch (\Exception|ExceptionInterface $e) {
+        } catch (\Throwable $e) {
 
             $output->writeln("<error>{$e->getMessage()}</error>");
             return Cli::RETURN_FAILURE;

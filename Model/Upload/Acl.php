@@ -25,7 +25,6 @@ class Acl
     /**
      * @param $cloneNumber
      * @param $currActiveVersion
-     * @return bool|mixed
      */
     public function setupAcl($cloneNumber, $currActiveVersion)
     {

@@ -41,19 +41,13 @@ class ConfigTest extends TestCase
      */
      protected $_model;
 
-    /**
-     * @var MockObject|ScopeConfigInterface
-     */
+
      protected $_coreConfigMock;
 
-    /**
-     * @var MockObject|StateInterface
-     */
+
     protected $_cacheState;
 
-    /**
-     * @var MockObject|Reader
-     */
+
     protected $moduleReader;
 
     /**

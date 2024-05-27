@@ -21,9 +21,7 @@ class HttpCountryProvider implements CountryCodeProviderInterface
     {
         $this->request = $request;
     }
-    /**
-     * @return string|null
-     */
+
     public function getCountryCode(): ?string
     {
         return $this->request->getParam(self::REQUEST_PARAM_COUNTRY);

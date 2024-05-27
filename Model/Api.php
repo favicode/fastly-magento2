@@ -170,7 +170,6 @@ class Api
      * Purge a single URL
      *
      * @param $url
-     * @return array|\Magento\Framework\Controller\Result\Json
      */
     public function cleanUrl($url)
     {
@@ -191,7 +190,6 @@ class Api
      * Purge Fastly by a given surrogate key
      *
      * @param $keys
-     * @return bool|mixed
      */
     public function cleanBySurrogateKey($keys)
     {
@@ -247,7 +245,6 @@ class Api
     /**
      * Purge all of Fastly's CDN content. Can be called only once per request
      *
-     * @return bool|mixed
      */
     public function cleanAll()
     {
@@ -366,7 +363,6 @@ class Api
     /**
      * Get the logged in customer details
      *
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getCustomerInfo()
@@ -384,7 +380,6 @@ class Api
      * @param null $serviceId
      * @param null $apiKey
      * @param bool $isInitialCheck - flag for testing credentials before Service ID and token are saved to config
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function checkServiceDetails($test = false, $serviceId = null, $apiKey = null, $isInitialCheck = false)
@@ -412,7 +407,6 @@ class Api
      * Clone the current configuration into a new version.
      *
      * @param $curVersion
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function cloneVersion($curVersion)
@@ -432,7 +426,6 @@ class Api
      *
      * @param $version
      * @param $comment
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function addComment($version, $comment)
@@ -448,7 +441,6 @@ class Api
      *
      * @param array $vcl
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function uploadVcl($version, $vcl)
@@ -464,7 +456,6 @@ class Api
      *
      * @param $version
      * @param string $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function setVclAsMain($version, $name)
@@ -493,7 +484,6 @@ class Api
 
     /**
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function containerValidateServiceVersion($version)
@@ -508,7 +498,6 @@ class Api
      * Activate the current version.
      *
      * @param $version
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function activateVersion($version)
@@ -578,7 +567,6 @@ class Api
      *
      * @param $version
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getSnippet($version, $name)
@@ -593,7 +581,6 @@ class Api
      * Update a dynamic snippet
      *
      * @param array $snippet
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function updateSnippet(array $snippet)
@@ -633,7 +620,6 @@ class Api
      * Deleting an individual regular VCL Snippet
      * @param $version
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function removeSnippet($version, $name)
@@ -648,7 +634,6 @@ class Api
      * Creates a new condition
      * @param $version
      * @param array $condition
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function createCondition($version, array $condition)
@@ -674,8 +659,7 @@ class Api
     /**
      * Creates a new condition
      * @param $version
-     * @param array $condition
-     * @return bool|mixed
+     * @param string $conditionName
      * @throws LocalizedException
      */
     public function removeCondition($version, string $conditionName)
@@ -690,7 +674,6 @@ class Api
      *
      * @param $version
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getCondition($version, $name)
@@ -705,8 +688,7 @@ class Api
      * Creates a new header
      *
      * @param $version
-     * @param $condition
-     * @return bool|mixed
+     * @param array $condition
      * @throws LocalizedException
      */
     public function createHeader($version, array $condition)
@@ -731,7 +713,6 @@ class Api
      *
      * @param $version
      * @param $name
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function getHeader($version, $name)
@@ -771,7 +752,6 @@ class Api
      *
      * @param $version
      * @param string $responseName
-     * @return bool|mixed
      * @throws LocalizedException
      */
     public function removeResponse($version, string $responseName)
@@ -786,7 +766,6 @@ class Api
      *
      * @param string $version
      * @param string $name
-     * @return bool|mixed $result
      * @throws LocalizedException
      */
     public function getResponse($version, $name)

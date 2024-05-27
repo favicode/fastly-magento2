@@ -82,7 +82,6 @@ class Image extends ImageModel
     }
 
     /**
-     * @return bool|null
      */
     public function isForceLossyEnabled()
     {

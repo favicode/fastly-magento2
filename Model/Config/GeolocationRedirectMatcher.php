@@ -10,7 +10,6 @@ class GeolocationRedirectMatcher
      * @param array $map
      * @param string $countryCode
      * @param int $websiteId
-     * @return int|null
      */
     public function execute(array $map, string $countryCode, int $websiteId): ?int
     {

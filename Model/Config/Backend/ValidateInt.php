@@ -32,7 +32,6 @@ use Fastly\Cdn\Model\Config;
 class ValidateInt extends Value
 {
     /**
-     * @return $this|string
      * @throws \Exception
      */
     public function beforeSave()

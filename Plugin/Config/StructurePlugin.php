@@ -58,7 +58,6 @@ class StructurePlugin
      *
      * @param \Closure $proceed
      * @param array $pathParts
-     * @return ElementInterface|null
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

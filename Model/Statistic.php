@@ -82,9 +82,7 @@ class Statistic extends AbstractModel implements IdentityInterface
      * @var array
      */
     private $GAReqData = [];
-    /**
-     * @var null|string
-     */
+
     private $validationServiceId = null;
     /**
      * @var Config
@@ -430,7 +428,7 @@ class Statistic extends AbstractModel implements IdentityInterface
     /**
      * Sends request to GA that the Fastly module is installed
      *
-     * @return bool|string $result
+     * @return bool $result
      */
     public function sendInstalledReq()
     {
@@ -564,7 +562,6 @@ class Statistic extends AbstractModel implements IdentityInterface
     /**
      * Calculates number of days since Fastly module installation
      *
-     * @return mixed|null
      */
     public function daysFromInstallation()
     {

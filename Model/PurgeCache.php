@@ -51,7 +51,6 @@ class PurgeCache
      * Send API purge request to invalidate cache by pattern
      *
      * @param string $pattern
-     * @return array|bool|\Magento\Framework\Controller\Result\Json
      */
     public function sendPurgeRequest($pattern = '')
     {

@@ -48,7 +48,6 @@ class GalleryPlugin
      * After Get Gallery Images Json
      *
      * @param Gallery $subject
-     * @param string|false $result
      */
     public function afterGetGalleryImagesJson(Gallery $subject, $result)
     {
