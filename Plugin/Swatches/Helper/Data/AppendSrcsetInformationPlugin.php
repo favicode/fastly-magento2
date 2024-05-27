@@ -29,7 +29,7 @@ class AppendSrcsetInformationPlugin
         $this->adaptivePixelRatio = $adaptivePixelRatio;
     }
 
-    public function afterGetProductMediaGallery(Data $subject, array $result, Product $product): array
+    public function afterGetProductMediaGallery(Data $subject, array $result, Product $product)
     {
         if (empty($result) || !$this->isPixelRatioEnabled()) {
             return $result;

@@ -54,8 +54,6 @@ class ConfigPlugin
      *
      * @param Config $config
      * @param string $result
-     *
-     * @return int
      */
     public function afterGetType(Config $config, $result)
     {
@@ -72,7 +70,6 @@ class ConfigPlugin
      *
      * @param Config $config
      * @param callable $proceed
-     * @return string|int
      */
     public function aroundGetType(Config $config, callable $proceed)
     {

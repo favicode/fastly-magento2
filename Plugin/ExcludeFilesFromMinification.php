@@ -33,7 +33,6 @@ class ExcludeFilesFromMinification
      * @param Minification $subject
      * @param callable $proceed
      * @param $contentType
-     * @return array
      */
     public function aroundGetExcludes(Minification $subject, callable $proceed, $contentType)
     {

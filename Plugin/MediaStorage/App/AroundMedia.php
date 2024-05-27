@@ -6,6 +6,7 @@ namespace Fastly\Cdn\Plugin\MediaStorage\App;
 use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\MediaStorage\Model\File\Storage\Response;
 use Magento\MediaStorage\App\Media;
 use Fastly\Cdn\Model\Config;
@@ -60,7 +61,7 @@ class AroundMedia
      *
      * @param Media $subject
      * @param callable $proceed
-     * @return Response
+     * @throws LocalizedException
      */
     public function aroundLaunch(Media $subject, callable $proceed)
     {

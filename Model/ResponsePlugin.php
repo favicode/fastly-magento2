@@ -61,7 +61,6 @@ class ResponsePlugin
      * @param string $name
      * @param string $value
      * @param bool $replace
-     * @return mixed
      */
     public function aroundSetHeader(Http $subject, callable $proceed, $name, $value, $replace = false) // @codingStandardsIgnoreLine - unused parameter
     {

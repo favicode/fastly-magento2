@@ -48,7 +48,6 @@ class ConfigurablePlugin
      *
      * @param Configurable $subject
      * @param string $result
-     * @return bool|string
      */
     public function afterGetJsonConfig(Configurable $subject, string $result)
     {

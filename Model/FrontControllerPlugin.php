@@ -120,7 +120,6 @@ class FrontControllerPlugin
      * @param FrontControllerInterface $subject
      * @param callable $proceed
      * @param mixed ...$args
-     * @return \Magento\Framework\App\Response\Http|\Magento\Framework\App\ResponseInterface
      */
     public function aroundDispatch(FrontControllerInterface $subject, callable $proceed, ...$args) // @codingStandardsIgnoreLine - unused parameter
     {
