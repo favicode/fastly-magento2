@@ -9,5 +9,5 @@ interface CountryCodeProviderInterface
 {
 
 
-    public function getCountryCode(): ?string;
+    public function getCountryCode();
 }

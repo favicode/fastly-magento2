@@ -54,7 +54,7 @@ class InstalledFlag implements DataPatchInterface
     /**
      * @inheritDoc
      */
-    public function apply(): self
+    public function apply()
     {
         $tableName = $this->moduleDataSetup->getTable('fastly_statistics');
         if ($this->moduleDataSetup->tableExists($tableName)) {

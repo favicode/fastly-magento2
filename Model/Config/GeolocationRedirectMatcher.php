@@ -11,7 +11,7 @@ class GeolocationRedirectMatcher
      * @param string $countryCode
      * @param int $websiteId
      */
-    public function execute(array $map, string $countryCode, int $websiteId): ?int
+    public function execute(array $map, string $countryCode, int $websiteId)
     {
         $match = null;
         $bestMatchScore = 0;
