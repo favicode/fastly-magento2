@@ -11,6 +11,7 @@ define([
         let loader = $('#ngwaf-loading-signals');
         let signalTableRows = $('#fastly-signals-list');
         let errorMessageDiv = $('#fastly-error-ngwaf');
+        let successMessageDiv = $('#fastly-success-ngwaf');
         let signalModal = $('#fastly-signal-modal-content');
         let newSignalButton = $('#fastly_ngwaf_signal_create_button');
 
@@ -66,6 +67,13 @@ define([
             errorMessageDiv.show()
             errorMessageDiv.html('')
             errorMessageDiv.html(errorMessage)
+        }
+
+        function displaySuccess(successMessage) {
+            loader.hide()
+            successMessageDiv.show()
+            successMessageDiv.html('')
+            successMessageDiv.html(successMessage)
         }
 
         function renderSignalList(signals) {
@@ -143,9 +151,11 @@ define([
                     if ( (response.status ?? false) === false) {
                         let errorMessage = response.msg ?? 'Error while deleting a signal';
                         displayError(errorMessage);
+                        successMessageDiv.hide();
                     }  else {
                         errorMessageDiv.hide()
                         signalRow.remove();
+                        displaySuccess('Signal deleted successfully');
                     }
 
                 },
@@ -230,9 +240,11 @@ define([
                     if ( (response.status ?? false) === false) {
                         let errorMessage = response.msg ?? 'Error while updating custom signal';
                         displayError(errorMessage);
+                        successMessageDiv.hide()
                     }  else {
                         errorMessageDiv.hide()
                         fetchSignals()
+                        displaySuccess('Custom signal updated')
 
                     }
 
