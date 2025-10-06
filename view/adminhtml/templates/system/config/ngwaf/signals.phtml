@@ -1,0 +1,100 @@
+<?php
+/** @var $escaper \Magento\Framework\Escaper */
+?>
+
+<?php
+$_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
+$_colspan = $block->isAddAfter() ? 2 : 1;
+
+$getSignalsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getAllSignals');
+$deleteSignalUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/deleteSignal');
+$editSignalUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editSignal');
+?>
+
+<div id="grid<?= $escaper->escapeHtmlAttr($_htmlId); ?>">
+    <div class="admin__control-table-wrapper">
+        <table class="admin__control-table" id="<?= $escaper->escapeHtmlAttr($block->getElement()->getId()); ?>">
+            <thead>
+            <tr>
+                <?php foreach ($block->getColumns() as $columnName => $column) : ?>
+                    <th><?= $escaper->escapeHtml($column['label']); ?></th>
+                <?php endforeach;?>
+                <th class="col-actions" colspan="<?= $escaper->escapeHtmlAttr($_colspan); ?>">Action</th>
+            </tr>
+            </thead>
+            <tbody id="fastly-signals-list"></tbody>
+        </table>
+    </div>
+    <p id="ngwaf-loading-signals" class="list-loading">
+        <img class="ngwaf-processing"
+             alt="Collecting"
+             style="margin:0 5px;"
+             src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Fastly_Cdn::images/fastly16.gif')) ?>" />
+        <?= $escaper->escapeHtml('Loading signals...'); ?>
+    </p>
+    <p id="ngwaf-no-signals" class="no-signals" style="display: none;">
+        <?= $escaper->escapeHtml('No custom signals found.'); ?>
+    </p>
+</div>
+
+<div class="message message-error fastly-button-messages"
+     id="fastly-error-ngwaf"
+     style="display: none">
+</div>
+
+<div id="fastly-signal-modal-content">
+    <div class="modal-inner-content">
+    </div>
+</div>
+
+<!-- Custom Signal creation/edit template -->
+<script type="text/x-magento-template" id="fastly-custom-signal-template">
+
+    <form action="<?= $editSignalUrl?>"
+          method="POST"
+          id="fastly-custom-signal-form"
+          class="form-inline"
+          enctype="multipart/form-data">
+
+        <fieldset class="admin__fieldset form-list question">
+            <div class="admin__field field _required">
+                <label for="custom_signal_name" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Name") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="custom_signal_name"
+                           required="required"
+                           id="custom_signal_name"
+                           class="admin__control-text required-entry">
+                </div>
+            </div>
+            <div class="admin__field field _required">
+                <label for="custom_signal_description" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Description") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="custom_signal_description"
+                           required="required"
+                           id="custom_signal_description"
+                           class="admin__control-text required-entry">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
+
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "ngwafSignals": {
+                "getAllSignalsUrl": "<?= $escaper->escapeJs($getSignalsUrl);?>",
+                "deleteSignalUrl": "<?= $escaper->escapeJs($deleteSignalUrl);?>",
+                "editSignalUrl": "<?= $escaper->escapeJs($editSignalUrl);?>"
+            }
+        }
+    }
+</script>
+

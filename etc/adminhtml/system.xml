@@ -654,6 +654,26 @@
                             <can_be_empty>1</can_be_empty>
                         </field>
                     </group>
+                    <!-- ==================================
+                         Next-Gen Web Application Firewall (NGWAF)
+                    =================================== -->
+                    <group id="fastly_next_gen_waf" sortOrder="495" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <label>Next-Gen Web Application Firewall (NGWAF)</label>
+                        <field id="fastly_next_gen_waf_workspace_id" type="text" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Workspace ID</label>
+                        </field>
+                        <field id="fastly_next_gen_waf_signals_create" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Create New Signal</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\CreateButton</frontend_model>
+                        </field>
+                        <field id="fastly_next_gen_waf_signals" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>NGWAF Signals</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\SignalList</frontend_model>
+                        </field>
+                        <field id="fastly_next_gen_waf_rules" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>NGWAF Rules</label>
+                        </field>
+                    </group>
                     <!-- ================================
                          Rate Limiting Settings group
                     ================================= -->

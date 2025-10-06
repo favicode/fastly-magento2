@@ -1,0 +1,64 @@
+<?php
+
+namespace Fastly\Cdn\Controller\Adminhtml\FastlyCdn\Ngwaf;
+
+use Fastly\Cdn\Model\Api;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+
+class DeleteSignal extends Action
+{
+    const ADMIN_RESOURCE = 'Magento_Backend::cache';
+
+    /**
+     * @var JsonFactory
+     */
+    private $resultJsonFactory;
+
+    /**
+     * @var Api
+     */
+    private $api;
+
+
+
+    public function __construct(
+        Context $context,
+        JsonFactory $resultJsonFactory,
+        Api $api
+    ) {
+        parent::__construct($context);
+
+        $this->api = $api;
+        $this->resultJsonFactory = $resultJsonFactory;
+    }
+
+    public function execute()
+    {
+        $result = $this->resultJsonFactory->create();
+
+        $signalId = $this->getRequest()->getParam('signal_id');
+
+        if (empty($signalId)) {
+            return $result->setData([
+                'status' => false,
+                'msg' => 'Signal ID is missing.',
+            ]);
+        }
+
+        try {
+            $response = $this->api->deleteSignal($signalId);
+
+            return $result->setData([
+                'status' => is_null($response) // response body is null on successful delete signal request
+            ]);
+
+        } catch (\Throwable $e) {
+            return $result->setData([
+                'status' => false,
+                'msg' => $e->getMessage(),
+            ]);
+        }
+    }
+}

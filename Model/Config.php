@@ -526,6 +526,10 @@ class Config extends \Magento\PageCache\Model\Config
     const XML_FASTLY_EXEMPT_GOOD_BOTS
         = 'system/full_page_cache/fastly/fastly_rate_limiting_settings/crawler_protection/exempt_good_bots';
 
+    const XML_FASTLY_NFWAF_WORKSPACE_ID =
+        'system/full_page_cache/fastly/fastly_next_gen_waf/fastly_next_gen_waf_workspace_id';
+
+
     /**
      * Request Header for VCL comparison
      */
@@ -923,6 +927,16 @@ class Config extends \Magento\PageCache\Model\Config
     {
         return $this->_scopeConfig->getValue(self::XML_FASTLY_WAF_ALLOW_BY_ACL);
     }
+    /**
+     * Get Workspace ID for NFWAF
+     *
+     * @return string
+     */
+    public function getWorkspaceId()
+    {
+        return (string)$this->_scopeConfig->getValue(self::XML_FASTLY_NFWAF_WORKSPACE_ID);
+    }
+
 
     /**
      * Return are Webhooks enabled

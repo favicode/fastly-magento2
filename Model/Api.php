@@ -46,6 +46,9 @@ class Api
     public const FASTLY_MAX_HEADER_KEY_SIZE = 256;
     public const UPSERT_ITEMS_MAX_COUNT = 200;
 
+    public const GET_SIGNALS_URI  = 'ngwaf/v1/workspaces/%s/signals';
+    public const EDIT_SIGNAL_URI  = 'ngwaf/v1/workspaces/%s/signals/%s';
+
     /**
      * @var Config
      */
@@ -1682,7 +1685,9 @@ class Api
         // Return error based on response code
         if ($responseCode == '429') {
             throw new LocalizedException(__($responseMessage));
-        } elseif ($responseCode != '200') {
+
+            // 204 is returned on NGWAF signal deletion
+        } elseif (!in_array($responseCode, [200, 204])) {
             if ($logError == true) {
                 $this->logger->critical('Return status ' . $responseCode, $uri);
             }
@@ -1723,5 +1728,77 @@ class Api
             }
         }
         return $responseMessage;
+    }
+
+    public function getSignals()
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::GET_SIGNALS_URI, urlencode($workspaceId));
+
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl);
+
+        $signals = [];
+        foreach ($response->data ?? [] as $signal) {
+
+            $signals[] = [
+                'id' => $signal->id,
+                'name' => $signal->name,
+                'description' => $signal->description,
+            ];
+        }
+
+        return $signals;
+
+    }
+
+    public function deleteSignal(string $signalId)
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::EDIT_SIGNAL_URI, urlencode($workspaceId), urlencode($signalId));
+
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl, Request::METHOD_DELETE);
+
+        return $response;
+    }
+
+    public function createSignal(string $signalName, string $signalDescription, ?string $signalId = null)
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $body = json_encode([
+            'name' => $signalName,
+            'description' => $signalDescription
+        ]);
+
+        if ($signalId) {
+            $uri = sprintf(self::EDIT_SIGNAL_URI, urlencode($workspaceId), urlencode($signalId));
+            $requestUrl = $this->config->getApiEndpoint() . $uri;
+            $response = $this->_fetch($requestUrl, Request::METHOD_PATCH, $body);
+
+        } else {
+            $uri = sprintf(self::GET_SIGNALS_URI, urlencode($workspaceId));
+            $requestUrl = $this->config->getApiEndpoint() . $uri;
+            $response = $this->_fetch($requestUrl,  Request::METHOD_POST, $body);
+        }
+
+        return $response;
     }
 }
