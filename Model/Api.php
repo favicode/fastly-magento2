@@ -1686,8 +1686,8 @@ class Api
         if ($responseCode == '429') {
             throw new LocalizedException(__($responseMessage));
 
-            // 204 is returned on NGWAF signal deletion
-        } elseif (!in_array($responseCode, [200, 204])) {
+            // 201 is returned on NGWAF signal create, 204 on NGWAF signal deletion
+        } elseif (!in_array($responseCode, [200, 201, 204])) {
             if ($logError == true) {
                 $this->logger->critical('Return status ' . $responseCode, $uri);
             }

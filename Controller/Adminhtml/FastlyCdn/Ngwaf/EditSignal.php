@@ -59,7 +59,7 @@ class EditSignal extends Action
             $response = $this->api->createSignal($signalName, $signalDescription, $signalId);
 
             return $result->setData([
-                'status' => !is_null($response)
+                'status' => $response
             ]);
 
         } catch (\Throwable $e) {
