@@ -31,6 +31,7 @@ let config = {
             fastlyExport: 'Fastly_Cdn/js/export',
             versionHistory: 'Fastly_Cdn/js/version-history',
             importExportRenderer: 'Fastly_Cdn/js/import-export-renderer',
+            http3: 'Fastly_Cdn/js/http3',
             ngwafSignals: 'Fastly_Cdn/js/signals'
         }
     }
