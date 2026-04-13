@@ -32,7 +32,8 @@ let config = {
             versionHistory: 'Fastly_Cdn/js/version-history',
             importExportRenderer: 'Fastly_Cdn/js/import-export-renderer',
             http3: 'Fastly_Cdn/js/http3',
-            ngwafSignals: 'Fastly_Cdn/js/signals'
+            ngwafSignals: 'Fastly_Cdn/js/signals',
+            ngwafRules: 'Fastly_Cdn/js/rules'
         }
     }
 };

@@ -48,6 +48,8 @@ class Api
 
     public const GET_SIGNALS_URI  = 'ngwaf/v1/workspaces/%s/signals';
     public const EDIT_SIGNAL_URI  = 'ngwaf/v1/workspaces/%s/signals/%s';
+    public const GET_RULES_URI  = 'ngwaf/v1/workspaces/%s/rules';
+    public const EDIT_RULE_URI  = 'ngwaf/v1/workspaces/%s/rules/%s';
 
     /**
      * @var Config
@@ -1801,6 +1803,78 @@ class Api
 
         } else {
             $uri = sprintf(self::GET_SIGNALS_URI, urlencode($workspaceId));
+            $requestUrl = $this->config->getApiEndpoint() . $uri;
+            $response = $this->_fetch($requestUrl,  Request::METHOD_POST, $body);
+        }
+
+        return $response;
+    }
+
+    public function getRules()
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::GET_RULES_URI, urlencode($workspaceId));
+
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl);
+
+        $rules = [];
+        foreach ($response->data ?? [] as $rule) {
+
+            $rules[] = [
+                'id' => $rule->id,
+                'description' => $rule->description,
+                'type' => $rule->type,
+            ];
+        }
+
+        return $rules;
+
+    }
+
+    public function deleteRule(string $ruleId)
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::EDIT_RULE_URI, urlencode($workspaceId), urlencode($ruleId));
+
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl, Request::METHOD_DELETE);
+
+        return $response;
+    }
+
+    public function createRule(string $ruleName, string $ruleDescription, ?string $ruleId = null)
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $body = json_encode([
+            'name' => $ruleName,
+            'description' => $ruleDescription
+        ]);
+
+        if ($ruleId) {
+            $uri = sprintf(self::EDIT_RULE_URI, urlencode($workspaceId), urlencode($ruleId));
+            $requestUrl = $this->config->getApiEndpoint() . $uri;
+            $response = $this->_fetch($requestUrl, Request::METHOD_PATCH, $body);
+
+        } else {
+            $uri = sprintf(self::GET_RULES_URI, urlencode($workspaceId));
             $requestUrl = $this->config->getApiEndpoint() . $uri;
             $response = $this->_fetch($requestUrl,  Request::METHOD_POST, $body);
         }

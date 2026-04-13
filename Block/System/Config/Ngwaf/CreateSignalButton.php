@@ -5,7 +5,7 @@ namespace Fastly\Cdn\Block\System\Config\Ngwaf;
 use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
-class CreateButton extends Field
+class CreateSignalButton extends Field
 {
     protected function _construct()
     {
@@ -41,7 +41,7 @@ class CreateButton extends Field
             'Magento\Backend\Block\Widget\Button'
         )->setData([
             'id'    => 'fastly_ngwaf_signal_create_button',
-            'label' => __('Create')
+            'label' => __('Create Signal')
         ]);
 
         return $button->toHtml();

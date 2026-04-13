@@ -6,9 +6,9 @@
 $_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
 $_colspan = $block->isAddAfter() ? 2 : 1;
 
-$getSignalsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getAllSignals');
-$deleteSignalUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/deleteSignal');
-$editSignalUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editSignal');
+$getRulesUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getAllRules');
+$deleteRuleUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/deleteRule');
+$editRuleUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editRule');
 ?>
 
 <div id="grid<?= $escaper->escapeHtmlAttr($_htmlId); ?>">
@@ -22,67 +22,67 @@ $editSignalUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editSignal');
                 <th class="col-actions" colspan="<?= $escaper->escapeHtmlAttr($_colspan); ?>">Action</th>
             </tr>
             </thead>
-            <tbody id="fastly-signals-list"></tbody>
+            <tbody id="fastly-rules-list"></tbody>
         </table>
     </div>
-    <p id="ngwaf-loading-signals" class="list-loading">
+    <p id="ngwaf-loading-rules" class="list-loading">
         <img class="ngwaf-processing"
              alt="Collecting"
              style="margin:0 5px;"
              src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Fastly_Cdn::images/fastly16.gif')) ?>" />
-        <?= $escaper->escapeHtml('Loading signals...'); ?>
+        <?= $escaper->escapeHtml('Loading rules...'); ?>
     </p>
-    <p id="ngwaf-no-signals" class="no-signals" style="display: none;">
-        <?= $escaper->escapeHtml('No custom signals found.'); ?>
+    <p id="ngwaf-no-rules" class="no-rules" style="display: none;">
+        <?= $escaper->escapeHtml('No custom rules found.'); ?>
     </p>
 </div>
 
 <div class="message message-error fastly-button-messages"
-     id="fastly-error-ngwaf-signal"
+     id="fastly-error-ngwaf-rule"
      style="display: none">
 </div>
 <div class="message message-success fastly-button-messages"
-     id="fastly-success-ngwaf-signal"
+     id="fastly-success-ngwaf-rule"
      style="display: none">
 </div>
 
 
-<div id="fastly-signal-modal-content">
+<div id="fastly-rule-modal-content">
     <div class="modal-inner-content">
     </div>
 </div>
 
-<!-- Custom Signal creation/edit template -->
-<script type="text/x-magento-template" id="fastly-custom-signal-template">
+<!-- Custom Rule creation/edit template -->
+<script type="text/x-magento-template" id="fastly-custom-rule-template">
 
-    <form action="<?= $editSignalUrl?>"
+    <form action="<?= $editRuleUrl?>"
           method="POST"
-          id="fastly-custom-signal-form"
+          id="fastly-custom-rule-form"
           class="form-inline"
           enctype="multipart/form-data">
 
         <fieldset class="admin__fieldset form-list question">
             <div class="admin__field field _required">
-                <label for="custom_signal_name" class="admin__field-label">
+                <label for="custom_rule_name" class="admin__field-label">
                     <span><?php /* @noEscape */ echo __("Name") ?></span>
                 </label>
                 <div class="admin__field-control">
                     <input type="text"
-                           name="custom_signal_name"
+                           name="custom_rule_name"
                            required="required"
-                           id="custom_signal_name"
+                           id="custom_rule_name"
                            class="admin__control-text required-entry">
                 </div>
             </div>
             <div class="admin__field field _required">
-                <label for="custom_signal_description" class="admin__field-label">
+                <label for="custom_rule_description" class="admin__field-label">
                     <span><?php /* @noEscape */ echo __("Description") ?></span>
                 </label>
                 <div class="admin__field-control">
                     <input type="text"
-                           name="custom_signal_description"
+                           name="custom_rule_description"
                            required="required"
-                           id="custom_signal_description"
+                           id="custom_rule_description"
                            class="admin__control-text required-entry">
                 </div>
             </div>
@@ -94,10 +94,10 @@ $editSignalUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editSignal');
 <script type="text/x-magento-init">
     {
         "*": {
-            "ngwafSignals": {
-                "getAllSignalsUrl": "<?= $escaper->escapeJs($getSignalsUrl);?>",
-                "deleteSignalUrl": "<?= $escaper->escapeJs($deleteSignalUrl);?>",
-                "editSignalUrl": "<?= $escaper->escapeJs($editSignalUrl);?>"
+            "ngwafRules": {
+                "getAllRulesUrl": "<?= $escaper->escapeJs($getRulesUrl);?>",
+                "deleteRuleUrl": "<?= $escaper->escapeJs($deleteRuleUrl);?>",
+                "editRuleUrl": "<?= $escaper->escapeJs($editRuleUrl);?>"
             }
         }
     }

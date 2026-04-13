@@ -673,14 +673,19 @@
                         </field>
                         <field id="fastly_next_gen_waf_signals_create" showInDefault="1" showInWebsite="0" showInStore="0">
                             <label>Create New Signal</label>
-                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\CreateButton</frontend_model>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\CreateSignalButton</frontend_model>
                         </field>
                         <field id="fastly_next_gen_waf_signals" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
                             <label>NGWAF Signals</label>
                             <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\SignalList</frontend_model>
                         </field>
+                        <field id="fastly_next_gen_waf_rules_create" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Create New Rule</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\CreateRuleButton</frontend_model>
+                        </field>
                         <field id="fastly_next_gen_waf_rules" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
                             <label>NGWAF Rules</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\RuleList</frontend_model>
                         </field>
                     </group>
                     <!-- ================================

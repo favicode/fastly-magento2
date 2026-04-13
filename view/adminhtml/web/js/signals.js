@@ -10,8 +10,8 @@ define([
         let noSignalsFoundMessage = $('#ngwaf-no-signals');
         let loader = $('#ngwaf-loading-signals');
         let signalTableRows = $('#fastly-signals-list');
-        let errorMessageDiv = $('#fastly-error-ngwaf');
-        let successMessageDiv = $('#fastly-success-ngwaf');
+        let errorMessageDiv = $('#fastly-error-ngwaf-signal');
+        let successMessageDiv = $('#fastly-success-ngwaf-signal');
         let signalModal = $('#fastly-signal-modal-content');
         let newSignalButton = $('#fastly_ngwaf_signal_create_button');
 
