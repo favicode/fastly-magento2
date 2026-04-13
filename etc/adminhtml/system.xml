@@ -687,6 +687,10 @@
                             <label>NGWAF Rules</label>
                             <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\RuleList</frontend_model>
                         </field>
+                        <field id="fastly_next_gen_waf_virtual_patches" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>NGWAF Virtual Patches</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\VirtualPatchList</frontend_model>
+                        </field>
                     </group>
                     <!-- ================================
                          Rate Limiting Settings group

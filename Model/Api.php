@@ -50,6 +50,8 @@ class Api
     public const EDIT_SIGNAL_URI  = 'ngwaf/v1/workspaces/%s/signals/%s';
     public const GET_RULES_URI  = 'ngwaf/v1/workspaces/%s/rules';
     public const EDIT_RULE_URI  = 'ngwaf/v1/workspaces/%s/rules/%s';
+    public const GET_VIRTUAL_PATCHES_URI  = 'ngwaf/v1/workspaces/%s/virtual-patches';
+    public const EDIT_VIRTUAL_PATCHES_URI  = 'ngwaf/v1/workspaces/%s/virtual-patches/%s';
 
     /**
      * @var Config
@@ -1878,6 +1880,55 @@ class Api
             $requestUrl = $this->config->getApiEndpoint() . $uri;
             $response = $this->_fetch($requestUrl,  Request::METHOD_POST, $body);
         }
+
+        return $response;
+    }
+
+    public function getVirtualPatches()
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::GET_VIRTUAL_PATCHES_URI, urlencode($workspaceId));
+
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl);
+
+        $virtualPatches = [];
+        foreach ($response->data ?? [] as $patch) {
+
+            $virtualPatches[] = [
+                'id' => $patch->id,
+                'description' => $patch->description,
+                'enabled' => $patch->enabled,
+                'mode' => $patch->mode,
+            ];
+        }
+
+        return $virtualPatches;
+
+    }
+
+    public function editVirtualPatch(string $patchId, string $mode, ?bool $isEnabled = false)
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $body = json_encode([
+            'enabled' => $isEnabled,
+            'mode' => $mode
+        ]);
+
+        $uri = sprintf(self::EDIT_VIRTUAL_PATCHES_URI, urlencode($workspaceId), urlencode($patchId));
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+        $response = $this->_fetch($requestUrl, Request::METHOD_PATCH, $body);
 
         return $response;
     }

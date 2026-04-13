@@ -1,0 +1,129 @@
+<?php
+/** @var $escaper \Magento\Framework\Escaper */
+?>
+
+<?php
+$_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
+$_colspan = $block->isAddAfter() ? 2 : 1;
+
+$getVirtualPatchesUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getAllVirtualPatches');
+$editVirtualPatchUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editVirtualPatch');
+?>
+
+<div id="grid<?= $escaper->escapeHtmlAttr($_htmlId); ?>">
+    <div class="admin__control-table-wrapper">
+        <table class="admin__control-table" id="<?= $escaper->escapeHtmlAttr($block->getElement()->getId()); ?>">
+            <thead>
+            <tr>
+                <?php foreach ($block->getColumns() as $columnName => $column) : ?>
+                    <th><?= $escaper->escapeHtml($column['label']); ?></th>
+                <?php endforeach;?>
+                <th class="col-actions" colspan="<?= $escaper->escapeHtmlAttr($_colspan); ?>">Action</th>
+            </tr>
+            </thead>
+            <tbody id="fastly-virtual-patches-list"></tbody>
+        </table>
+    </div>
+    <p id="ngwaf-loading-virtual-patches" class="list-loading">
+        <img class="ngwaf-processing"
+             alt="Collecting"
+             style="margin:0 5px;"
+             src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Fastly_Cdn::images/fastly16.gif')) ?>" />
+        <?= $escaper->escapeHtml('Loading virtual patches...'); ?>
+    </p>
+    <p id="ngwaf-no-virtual-patches" class="no-virtual-patches" style="display: none;">
+        <?= $escaper->escapeHtml('No custom virtual-patches found.'); ?>
+    </p>
+</div>
+
+<div class="message message-error fastly-button-messages"
+     id="fastly-error-ngwaf-virtual-patch"
+     style="display: none">
+</div>
+<div class="message message-success fastly-button-messages"
+     id="fastly-success-ngwaf-virtual-patch"
+     style="display: none">
+</div>
+
+
+<div id="fastly-virtual-patch-modal-content">
+    <div class="modal-inner-content">
+    </div>
+</div>
+
+<!-- Custom Virtual Patch creation/edit template -->
+<script type="text/x-magento-template" id="fastly-custom-virtual-patch-template">
+
+    <form action="<?= $editVirtualPatchUrl?>"
+          method="POST"
+          id="fastly-custom-virtual-patch-form"
+          class="form-inline"
+          enctype="multipart/form-data">
+
+        <fieldset class="admin__fieldset form-list question">
+            <div class="admin__field field _required">
+                <label for="custom_virtual_patch_id" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Patch ID") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="custom_virtual_patch_id"
+                           required="required"
+                           id="custom_virtual_patch_id"
+                           class="admin__control-text required-entry">
+                </div>
+            </div>
+            <div class="admin__field field _required">
+                <label for="custom_virtual_patch_description" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Description") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="custom_virtual_patch_description"
+                           required="required"
+                           id="custom_virtual_patch_description"
+                           class="admin__control-text required-entry">
+                </div>
+            </div>
+            <div class="admin__field field ">
+                <label for="custom_virtual_patch_status" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Is Enabled") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <div class="admin__field-option">
+                        <input class="input-checkbox checkbox"
+                               type="checkbox"
+                               name="custom_virtual_patch_status"
+                               id="custom_virtual_patch_status"
+                               />
+                    </div>
+                </div>
+
+            </div>
+            <div class="admin__field field _required">
+                <label for="custom_virtual_patch_mode" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Mode") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <select name="custom_virtual_patch_mode" id="custom_virtual_patch_mode" class="admin__control-text">
+                        <option value="block" selected>Block</option>
+                        <option value="log">Log</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
+
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "ngwafVirtualPatches": {
+                "getAllVirtualPatchesUrl": "<?= $escaper->escapeJs($getVirtualPatchesUrl);?>",
+                "editVirtualPatchUrl": "<?= $escaper->escapeJs($editVirtualPatchUrl);?>"
+            }
+        }
+    }
+</script>
+
