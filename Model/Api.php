@@ -52,6 +52,8 @@ class Api
     public const EDIT_RULE_URI  = 'ngwaf/v1/workspaces/%s/rules/%s';
     public const GET_VIRTUAL_PATCHES_URI  = 'ngwaf/v1/workspaces/%s/virtual-patches';
     public const EDIT_VIRTUAL_PATCHES_URI  = 'ngwaf/v1/workspaces/%s/virtual-patches/%s';
+    public const GET_WORKSPACE_LISTS_URI  = 'ngwaf/v1/workspaces/%s/lists';
+    public const EDIT_WORKSPACE_LIST_URI  = 'ngwaf/v1/workspaces/%s/lists/%s';
 
     /**
      * @var Config
@@ -1809,6 +1811,10 @@ class Api
             $response = $this->_fetch($requestUrl,  Request::METHOD_POST, $body);
         }
 
+        if (!$response) {
+            throw new \Exception('Error while creating signal: ' . $this->errorMessage ?? '');
+        }
+
         return $response;
     }
 
@@ -1929,6 +1935,92 @@ class Api
         $uri = sprintf(self::EDIT_VIRTUAL_PATCHES_URI, urlencode($workspaceId), urlencode($patchId));
         $requestUrl = $this->config->getApiEndpoint() . $uri;
         $response = $this->_fetch($requestUrl, Request::METHOD_PATCH, $body);
+
+        return $response;
+    }
+
+    public function getWorkspaceLists()
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::GET_WORKSPACE_LISTS_URI, urlencode($workspaceId));
+
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl);
+
+        $workspaceLists = [];
+        foreach ($response->data ?? [] as $list) {
+
+            $workspaceLists[] = [
+                'id' => $list->id,
+                'name' => $list->name,
+                'description' => $list->description ?? '',
+                'type' => $list->type,
+                'entries' => $list->entries,
+            ];
+        }
+
+        return $workspaceLists;
+
+    }
+
+    public function deleteWorkspaceList(string $listId)
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::EDIT_WORKSPACE_LIST_URI, urlencode($workspaceId), urlencode($listId));
+
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl, Request::METHOD_DELETE);
+
+        return $response;
+    }
+
+    public function createWorkspaceList(
+        string $listName,
+        string $listDescription,
+        string $listType,
+        array $listEntries,
+        ?string $listId = null
+    ) {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $body = json_encode([
+            'name' => $listName,
+            'description' => $listDescription,
+            'type' => $listType,
+            'entries' => $listEntries,
+            'scope' => 'workspace',
+        ]);
+
+        if ($listId) {
+            $uri = sprintf(self::EDIT_WORKSPACE_LIST_URI, urlencode($workspaceId), urlencode($listId));
+            $requestUrl = $this->config->getApiEndpoint() . $uri;
+            $response = $this->_fetch($requestUrl, Request::METHOD_PATCH, $body);
+
+        } else {
+            $uri = sprintf(self::GET_WORKSPACE_LISTS_URI, urlencode($workspaceId));
+            $requestUrl = $this->config->getApiEndpoint() . $uri;
+            $response = $this->_fetch($requestUrl,  Request::METHOD_POST, $body);
+        }
+
+        if (!$response) {
+            throw new \Exception('Error while creating list: ' . $this->errorMessage ?? '');
+        }
 
         return $response;
     }

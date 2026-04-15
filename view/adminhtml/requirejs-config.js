@@ -34,7 +34,8 @@ let config = {
             http3: 'Fastly_Cdn/js/http3',
             ngwafSignals: 'Fastly_Cdn/js/signals',
             ngwafRules: 'Fastly_Cdn/js/rules',
-            ngwafVirtualPatches: 'Fastly_Cdn/js/virtual-patches'
+            ngwafVirtualPatches: 'Fastly_Cdn/js/virtual-patches',
+            ngwafWorkspaceLists: 'Fastly_Cdn/js/workspace-lists'
         }
     }
 };

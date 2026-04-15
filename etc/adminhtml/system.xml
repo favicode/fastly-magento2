@@ -691,6 +691,14 @@
                             <label>NGWAF Virtual Patches</label>
                             <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\VirtualPatchList</frontend_model>
                         </field>
+                        <field id="fastly_next_gen_waf_workspace_lists_create" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>Create New List</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\CreateWorkspaceListButton</frontend_model>
+                        </field>
+                        <field id="fastly_next_gen_waf_workspace_lists" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                            <label>NGWAF Workspace Lists</label>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\WorkspaceList</frontend_model>
+                        </field>
                     </group>
                     <!-- ================================
                          Rate Limiting Settings group

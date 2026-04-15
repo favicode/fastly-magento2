@@ -1,0 +1,128 @@
+<?php
+/** @var $escaper \Magento\Framework\Escaper */
+?>
+
+<?php
+$_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
+$_colspan = $block->isAddAfter() ? 2 : 1;
+
+$getWorkspaceListsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getAllWorkspaceLists');
+$deleteWorkspaceListUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/deleteWorkspaceList');
+$editWorkspaceListUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editWorkspaceList');
+?>
+
+<div id="grid<?= $escaper->escapeHtmlAttr($_htmlId); ?>">
+    <div class="admin__control-table-wrapper">
+        <table class="admin__control-table" id="<?= $escaper->escapeHtmlAttr($block->getElement()->getId()); ?>">
+            <thead>
+            <tr>
+                <?php foreach ($block->getColumns() as $columnName => $column) : ?>
+                    <th><?= $escaper->escapeHtml($column['label']); ?></th>
+                <?php endforeach;?>
+                <th class="col-actions" colspan="<?= $escaper->escapeHtmlAttr($_colspan); ?>">Action</th>
+            </tr>
+            </thead>
+            <tbody id="fastly-workspace-lists-list"></tbody>
+        </table>
+    </div>
+    <p id="ngwaf-loading-workspace-lists" class="list-loading">
+        <img class="ngwaf-processing"
+             alt="Collecting"
+             style="margin:0 5px;"
+             src="<?= $escaper->escapeHtmlAttr($block->getViewFileUrl('Fastly_Cdn::images/fastly16.gif')) ?>" />
+        <?= $escaper->escapeHtml('Loading workspace lists...'); ?>
+    </p>
+    <p id="ngwaf-no-workspace-lists" class="no-workspace-lists" style="display: none;">
+        <?= $escaper->escapeHtml('No custom workspace lists found.'); ?>
+    </p>
+</div>
+
+<div class="message message-error fastly-button-messages"
+     id="fastly-error-ngwaf-workspace-list"
+     style="display: none">
+</div>
+<div class="message message-success fastly-button-messages"
+     id="fastly-success-ngwaf-workspace-list"
+     style="display: none">
+</div>
+
+
+<div id="fastly-workspace-list-modal-content">
+    <div class="modal-inner-content">
+    </div>
+</div>
+
+<!-- Custom Workspace List creation/edit template -->
+<script type="text/x-magento-template" id="fastly-custom-workspace-list-template">
+
+    <form action="<?= $editWorkspaceListUrl?>"
+          method="POST"
+          id="fastly-custom-workspace-list-form"
+          class="form-inline"
+          enctype="multipart/form-data">
+
+        <fieldset class="admin__fieldset form-list question">
+            <div class="admin__field field _required">
+                <label for="workspace_list_name" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Name") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="workspace_list_name"
+                           required="required"
+                           id="workspace_list_name"
+                           class="admin__control-text required-entry">
+                </div>
+            </div>
+            <div class="admin__field field">
+                <label for="workspace_list_description" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Description") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="workspace_list_description"
+                           id="workspace_list_description"
+                           class="admin__control-text required-entry">
+                </div>
+            </div>
+            <div class="admin__field field _required">
+                <label for="workspace_list_type" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Mode") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <select name="workspace_list_type" id="workspace_list_type" class="admin__control-text">
+                        <option value="country" selected>Country</option>
+                        <option value="ip">IP</option>
+                        <option value="signal">Signal</option>
+                        <option value="string">String</option>
+                        <option value="wildcard">Wildcard</option>
+                    </select>
+                </div>
+            </div>
+            <div class="admin__field field">
+                <label for="workspace_list_entries" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Entries") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <textarea rows="3" name="workspace_list_entries" id="workspace_list_entries" class="admin__control-text"></textarea>
+                    <div class="admin__field-note">
+                        Entries must be separated by new line.
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
+
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "ngwafWorkspaceLists": {
+                "getAllWorkspaceListsUrl": "<?= $escaper->escapeJs($getWorkspaceListsUrl);?>",
+                "deleteWorkspaceListUrl": "<?= $escaper->escapeJs($deleteWorkspaceListUrl);?>",
+                "editWorkspaceListUrl": "<?= $escaper->escapeJs($editWorkspaceListUrl);?>"
+            }
+        }
+    }
+</script>
