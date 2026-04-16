@@ -6,6 +6,9 @@
 $_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
 $_colspan = $block->isAddAfter() ? 2 : 1;
 
+$ruleProvider = $this->helper('\Fastly\Cdn\Model\Ngwaf\RuleProvider');
+$rulePayload = $ruleProvider->getPayload();
+
 $getRulesUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getAllRules');
 $deleteRuleUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/deleteRule');
 $editRuleUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editRule');
@@ -63,27 +66,202 @@ $editRuleUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editRule');
 
         <fieldset class="admin__fieldset form-list question">
             <div class="admin__field field _required">
-                <label for="custom_rule_name" class="admin__field-label">
-                    <span><?php /* @noEscape */ echo __("Name") ?></span>
+                <label for="fastly_ngwaf_rule_type" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Rule type") ?></span>
                 </label>
                 <div class="admin__field-control">
-                    <input type="text"
-                           name="custom_rule_name"
-                           required="required"
-                           id="custom_rule_name"
-                           class="admin__control-text required-entry">
+                    <select name="fastly_ngwaf_rule_type" id="fastly_ngwaf_rule_type" class="admin__control-text">
+                    </select>
                 </div>
             </div>
             <div class="admin__field field _required">
-                <label for="custom_rule_description" class="admin__field-label">
-                    <span><?php /* @noEscape */ echo __("Description") ?></span>
+                <label for="fastly_ngwaf_rule_condition_operator" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Rule applies if X conditions are true") ?></span>
                 </label>
                 <div class="admin__field-control">
-                    <input type="text"
-                           name="custom_rule_description"
-                           required="required"
-                           id="custom_rule_description"
-                           class="admin__control-text required-entry">
+                    <select name="fastly_ngwaf_rule_condition_operator" id="fastly_ngwaf_rule_condition_operator" class="admin__control-text">
+                        <option value="all" selected>All</option>
+                        <option value="any">Any</option>
+                    </select>
+                </div>
+            </div>
+            <div class="ngwaf-conditions">
+                <h2><?php /* @noEscape */ echo __("Conditions") ?></h2>
+
+                <div class="ngwaf-condition">
+                    <div class="admin__field field _required">
+                        <label class="admin__field-label">
+                            <span><?php /* @noEscape */ echo __("Field") ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <select name="fastly_ngwaf_rule_condition_field[]" class="admin__control-text fastly_ngwaf_rule_condition_field">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="admin__field field _required">
+                        <label class="admin__field-label">
+                            <span><?php /* @noEscape */ echo __("Operator") ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <select name="fastly_ngwaf_rule_condition_operator[]" class="admin__control-text fastly_ngwaf_rule_condition_operator">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="admin__field field _required">
+                        <label class="admin__field-label">
+                            <span><?php /* @noEscape */ echo __("Value") ?></span>
+                        </label>
+                        <div class="admin__field-control condition-input">
+                            <input type="text"
+                                   name="fastly_ngwaf_rule_condition_value[]"
+                                   required="required"
+                                   class="admin__control-text required-entry fastly_ngwaf_rule_condition_value">
+                        </div>
+                        <div class="admin__field-control condition-select">
+                            <select name="fastly_ngwaf_rule_condition_value[]"
+                                    class="admin__control-text required-entry fastly_ngwaf_rule_condition_value"
+                                    required="required">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="fastly-ngwaf-rule-actions">
+                <h2><?php /* @noEscape */ echo __("Actions") ?></h2>
+                <div class="admin__field field _required">
+                    <label class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Type") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select id="fastly_ngwaf_rule_action_field" name="fastly_ngwaf_rule_action_field" class="admin__control-text">
+                        </select>
+                    </div>
+                </div>
+                <div class="admin__field field _required">
+                    <label class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Value") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select id="fastly_ngwaf_rule_action_value" name="fastly_ngwaf_rule_action_value" class="admin__control-text">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="fastly-ngwaf-rule-rate-limit-actions">
+                <h2><?php /* @noEscape */ echo __("Actions") ?></h2>
+                <div class="admin__field field _required">
+                    <label class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Type") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select name="fastly_ngwaf_rule_rate_limit_action_field" class="admin__control-text">
+                        </select>
+                    </div>
+                </div>
+                <div class="admin__field field _required">
+                    <label class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Match type") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select name="fastly_ngwaf_rule_rate_limit_action_match_type" class="admin__control-text">
+                        </select>
+                    </div>
+                </div>
+                <div class="admin__field field _required">
+                    <label class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Action signal") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select name="fastly_ngwaf_rule_rate_limit_action_other_signal_type" class="admin__control-text">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="fastly-ngwaf-rule-rate-limit-details">
+                <h2><?php /* @noEscape */ echo __("Rate limiting") ?></h2>
+                <div class="admin__field field _required">
+                    <label class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Client Identifier") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select name="fastly_ngwaf_rule_rate_limit_client_identifier" class="admin__control-text">
+                        </select>
+                    </div>
+                </div>
+                <div class="admin__field field _required">
+                    <label for="fastly_ngwaf_rule_rate_limit_threshold" class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Threshold") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <input type="text"
+                               name="fastly_ngwaf_rule_rate_limit_threshold"
+                               required="required"
+                               id="fastly_ngwaf_rule_rate_limit_threshold"
+                               class="admin__control-text required-entry">
+                    </div>
+                </div>
+                <div class="admin__field field _required">
+                    <label for="fastly_ngwaf_rule_rate_limit_interval" class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Interval") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select name="fastly_ngwaf_rule_rate_limit_interval" class="admin__control-text">
+                            <option value="60" selected>1 minute</option>
+                            <option value="600">10 minutes</option>
+                            <option value="3600">60 minutes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="admin__field field _required">
+                    <label for="fastly_ngwaf_rule_rate_limit_duration" class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Duration") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select name="fastly_ngwaf_rule_rate_limit_duration" class="admin__control-text">
+                            <option value="300" selected>5 minutes</option>
+                            <option value="3600">1 hour</option>
+                            <option value="21600">6 hours</option>
+                            <option value="86400">1 day</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="rule-details">
+                <h2><?php /* @noEscape */ echo __("Details") ?></h2>
+                <div class="admin__field field _required">
+                    <label for="fastly_ngwaf_rule_description" class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Description") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <input type="text"
+                               name="fastly_ngwaf_rule_description"
+                               required="required"
+                               id="fastly_ngwaf_rule_description"
+                               class="admin__control-text required-entry">
+                    </div>
+                </div>
+                <div class="admin__field field _required">
+                    <label for="fastly_ngwaf_rule_enabled" class="admin__field-label">
+                        <span><?php /* @noEscape */ echo __("Is Rule Enabled") ?></span>
+                    </label>
+                    <div class="admin__field-control">
+                        <select name="fastly_ngwaf_rule_rate_limit_duration" class="admin__control-text">
+                            <option value="true" selected>Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="rule-request-logging">
+                    <div class="admin__field field _required">
+                        <label for="fastly_ngwaf_rule_request_logging" class="admin__field-label">
+                            <span><?php /* @noEscape */ echo __("Request logging") ?></span>
+                        </label>
+                        <div class="admin__field-control">
+                            <select id="fastly_ngwaf_rule_request_logging" name="fastly_ngwaf_rule_request_logging" class="admin__control-text">
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </fieldset>
@@ -97,7 +275,8 @@ $editRuleUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editRule');
             "ngwafRules": {
                 "getAllRulesUrl": "<?= $escaper->escapeJs($getRulesUrl);?>",
                 "deleteRuleUrl": "<?= $escaper->escapeJs($deleteRuleUrl);?>",
-                "editRuleUrl": "<?= $escaper->escapeJs($editRuleUrl);?>"
+                "editRuleUrl": "<?= $escaper->escapeJs($editRuleUrl);?>",
+                "rulePayload": <?= $rulePayload?>
             }
         }
     }

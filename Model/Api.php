@@ -1761,6 +1761,7 @@ class Api
 
             $signals[] = [
                 'id' => $signal->id,
+                'reference_id' => $signal->reference_id,
                 'name' => $signal->name,
                 'description' => $signal->description,
             ];

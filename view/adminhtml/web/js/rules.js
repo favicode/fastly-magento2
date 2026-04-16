@@ -15,6 +15,7 @@ define([
         let ruleModal = $('#fastly-rule-modal-content');
         let newRuleButton = $('#fastly_ngwaf_rule_create_button');
 
+        window.myRuleConfig = config.rulePayload;
 
         ngWafHead.one('click', function () {
             fetchRules();
@@ -22,6 +23,7 @@ define([
 
         newRuleButton.on('click', function () {
             createRuleModal();
+            populateFormOptions();
         })
 
         function fetchRules() {
@@ -250,6 +252,122 @@ define([
             })
 
             ruleModal.modal('closeModal');
+        }
+
+        function populateFormOptions() {
+
+            // NGWAF creation/edit rule form
+            let ruleTypeSelectElement = $('#fastly_ngwaf_rule_type');
+            let ruleConditionField = $('.fastly_ngwaf_rule_condition_field');
+            let ruleConditionOperator = $('.fastly_ngwaf_rule_condition_operator');
+            let ruleActionsElement = $('#fastly_ngwaf_rule_action_field');
+            let rateLimitActionsElement = $('#fastly_ngwaf_rule_rate_limit_action_field');
+
+            let requestRuleLogging = $('.rule-request-logging');
+            let ruleActionsSection = $('.fastly-ngwaf-rule-actions');
+            let rateLimitActionsSection = $('.fastly-ngwaf-rule-rate-limit-actions');
+            let rateLimitDetailsSection = $('.fastly-ngwaf-rule-rate-limit-details');
+
+            ruleTypeSelectElement.on("change", function() {
+                let selectedValue = $(this).val();
+                let actionsElement;
+
+                if (selectedValue === 'rate_limit') {
+                    ruleActionsSection.hide();
+                    rateLimitActionsSection.show();
+                    rateLimitDetailsSection.show();
+
+                    actionsElement = rateLimitActionsElement;
+                } else {
+                    ruleActionsSection.show();
+                    rateLimitActionsSection.hide();
+                    rateLimitDetailsSection.hide();
+
+                    actionsElement = ruleActionsElement;
+
+                }
+
+                if (selectedValue === 'request') {
+                    requestRuleLogging.show()
+                } else {
+                    requestRuleLogging.hide()
+                }
+
+                let actionOptions = config.rulePayload?.actions[selectedValue] ?? [];
+
+                actionsElement.empty()
+                $.each(actionOptions, function(key, value) {
+                    actionsElement.append(
+                        $(`<option value='${key}' >${value.name}</option>"`)
+                    );
+                });
+
+                actionsElement.trigger('change')
+
+            })
+
+            ruleConditionField.on("change", function() {
+                let selectedValue = $(this).val();
+
+                let conditionOptions = config.rulePayload?.conditions[selectedValue]?.conditions ?? [];
+
+                ruleConditionOperator.empty()
+                $.each(conditionOptions, function(key, value) {
+                    ruleConditionOperator.append(
+                        $(`<option value='${key}' >${value}</option>"`)
+                    );
+                });
+
+                let selectOptionValues = config.rulePayload?.conditions[selectedValue]?.select_options ?? [];
+                let conditionInputValue = $(this).parents('.ngwaf-condition').find("input[name='fastly_ngwaf_rule_condition_value[]']")
+                let conditionInputSelect = $(this).parents('.ngwaf-condition').find("select[name='fastly_ngwaf_rule_condition_value[]']")
+
+
+                if (!selectOptionValues || !selectOptionValues.length) {
+                    conditionInputValue.empty().show()
+                    conditionInputSelect.empty().hide()
+                } else {
+                    conditionInputValue.empty().hide()
+
+                    conditionInputSelect.empty()
+
+                    $.each(selectOptionValues, function(key, value) {
+                        conditionInputSelect.append(
+                            $(`<option value='${key}' >${value}</option>"`)
+                        );
+                    });
+
+                    conditionInputSelect.show()
+
+                }
+
+
+            });
+
+            if (ruleTypeSelectElement && config.rulePayload?.rule_types) {
+
+                ruleTypeSelectElement.empty()
+                $.each(config.rulePayload.rule_types, function(key, value) {
+                    ruleTypeSelectElement.append(
+                        $(`<option value='${key}'>${value}</option>"`)
+                    );
+                });
+
+                ruleTypeSelectElement.trigger('change')
+            }
+
+            if (ruleConditionField && config.rulePayload?.conditions) {
+                ruleConditionField.empty()
+                $.each(config.rulePayload.conditions, function(key, value) {
+                    ruleConditionField.append(
+                        $(`<option value='${key}' data-rule-condition-type="${value.type}">${value.name}</option>"`)
+                    );
+                });
+
+                ruleConditionField.trigger('change')
+            }
+
+
         }
     }
 });
