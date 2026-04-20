@@ -67,7 +67,7 @@ jobs:
       matrix:
         # https://experienceleague.adobe.com/docs/commerce-operations/installation-guide/system-requirements.html
         include:
-          - magento: "2.4.5-p13"
+          - magento: "2.4.5-p14"
             php: "8.1"
             composer: "v2"
             opensearch: "1.2.0"
@@ -103,6 +103,10 @@ jobs:
         run: |
           composer create-project --repository-url="https://mirror.mage-os.org/" \
           "magento/project-community-edition=${{ matrix.magento }}" . --no-install
+
+      - name: Ignore specific security advisories
+        run: |
+          composer config --json audit.ignore '{"PKSA-7h5p-prw9-w5nr": "advisory is complexity related, low impact for our scenario"}'
 
       - name: Force PHPUnit version
         if: matrix.phpunit != ''
