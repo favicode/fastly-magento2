@@ -52,7 +52,9 @@
             if (!beresp.http.Vary ~ "Accept-Encoding") {
                 set beresp.http.Vary:Accept-Encoding = "";
             }
-            if (req.http.Accept-Encoding == "gzip") {
+            if (req.http.Accept-Encoding == "br") {
+                set beresp.brotli = true;
+            } else if (req.http.Accept-Encoding == "gzip") {
                 set beresp.gzip = true;
             }
         }
@@ -107,13 +109,19 @@
         # init surrogate keys
         if (beresp.http.X-Magento-Tags) {
             set beresp.http.Surrogate-Key = beresp.http.X-Magento-Tags " text";
-        } else {
+        } else if (beresp.http.Surrogate-Key && beresp.http.Surrogate-Key !~ "text") {
+            set beresp.http.Surrogate-Key = beresp.http.Surrogate-Key " text";
+        } else if (!beresp.http.Surrogate-Key) {
             set beresp.http.Surrogate-Key = "text";
         }
 
         # set surrogate keys by content type if they are image/script or CSS
         if (beresp.http.Content-Type ~ "(image|script|css)") {
-            set beresp.http.Surrogate-Key = re.group.1;
+            if (beresp.http.Surrogate-Key) {
+                set beresp.http.Surrogate-Key = beresp.http.Surrogate-Key " " re.group.1;
+            } else {
+                set beresp.http.Surrogate-Key = re.group.1;
+            }
         }
     }
 

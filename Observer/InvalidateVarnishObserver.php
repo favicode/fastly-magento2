@@ -23,6 +23,7 @@ namespace Fastly\Cdn\Observer;
 use Fastly\Cdn\Helper\CacheTags;
 use Fastly\Cdn\Model\Config;
 use Fastly\Cdn\Model\PurgeCache;
+use Magento\Framework\App\Cache\Tag\Resolver;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
@@ -47,6 +48,10 @@ class InvalidateVarnishObserver implements ObserverInterface
      * @var array
      */
     private $alreadyPurged = [];
+    /**
+     * @var Resolver
+     */
+    private $tagResolver;
 
     /**
      * @param Config $config
@@ -56,11 +61,13 @@ class InvalidateVarnishObserver implements ObserverInterface
     public function __construct(
         Config $config,
         PurgeCache $purgeCache,
-        CacheTags $cacheTags
+        CacheTags $cacheTags,
+        Resolver $tagResolver
     ) {
         $this->config = $config;
         $this->purgeCache = $purgeCache;
         $this->cacheTags = $cacheTags;
+        $this->tagResolver = $tagResolver;
     }
 
     /**
@@ -81,6 +88,24 @@ class InvalidateVarnishObserver implements ObserverInterface
                         continue;
                     }
                     $tag = $this->cacheTags->convertCacheTags($tag);
+
+                    if (!$this->isTagAllowed($tag)) {
+                        continue;
+                    }
+
+                    if (!in_array($tag, $this->alreadyPurged)) {
+                        $tags[] = $tag;
+                        $this->alreadyPurged[] = $tag;
+                    }
+                }
+
+                if (!empty($tags)) {
+                    $this->purgeCache->sendPurgeRequest(array_unique($tags));
+                }
+            } else if ($object instanceof \Magento\Framework\App\Config\Value) {
+                $configTags = $this->tagResolver->getTags($object);
+                $tags = [];
+                foreach ($configTags as $tag) {
                     if (!in_array($tag, $this->alreadyPurged)) {
                         $tags[] = $tag;
                         $this->alreadyPurged[] = $tag;
@@ -111,6 +136,26 @@ class InvalidateVarnishObserver implements ObserverInterface
         if ($object instanceof \Magento\Cms\Model\Page && !$this->config->canPurgeCmsPage()) {
             return false;
         }
+        return true;
+    }
+
+    /**
+     * Additional validation since IdentityInterface can pass canPurgeObject check (e.g. ProductRuleIndexer), but still
+     * hold tags of products or categories
+     *
+     * @param string $tag
+     * @return bool
+     */
+    private function isTagAllowed(string $tag)
+    {
+        if ($tag === \Magento\Catalog\Model\Category::CACHE_TAG && !$this->config->canPurgeCatalogCategory()) {
+            return false;
+        }
+
+        if ($tag === \Magento\Catalog\Model\Product::CACHE_TAG && !$this->config->canPurgeCatalogProduct()) {
+            return false;
+        }
+
         return true;
     }
 }

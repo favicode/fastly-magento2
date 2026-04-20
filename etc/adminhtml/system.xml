@@ -49,7 +49,8 @@
                     <field id="fastly_api_key" type="text" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
                         <label>Fastly API Token</label>
                         <comment>
-                            <![CDATA[Please create a <a href="https://manage.fastly.com/account/personal/tokens" target="_blank">Fastly API token</a> with a global scope.<br /><br />
+                            <![CDATA[Please create a <a href="https://manage.fastly.com/account/personal/tokens" target="_blank">Fastly API token</a> with a global scope.<br />
+                            NOTE: Adobe Commerce Cloud customers should refer to <a href="https://experienceleague.adobe.com/en/docs/commerce-cloud-service/user-guide/cdn/fastly#fastly-service-account-and-credentials" target="_blank">their documentation</a> on how to obtain their Fastly API Token. If your token has expired, refer to <a href="https://experienceleague.adobe.com/en/docs/commerce-knowledge-base/kb/troubleshooting/miscellaneous/error-when-validating-fastly-credentials" target="_blank">this KB article.</a><br /><br />
                             After making any changes to Fastly Service ID or API token, please Save Config first before uploading VCL.]]>
                         </comment>
                         <frontend_class>masked</frontend_class>
@@ -89,6 +90,15 @@
                             <comment>
                                 <![CDATA[Return a <strong>301 Moved Permanently</strong> redirect to any unencrypted request, and redirect to the TLS equivalent. Also sets <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security" target="_blank">HSTS headers</a>.]]></comment>
                             <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\TlsBtn</frontend_model>
+                        </field>
+                        <!-- ====================
+                             Enable HTTP3 button
+                        ===================== -->
+                        <field id="enable_http_3" translate="label comment" sortOrder="10" showInDefault="1" showInStore="0" showInWebsite="0">
+                            <label>Enable HTTP/3</label>
+                            <comment>Requests made to the domains on this Fastly services should be capable of supporting HTTP/3 if
+                                they are being made from a client that supports these protocols.</comment>
+                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\Http3Btn</frontend_model>
                         </field>
                         <!-- ==================================
                              Admin Path Timeout input field
@@ -325,7 +335,7 @@
                             <comment>
                                 <![CDATA[List of countries that can be selected. Multiple selections allowed.]]>
                             </comment>
-                            <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                            <source_model>Fastly\Cdn\Model\Config\Country</source_model>
                             <can_be_empty>1</can_be_empty>
                         </field>
                         <!-- ==========================
@@ -607,14 +617,6 @@
                         <comment>
                             <![CDATA[]]>
                         </comment>
-                        <!-- ====================
-                             WAF status field
-                        ===================== -->
-                        <field id="toggle_waf" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
-                            <label>Web Application Firewall</label>
-                            <comment><![CDATA[]]></comment>
-                            <frontend_model>Fastly\Cdn\Block\System\Config\Form\Field\WafBtn</frontend_model>
-                        </field>
                         <!-- ===============================
                              OWASP Allowed Methods field
                         ================================ -->

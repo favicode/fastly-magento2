@@ -1,5 +1,152 @@
 # Fastly_Cdn Release Notes
 
+## 1.2.242
+
+- Add static URL check to basic auth VCL https://github.com/fastly/fastly-magento2/pull/791
+- fix: Additional check for AsyncConfig class - check if exists before usage https://github.com/fastly/fastly-magento2/pull/804
+- feat: Support for https logging https://github.com/fastly/fastly-magento2/pull/806
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/807
+
+## 1.2.241
+
+- feat: Improve bulk operations and output https://github.com/fastly/fastly-magento2/pull/742
+- Update Netacea integration to 5.17.0 https://github.com/fastly/fastly-magento2/pull/802
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/803
+
+## 1.2.240
+
+- feat: php 8.5 compatibility https://github.com/fastly/fastly-magento2/pull/793
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/795
+
+## 1.2.239
+
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/792
+
+## 1.2.238
+
+- Add gstatic.com to CSP allowlist https://github.com/fastly/fastly-magento2/pull/787
+
+## 1.2.237
+
+- Invalidate GraphQL cache for asynchronously saved config cache https://github.com/fastly/fastly-magento2/pull/785
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/786
+
+## 1.2.236
+
+- Implement logic which adds snippet to recv based on HTTP3 config https://github.com/fastly/fastly-magento2/pull/772
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/771
+
+## 1.2.235
+
+- Update Netacea integration to 5.15.0 https://github.com/fastly/fastly-magento2/pull/766
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/765
+
+## 1.2.234
+
+- Purge tags on Admin config save https://github.com/fastly/fastly-magento2/pull/762
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/761
+
+## 1.2.233
+
+- Update Netacea integration to 5.14.0 https://github.com/fastly/fastly-magento2/pull/755
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/756
+
+## 1.2.232
+
+- Update Netacea integration to 5.13.0 https://github.com/fastly/fastly-magento2/pull/748
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/754
+
+## 1.2.231
+
+- Add @noEscape notation to JSON output in config
+
+## 1.2.230
+
+- Update to DataDome Fastly Module 2.25.0 https://github.com/fastly/fastly-magento2/pull/750
+
+## 1.2.229
+
+- Correct Surrogate Key behavior under shielding https://github.com/fastly/fastly-magento2/pull/746 
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/743
+
+## 1.2.228
+
+- Extend surrogate keys instead of replacing them https://github.com/fastly/fastly-magento2/pull/719
+
+## 1.2.227
+
+- Use bulk update API for ACLs for IP list update in fastly:maintenance command https://github.com/fastly/fastly-magento2/pull/741
+
+## 1.2.226
+
+- Update available Fastly Shielding POP list https://github.com/fastly/fastly-magento2/pull/738
+- Update Netacea integration to 5.10.7 https://github.com/fastly/fastly-magento2/pull/737
+
+## 1.2.225
+
+- PHP 8.4 suport https://github.com/fastly/fastly-magento2/pull/724
+- Update Netacea integration to 5.10.6 https://github.com/fastly/fastly-magento2/pull/736
+
+## 1.2.224
+
+- Update available Fastly Shielding POP list
+- Update to DataDome Fastly Module 2.24.1 https://github.com/fastly/fastly-magento2/pull/728
+- Remove legacy WAF button https://github.com/fastly/fastly-magento2/pull/735
+
+## 1.2.223
+
+- Update available Fastly Shielding POP list
+
+## 1.2.222
+
+- Update to DataDome Fastly Module 2.23.0 https://github.com/fastly/fastly-magento2/pull/715
+
+## 1.2.221
+
+- Catch Throwable instead of Exception in Blocking controller https://github.com/fastly/fastly-magento2/pull/704
+- Perform additional validation during tag purge https://github.com/fastly/fastly-magento2/pull/705
+- Trigger init of edge modules if tab is open by default https://github.com/fastly/fastly-magento2/pull/707 
+- Don't display NGWAF dictionary in admin screen https://github.com/fastly/fastly-magento2/pull/710
+
+## 1.2.220
+
+- Logging endpoints changes https://github.com/fastly/fastly-magento2/pull/701
+
+## 1.2.219
+
+- Removing trailing comma in WAF constructor to be compatible with PHP 7.2 https://github.com/fastly/fastly-magento2/pull/698
+
+## 1.2.218
+
+- Update to Netacea module https://github.com/fastly/fastly-magento2/pull/696
+- Fixing deprecated usage https://github.com/fastly/fastly-magento2/pull/697
+
+## 1.2.217
+
+- Update to Netacea module https://github.com/fastly/fastly-magento2/pull/690
+
+## 1.2.216
+
+- Fix for GEOIP redirection causes 404 in specific cases https://github.com/fastly/fastly-magento2/pull/694
+
+## 1.2.215
+
+- Fix for checking if current IP is in maintenance IP list https://github.com/fastly/fastly-magento2/pull/692
+
+## 1.2.214
+
+- Rate limiting doesn't work correctly when store codes are involved https://github.com/fastly/fastly-magento2/pull/689
+
+## 1.2.213
+
+- Update Netacea Edge Module to 5.9.0 https://github.com/fastly/fastly-magento2/pull/687
+- Add support for Brotli static compression https://github.com/fastly/fastly-magento2/pull/688
+
+## 1.2.212
+
+- Additional fixes to log shipping menu https://github.com/fastly/fastly-magento2/pull/684
+- Updating to DataDome Fastly Module 2.19.4 https://github.com/fastly/fastly-magento2/pull/685
+
 ## 1.2.211
 
 - Fix for not being able to add log shipping jobs due to bug in Fastly Magento UI https://github.com/fastly/fastly-magento2/pull/683

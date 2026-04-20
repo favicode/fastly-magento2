@@ -114,7 +114,7 @@ class SuperUserCommand extends Command
      * @param OutputInterface $output
      * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output) // @codingStandardsIgnoreLine - required by parent class
+    protected function execute(InputInterface $input, OutputInterface $output): int // @codingStandardsIgnoreLine - required by parent class
     {
         $this->output = $output;
         $options = $input->getOptions();
@@ -227,11 +227,22 @@ class SuperUserCommand extends Command
             throw new \Exception(__($msg));
         }
         $aclId = $acl->id;
-        $aclItems = $this->api->aclItemsList($aclId);
         $comment = 'Added for Maintenance Mode';
 
-        $this->deleteIps($aclItems, $aclId);
+        do {
 
+            // Per default, Fastly returns 100 IP addresses in one call - we fetch until we clear all of them
+            $aclItems = $this->api->aclItemsList($aclId);
+            if (!$aclItems) {
+                break;
+            }
+            $numberOfItems = count($aclItems);
+            $this->output->writeln('<info>' . "Deleting $numberOfItems IP addresses" . '</info>');
+            $this->deleteIps($aclItems, $aclId);
+
+        } while (true);
+
+        $updatedIpList = [];
         foreach ($ipList as $ip) {
             if ($ip[0] == '!') {
                 $ip = ltrim($ip, '!');
@@ -254,8 +265,23 @@ class SuperUserCommand extends Command
                 throw new \Exception(__($msg));
             }
 
-            $this->api->upsertAclItem($aclId, $ipParts[0], 0, $comment, $subnet);
+            $ipInformation = [
+                'op' => 'create',
+                'ip' => $ipParts[0],
+                'negated' => 0,
+                'comment' => $comment
+            ];
+
+            if ($subnet) {
+                $ipInformation['subnet'] = $subnet;
+            }
+
+            $updatedIpList[] = $ipInformation;
         }
+
+        $numberOfUpdatedIp = count($updatedIpList);
+        $this->output->writeln('<info>' . "Updating list with $numberOfUpdatedIp IP addresses" . '</info>');
+        $this->api->bulkAclItems($aclId, $updatedIpList);
 
         $this->sendWebHook('*Admin IPs list has been updated*');
 
@@ -307,9 +333,14 @@ class SuperUserCommand extends Command
      */
     private function deleteIps($aclItems, $aclId)
     {
-        foreach ($aclItems as $key => $value) {
-            $this->api->deleteAclItem($aclId, $value->id);
+        $items = [];
+        foreach ($aclItems as $item) {
+            $items[] = [
+                'op' => 'delete',
+                'id' => $item->id
+            ];
         }
+        $this->api->bulkAclItems($aclId, $items);
     }
 
     /**
