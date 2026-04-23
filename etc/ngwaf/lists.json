@@ -1,0 +1,67 @@
+[
+  {
+    "id": "pviNlgUUXtV3lC3qydv1sD",
+    "type": "signal",
+    "reference_id": "system.attack-signals",
+    "name": "Attack Signals",
+    "description": "A list containing Attack Signals",
+    "entries": [],
+    "created_at": "0001-01-01T00:00:00Z",
+    "updated_at": "0001-01-01T00:00:00Z",
+    "scope": {
+      "type": "system"
+    }
+  },
+  {
+    "id": "noDEWc1GfHo60NlUu1rK8j",
+    "type": "signal",
+    "reference_id": "system.anomalous-ip-signals",
+    "name": "Anomalous IP Signals",
+    "description": "A list containing Fastly IP Addresses",
+    "entries": [],
+    "created_at": "0001-01-01T00:00:00Z",
+    "updated_at": "0001-01-01T00:00:00Z",
+    "scope": {
+      "type": "system"
+    }
+  },
+  {
+    "id": "GVhkqByREb1AodW1hXwg4g",
+    "type": "ip",
+    "reference_id": "system.apple-privacy-relay",
+    "name": "Apple Privacy Relay IP Addresses",
+    "description": "A list containing Apple Privacy Relay IP Addresses",
+    "entries": [],
+    "created_at": "0001-01-01T00:00:00Z",
+    "updated_at": "0001-01-01T00:00:00Z",
+    "scope": {
+      "type": "system"
+    }
+  },
+  {
+    "id": "SkU3hTJT8oYPCf08sMCKYP",
+    "type": "signal",
+    "reference_id": "system.ai-bot-signals",
+    "name": "AI Bot Signals",
+    "description": "A list containing AI Bot Signals",
+    "entries": [],
+    "created_at": "0001-01-01T00:00:00Z",
+    "updated_at": "0001-01-01T00:00:00Z",
+    "scope": {
+      "type": "system"
+    }
+  },
+  {
+    "id": "0N4T9V6CdxgLxlI45uLJwO",
+    "type": "ip",
+    "reference_id": "system.fastly-ip-addresses",
+    "name": "Fastly IP Addresses",
+    "description": "A list containing Fastly IP Addresses",
+    "entries": [],
+    "created_at": "0001-01-01T00:00:00Z",
+    "updated_at": "0001-01-01T00:00:00Z",
+    "scope": {
+      "type": "system"
+    }
+  }
+]

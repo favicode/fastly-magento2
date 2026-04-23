@@ -1,0 +1,3649 @@
+[
+  {
+    "id": "ALLOWED",
+    "name": "ALLOWED",
+    "display_name": "Allowed Request",
+    "long_name": "Allowed Requests",
+    "description": "Requests allowed by Next-Gen WAF.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "ABNORMALPATH",
+    "name": "ABNORMALPATH",
+    "display_name": "Abnormal Path",
+    "long_name": "Abnormal Path",
+    "description": "Abnormal Path indicates that the original path differs from the normalized path.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "BHH",
+    "name": "BHH",
+    "display_name": "BHH",
+    "long_name": "Bad Hop Headers",
+    "description": "Bad Hop Headers indicate an HTTP smuggling attempt through either a malformed Transfer-Encoding (TE) and/or Content-Length (CL) header, or a well-formed TE and CL header.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SQLI",
+    "name": "SQLI",
+    "display_name": "SQLI",
+    "long_name": "SQL Injection",
+    "description": "SQL Injection is the attempt to gain access to an application or obtain privileged information by executing arbitrary SQL database queries.",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "OWASP"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "XSS",
+    "name": "XSS",
+    "display_name": "XSS",
+    "long_name": "Cross Site Scripting",
+    "description": "Cross-Site Scripting is the attempt to hijack a user's account or web-browsing session through malicious JavaScript code.",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "OWASP"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "CMDEXE",
+    "name": "CMDEXE",
+    "display_name": "CMDEXE",
+    "long_name": "Command Execution",
+    "description": "Command Execution is the attempt to gain control or damage a target system through arbitrary system commands by means of user input.",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "OWASP"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "LOG4J-JNDI",
+    "name": "LOG4J-JNDI",
+    "display_name": "Log4J JNDI",
+    "long_name": "Log4J JNDI",
+    "description": "Apache Log4j JNDI remote code execution",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "CODEINJECTION",
+    "name": "CODEINJECTION",
+    "display_name": "Code Injection",
+    "long_name": "Code Injection",
+    "description": "Code Injection is the attempt to gain control or damage a target system through arbitrary application code commands by means of user input. Note, this signal is currently in an experimental phase. Please contact support@signalsciences.com if you ecounter any issues with this signal.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "IMPOSTOR",
+    "name": "IMPOSTOR",
+    "display_name": "Impostor",
+    "long_name": "SearchBot Impostors",
+    "description": "Search bot impostor is someone pretending to be a Google or Bing search bot, but who is not legitimate. Note, Doesn't depend on a response per se, but needs to be resolved in the cloud first, so shouldn't be used in a pre rule.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "requestAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "NOUA",
+    "name": "NOUA",
+    "display_name": "No UA",
+    "long_name": "No User Agent",
+    "description": "Many automated and malicious requests use fake or missing User-Agents to make it difficult to identify the type of device making the requests.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "requestAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "FORCEFULBROWSING",
+    "name": "FORCEFULBROWSING",
+    "display_name": "Forceful Browsing",
+    "long_name": "Forceful Browsing",
+    "description": "Forceful Browsing is the failed attempt to access admin pages.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "scanner"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "DOUBLEENCODING",
+    "name": "DOUBLEENCODING",
+    "display_name": "Double Encoding",
+    "long_name": "Double Encoding",
+    "description": "Double Encoding checks for the evasion technique of double encoding html characters.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SCANNER",
+    "name": "SCANNER",
+    "display_name": "Scanner",
+    "long_name": "Scanner",
+    "description": "Identifies popular scanning services and tools.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "scanner"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "TRAVERSAL",
+    "name": "TRAVERSAL",
+    "display_name": "Traversal",
+    "long_name": "Directory Traversal",
+    "description": "Directory Traversal is the attempt to navigate privileged folders throughout a system in hopes of obtaining sensitive information.",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "OWASP"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "BACKDOOR",
+    "name": "BACKDOOR",
+    "display_name": "Backdoor",
+    "long_name": "Backdoor",
+    "description": "A backdoor signal is a request which attempts to determine if a common backdoor file is present on the system.",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "scanner"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "RESPONSESPLIT",
+    "name": "RESPONSESPLIT",
+    "display_name": "Response Splitting",
+    "long_name": "HTTP Response Splitting",
+    "description": "Identifies when CRLF characters are submitted as input to the application in order to inject headers into the HTTP response.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "TORNODE",
+    "name": "TORNODE",
+    "display_name": "Tor Traffic",
+    "long_name": "Tor Traffic",
+    "description": "Tor is software that conceals a user's identity. A spike in Tor traffic can indicate an attacker trying to mask their location.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "ATO",
+      "trafficSource"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SANS",
+    "name": "SANS",
+    "display_name": "Malicious IP",
+    "long_name": "Malicious IP Traffic",
+    "description": "When a host becomes compromised, it is commonly used to attack multiple targets, which can trigger it to be recorded as a known malicious IP.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "ATO",
+      "trafficSource"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SIGSCI-IP",
+    "name": "SIGSCI-IP",
+    "display_name": "SigSci IP",
+    "long_name": "SigSci Malicious IPs",
+    "description": "An IP that Next-Gen WAF has identified as malicious.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "trafficSource"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "DATACENTER",
+    "name": "DATACENTER",
+    "display_name": "Datacenter",
+    "long_name": "Datacenter Traffic",
+    "description": "Datacenter Traffic is non-organic traffic originating from identified hosting providers. This type of traffic is not commonly associated with a real end user.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "ATO",
+      "trafficSource"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "HTTP4XX",
+    "name": "HTTP4XX",
+    "display_name": "HTTP 4XX",
+    "long_name": "HTTP 4XX Errors",
+    "description": "4xx Status Codes commonly refer to client request errors.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "responseAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "HTTP403",
+    "name": "HTTP403",
+    "display_name": "HTTP 403",
+    "long_name": "HTTP 403 Errors",
+    "description": "Forbidden. This is commonly seen when the request for a url has been protected by the server's configuration.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "responseAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "HTTP404",
+    "name": "HTTP404",
+    "display_name": "HTTP 404",
+    "long_name": "HTTP 404 Errors",
+    "description": "Not Found. This is commonly seen when the request for a page or asset does not exist or cannot be found by the server.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "responseAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "HTTP429",
+    "name": "HTTP429",
+    "display_name": "HTTP 429",
+    "long_name": "HTTP 429 Errors",
+    "description": "Too Many Requests. This is commonly seen when rate-limiting is used to slow down the number of active connections to a server.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "responseAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "HTTP500",
+    "name": "HTTP500",
+    "display_name": "HTTP 500",
+    "long_name": "HTTP 500 Errors",
+    "description": "Internal Server Error. This is commonly seen when a request generates an unhandled application error.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "responseAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "HTTP503",
+    "name": "HTTP503",
+    "display_name": "HTTP 503",
+    "long_name": "HTTP 503 Errors",
+    "description": "Service Unavailable. This is commonly seen when a web service is overloaded or sometimes taken down for maintenance.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "responseAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "HTTP5XX",
+    "name": "HTTP5XX",
+    "display_name": "HTTP 5XX",
+    "long_name": "HTTP 5XX Errors",
+    "description": "5xx Status Codes commonly refer to server related issues.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "responseAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "USERAGENT",
+    "name": "USERAGENT",
+    "display_name": "Attack Tooling",
+    "long_name": "Attack Tooling",
+    "description": "Attack Tooling is the use of automated software to identify security vulnerabilities or to attempt to exploit a discovered vulnerability.",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "scanner"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "NULLBYTE",
+    "name": "NULLBYTE",
+    "display_name": "Null Byte",
+    "long_name": "Null Byte",
+    "description": "Null bytes do not normally appear in a request and indicate the request is malformed and potentially malicious.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "requestAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "NOTUTF8",
+    "name": "NOTUTF8",
+    "display_name": "Invalid Encoding",
+    "long_name": "Invalid Encoding",
+    "description": "Invalid Encoding can cause the server to translate malicious characters from a request into a response, causing either a denial of service or XSS.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "requestAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "PRIVATEFILE",
+    "name": "PRIVATEFILE",
+    "display_name": "Private File",
+    "long_name": "Private Files",
+    "description": "Private files are usually confidential in nature, such as an Apache .htaccess file, or a configuration file which could leak sensitive information.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "scanner"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "WEAKTLS",
+    "name": "WEAKTLS",
+    "display_name": "Weak TLS",
+    "long_name": "Weak TLS",
+    "description": "Weak TLS. A web server's configuration allows SSL/TLS connections to be established with an obsolete cipher suite or protocol version. This signal is based on inspecting a small percent of requests. Also, some architectures and Next-Gen WAF language SDK modules do not support this signal.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "BLOCKED",
+    "name": "BLOCKED",
+    "display_name": "Blocked Request",
+    "long_name": "Blocked Requests",
+    "description": "Requests blocked by Next-Gen WAF.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "requestAnomaly"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "NO-CONTENT-TYPE",
+    "name": "NO-CONTENT-TYPE",
+    "display_name": "No Content Type",
+    "long_name": "Missing \"Content-Type\" request header",
+    "description": "A POST, PUT or PATCH request that does not have a \"Content-Type\" request header.  By default application servers should assume \"Content-Type: text/plain; charset=us-ascii\" in this case.  Many automated and malicious requests may be missing \"Content Type\".",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "MALFORMED-DATA",
+    "name": "MALFORMED-DATA",
+    "display_name": "Malformed Data",
+    "long_name": "Malformed Data in the request body",
+    "description": "A POST, PUT or PATCH request body that is malformed according to the \"Content-Type\" request header.  For example, if a \"Content-Type: application/x-www-form-urlencoded\" request header is specified and contains a POST body that is json.  This is often a programming error, automated or malicious request.  Requires agent 3.2 or higher.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "COMPRESSED",
+    "name": "COMPRESSED",
+    "display_name": "Compressed",
+    "long_name": "Compressed Not Inspected",
+    "description": "The POST request body is compressed and cannot be inspected.  For example, if a \"Content-Encoding: gzip\" request header is specified and the POST body is verified to not be plain text. Requires agent 4.30 or higher.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "UNKNOWN-CONTENT",
+    "name": "UNKNOWN-CONTENT",
+    "display_name": "Unknown Content",
+    "long_name": "Unknown Content Not Inspected",
+    "description": "The POST request did not contain a recognized content type, and the inspection engine was unable to guess the type. This may represent a malicious client attempting to implement WAF evasion techniques. Requires agent 4.31 or higher.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "BODY-PARSER-EVASION",
+    "name": "BODY-PARSER-EVASION",
+    "display_name": "Body Parser Evasion",
+    "long_name": "Body Parser Evasion",
+    "description": "A request was made that may not have had its body parsed correctly by the inspection engine. This may represent a malicious client attempting to implement WAF evasion techniques.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "OOB-DOMAIN",
+    "name": "OOB-DOMAIN",
+    "display_name": "Out-of-Band Domain",
+    "long_name": "Out-of-Band Domain",
+    "description": "Out-of-Band domains are generally used during pentesting to identify vulnerabilities in which network access is allowed.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "INSECURE-AUTH",
+    "name": "INSECURE-AUTH",
+    "display_name": "Insecure Auth",
+    "long_name": "Insecure Authentication/Authorization",
+    "description": "Insecure Authentication/Authorization, such as using JSON Web Tokens with the None Algorithm.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API",
+      "OWASP"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "LOGINDISCOVERY",
+    "name": "LOGINDISCOVERY",
+    "display_name": "Login Discovery",
+    "long_name": "Login Discovery",
+    "description": "Indicates suspected login attempts",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "LOGINDISCOVERY",
+      "conditions": [
+        {
+          "type": "group",
+          "group_operator": "any",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "path",
+              "operator": "contains",
+              "value": "/auth"
+            },
+            {
+              "type": "single",
+              "field": "path",
+              "operator": "contains",
+              "value": "/login"
+            },
+            {
+              "type": "multival",
+              "field": "post_parameter",
+              "operator": "exists",
+              "group_operator": "any",
+              "conditions": [
+                {
+                  "type": "single",
+                  "field": "name",
+                  "operator": "contains",
+                  "value": "email"
+                },
+                {
+                  "type": "single",
+                  "field": "name",
+                  "operator": "contains",
+                  "value": "password"
+                },
+                {
+                  "type": "single",
+                  "field": "name",
+                  "operator": "contains",
+                  "value": "username"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "LOGINATTEMPT",
+    "name": "LOGINATTEMPT",
+    "display_name": "Login Attempt",
+    "long_name": "Attempted Logins",
+    "description": "Indicates login attempts",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": [],
+    "signal_template": {
+      "name": "LOGINATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals",
+          "value": "POST"
+        }
+      ],
+      "block_signal": "LOGINATTEMPT"
+    }
+  },
+  {
+    "id": "LOGINSUCCESS",
+    "name": "LOGINSUCCESS",
+    "display_name": "Login Success",
+    "long_name": "Successful Logins",
+    "description": "Indicates a successful login",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": [],
+    "signal_template": {
+      "name": "LOGINSUCCESS",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals",
+          "value": "POST"
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "response_header",
+          "operator": "exists",
+          "group_operator": "any",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            },
+            {
+              "type": "single",
+              "field": "value_string",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "LOGINFAILURE",
+    "name": "LOGINFAILURE",
+    "display_name": "Login Failure",
+    "long_name": "Failed Logins",
+    "description": "Indicates a failed login",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": [],
+    "signal_template": {
+      "name": "LOGINFAILURE",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals",
+          "value": "POST"
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "response_header",
+          "operator": "exists",
+          "group_operator": "any",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            },
+            {
+              "type": "single",
+              "field": "value_string",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": "LOGINATTEMPT"
+    }
+  },
+  {
+    "id": "REGATTEMPT",
+    "name": "REGATTEMPT",
+    "display_name": "Registration Attempt",
+    "long_name": "Attempted Registrations",
+    "description": "Indicates registration attempts via the registration page or API",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": [],
+    "signal_template": {
+      "name": "REGATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals",
+          "value": "POST"
+        }
+      ],
+      "block_signal": "REGATTEMPT"
+    }
+  },
+  {
+    "id": "REGSUCCESS",
+    "name": "REGSUCCESS",
+    "display_name": "Registration Success",
+    "long_name": "Successful Registrations",
+    "description": "Indicates a successful registration",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": [],
+    "signal_template": {
+      "name": "REGSUCCESS",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals",
+          "value": "POST"
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "response_header",
+          "operator": "exists",
+          "group_operator": "any",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            },
+            {
+              "type": "single",
+              "field": "value_string",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "REGFAILURE",
+    "name": "REGFAILURE",
+    "display_name": "Registration Failure",
+    "long_name": "Failed Registrations",
+    "description": "Indicates a failed registration",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": [],
+    "signal_template": {
+      "name": "REGFAILURE",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals",
+          "value": "POST"
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "response_header",
+          "operator": "exists",
+          "group_operator": "any",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            },
+            {
+              "type": "single",
+              "field": "value_string",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": "REGATTEMPT"
+    }
+  },
+  {
+    "id": "CVE-2017-5638",
+    "name": "CVE-2017-5638",
+    "display_name": "CVE-2017-5638",
+    "long_name": "CVE-2017-5638",
+    "description": "Apache Struts multipart/form remote execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2017-7269",
+    "name": "CVE-2017-7269",
+    "display_name": "CVE-2017-7269",
+    "long_name": "CVE-2017-7269",
+    "description": "IIS 6.0 WebDAV buffer overflow",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2017-9805",
+    "name": "CVE-2017-9805",
+    "display_name": "CVE-2017-9805",
+    "long_name": "CVE-2017-9805",
+    "description": "Apache Struts REST plugin remote execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2018-11776",
+    "name": "CVE-2018-11776",
+    "display_name": "CVE-2018-11776",
+    "long_name": "CVE-2018-11776",
+    "description": "2018 Apache Struts remote code execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2018-9206",
+    "name": "CVE-2018-9206",
+    "display_name": "CVE-2018-9206",
+    "long_name": "CVE-2018-9206",
+    "description": "jQuery-File-Upload <= v9.22.0 unauthenticated arbitrary file upload vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-6340",
+    "name": "CVE-2019-6340",
+    "display_name": "CVE-2019-6340",
+    "long_name": "CVE-2019-6340",
+    "description": "Drupal core - Highly critical - Remote Code Execution - SA-CORE-2019-003",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-5418",
+    "name": "CVE-2019-5418",
+    "display_name": "CVE-2019-5418",
+    "long_name": "CVE-2019-5418",
+    "description": "File Content Disclosure vulnerability in Rails Action View",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-0192",
+    "name": "CVE-2019-0192",
+    "display_name": "CVE-2019-0192",
+    "long_name": "CVE-2019-0192",
+    "description": "Apache Solr Deserialization Remote Code Execution Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-0232",
+    "name": "CVE-2019-0232",
+    "display_name": "CVE-2019-0232",
+    "long_name": "CVE-2019-0232",
+    "description": "Apache Tomcat Remote Code Execution on Windows",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-3396",
+    "name": "CVE-2019-3396",
+    "display_name": "CVE-2019-3396",
+    "long_name": "CVE-2019-3396",
+    "description": "Atlassian Confluence SSTI Remote Code Execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-2725",
+    "name": "CVE-2019-2725",
+    "display_name": "CVE-2019-2725",
+    "long_name": "CVE-2019-2725",
+    "description": "RCE vulnerability in the Oracle WebLogic Server component of Oracle Fusion Middleware",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-14234",
+    "name": "CVE-2019-14234",
+    "display_name": "CVE-2019-14234",
+    "long_name": "CVE-2019-14234",
+    "description": "JSON SQL Injection in the Django Framework",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-0193",
+    "name": "CVE-2019-0193",
+    "display_name": "CVE-2019-0193",
+    "long_name": "CVE-2019-0193",
+    "description": "Apache Solr Remote Code Execution via dataImportHandler",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-16759",
+    "name": "CVE-2019-16759",
+    "display_name": "CVE-2019-16759",
+    "long_name": "CVE-2019-16759",
+    "description": "vBulletin 5.x through 5.5.4 allows remote command execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-8451",
+    "name": "CVE-2019-8451",
+    "display_name": "CVE-2019-8451",
+    "long_name": "CVE-2019-8451",
+    "description": "SSRF in Jira < 8.4.0 on resource /plugins/servlet/gadgets/makeRequest",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2021-26084",
+    "name": "CVE-2021-26084",
+    "display_name": "CVE-2021-26084",
+    "long_name": "CVE-2021-26084",
+    "description": "Confluence Server and Data Center OGNL Injection Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2021-44228",
+    "name": "CVE-2021-44228",
+    "display_name": "CVE-2021-44228",
+    "long_name": "CVE-2021-44228",
+    "description": "Apache Log4j JNDI remote code execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2021-44228-STRICT",
+    "name": "CVE-2021-44228-STRICT",
+    "display_name": "CVE-2021-44228-STRICT",
+    "long_name": "CVE-2021-44228-STRICT",
+    "description": "Apache Log4j JNDI remote code execution vulnerability - strict coverage, though it increases the risk of false positives",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2021-26855",
+    "name": "CVE-2021-26855",
+    "display_name": "CVE-2021-26855",
+    "long_name": "CVE-2021-26855",
+    "description": "Microsoft Exchange Server Remote Code Execution Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2021-40438",
+    "name": "CVE-2021-40438",
+    "display_name": "CVE-2021-40438",
+    "long_name": "CVE-2021-40438",
+    "description": "Apache HTTP Server 2.4.48 SSRF",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2018-15961",
+    "name": "CVE-2018-15961",
+    "display_name": "CVE-2018-15961",
+    "long_name": "CVE-2018-15961",
+    "description": "Adobe ColdFusion Arbitrary File Upload Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-11580",
+    "name": "CVE-2019-11580",
+    "display_name": "CVE-2019-11580",
+    "long_name": "CVE-2019-11580",
+    "description": "Atlassian Crowd and Crowd Data Center arbitrary plugins permit remote code execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-3398",
+    "name": "CVE-2019-3398",
+    "display_name": "CVE-2019-3398",
+    "long_name": "CVE-2019-3398",
+    "description": "Confluence Server and Data Center path traversal vulnerability leads to remote code execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2019-8394",
+    "name": "CVE-2019-8394",
+    "display_name": "CVE-2019-8394",
+    "long_name": "CVE-2019-8394",
+    "description": "Zoho ManageEngine ServiceDesk Plus unrestricted file upload vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2022-22963",
+    "name": "CVE-2022-22963",
+    "display_name": "CVE-2022-22963",
+    "long_name": "CVE-2022-22963",
+    "description": "Remote code execution in Spring Cloud Function by malicious Spring Expression",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2022-22965",
+    "name": "CVE-2022-22965",
+    "display_name": "CVE-2022-22965",
+    "long_name": "CVE-2022-22965",
+    "description": "Spring Framework RCE via Data Binding on JDK 9+",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2022-26134",
+    "name": "CVE-2022-26134",
+    "display_name": "CVE-2022-26134",
+    "long_name": "CVE-2022-26134",
+    "description": "Unauthenticated RCE via OGNL template injection in Confluence",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2022-42889",
+    "name": "CVE-2022-42889",
+    "display_name": "CVE-2022-42889",
+    "long_name": "CVE-2022-42889",
+    "description": "Vulnerability in Apache Commons Text Library that can result in code execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2023-34362",
+    "name": "CVE-2023-34362",
+    "display_name": "CVE-2023-34362",
+    "long_name": "CVE-2023-34362",
+    "description": "Progress MOVEit Transfer SQL Injection Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2023-38218",
+    "name": "CVE-2023-38218",
+    "display_name": "CVE-2023-38218",
+    "long_name": "CVE-2023-38218",
+    "description": "Adobe Commerce and Magento Open Source insecure direct object reference in V1/customers/me",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2023-50164",
+    "name": "CVE-2023-50164",
+    "display_name": "CVE-2023-50164",
+    "long_name": "CVE-2023-50164",
+    "description": "Apache Struts File Upload Directory Traversal Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2024-5806",
+    "name": "CVE-2024-5806",
+    "display_name": "CVE-2024-5806",
+    "long_name": "CVE-2024-5806",
+    "description": "Progress MOVEit Transfer Authentication Bypass Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2024-34102",
+    "name": "CVE-2024-34102",
+    "display_name": "CVE-2024-34102",
+    "long_name": "CVE-2024-34102",
+    "description": "Adobe Commerce and Magento Open Source Unauthenticated XML Entity Injection",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2024-45115",
+    "name": "CVE-2024-45115",
+    "display_name": "CVE-2024-45115",
+    "long_name": "CVE-2024-45115",
+    "description": "Adobe Commerce and Magento Open Source Improper Authentication and Privilege Escalation",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2024-53677",
+    "name": "CVE-2024-53677",
+    "display_name": "CVE-2024-53677",
+    "long_name": "CVE-2024-53677",
+    "description": "Apache Struts File Upload Directory Traversal Vulnerability S2-067",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-29927",
+    "name": "CVE-2025-29927",
+    "display_name": "CVE-2025-29927",
+    "long_name": "CVE-2025-29927",
+    "description": "Authorization Bypass in Next.js Middleware",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-53770",
+    "name": "CVE-2025-53770",
+    "display_name": "CVE-2025-53770",
+    "long_name": "CVE-2025-53770",
+    "description": "Microsoft SharePoint Deserialization RCE",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-54236",
+    "name": "CVE-2025-54236",
+    "display_name": "CVE-2025-54236",
+    "long_name": "CVE-2025-54236",
+    "description": "Adobe Commerce and Magento Open Source Unauthenticated API Access",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-61882",
+    "name": "CVE-2025-61882",
+    "display_name": "CVE-2025-61882",
+    "long_name": "CVE-2025-61882",
+    "description": "Oracle E-Business Suite Pre-Auth Remote Code Execution",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-64459",
+    "name": "CVE-2025-64459",
+    "display_name": "CVE-2025-64459",
+    "long_name": "CVE-2025-64459",
+    "description": "Django SQL Injection via _connector or _negated",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-66478",
+    "name": "CVE-2025-66478",
+    "display_name": "CVE-2025-66478",
+    "long_name": "CVE-2025-66478",
+    "description": "Next.js / React Server Components Remote Code Execution via Unsafe Deserialization (also covers CVE-2025-55182)",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-55182",
+    "name": "CVE-2025-55182",
+    "display_name": "CVE-2025-55182",
+    "long_name": "CVE-2025-55182",
+    "description": "React Server Components Remote Code Execution via Unsafe Deserialization",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-55183",
+    "name": "CVE-2025-55183",
+    "display_name": "CVE-2025-55183",
+    "long_name": "CVE-2025-55183",
+    "description": "React Server Components Source Code Exposure Vulnerability",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2025-55184",
+    "name": "CVE-2025-55184",
+    "display_name": "CVE-2025-55184",
+    "long_name": "CVE-2025-55184",
+    "description": "React Server Components Denial of Service (also covers CVE-2025-67779)",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2026-23869",
+    "name": "CVE-2026-23869",
+    "display_name": "CVE-2026-23869",
+    "long_name": "CVE-2026-23869",
+    "description": "React Server Components Denial of Service",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "AWS-SSRF",
+    "name": "AWS-SSRF",
+    "display_name": "AWS SSRF",
+    "long_name": "AWS Server Side Request Forgery",
+    "description": "AWS specific detection of Server Side Request Forgery targeting Instance Metadata IP",
+    "type": "attack",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "rate-limit",
+    "name": "rate-limit",
+    "display_name": "Rate Limit",
+    "long_name": "Rate Limit",
+    "description": "Rate Limit custom signal",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "2FA-DISABLED",
+    "name": "2FA-DISABLED",
+    "display_name": "2FA Disabled",
+    "long_name": "2FA Disabled",
+    "description": "Indicates disabling of two-factor authentication",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "2FA-DISABLED",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "post_parameter",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            },
+            {
+              "type": "single",
+              "field": "value",
+              "operator": "equals"
+            }
+          ]
+        },
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "2FA-CHANGED"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "2FA-CHANGED",
+    "name": "2FA-CHANGED",
+    "display_name": "2FA Settings Changed",
+    "long_name": "2FA Settings Changed",
+    "description": "Indicates changing of two-factor authentication settings",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "2FA-CHANGED",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "like"
+        },
+        {
+          "type": "multival",
+          "field": "post_parameter",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "ADDRESS-CHANGED",
+    "name": "ADDRESS-CHANGED",
+    "display_name": "Address Changed",
+    "long_name": "Address Changed",
+    "description": "Indicates a changed physical address",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "ADDRESS-CHANGED",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "EMAIL-CHANGED",
+    "name": "EMAIL-CHANGED",
+    "display_name": "Email Address Changed",
+    "long_name": "Email Address Changed",
+    "description": "Indicates a changed email address",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "EMAIL-CHANGED",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "post_parameter",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "EMAIL-VALIDATION",
+    "name": "EMAIL-VALIDATION",
+    "display_name": "Email Validation",
+    "long_name": "Email Validation",
+    "description": "Indicates a validated email address",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "EMAIL-VALIDATION",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "INFO-VIEWED",
+    "name": "INFO-VIEWED",
+    "display_name": "Information Viewed",
+    "long_name": "Sensitive Information Viewed",
+    "description": "Indicates viewing of sensitive information",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "INFO-VIEWED",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "KBA-CHANGED",
+    "name": "KBA-CHANGED",
+    "display_name": "KBA Settings Changed",
+    "long_name": "Security Question Settings Changed",
+    "description": "Indicates changing of knowledge-based authentication settings",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "KBA-CHANGED",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "post_parameter",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "like"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "MESSAGE-SENT",
+    "name": "MESSAGE-SENT",
+    "display_name": "Message Sent",
+    "long_name": "Message Sent",
+    "description": "Indicates a sent message",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "MESSAGE-SENT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "PW-CHANGED",
+    "name": "PW-CHANGED",
+    "display_name": "Password Changed",
+    "long_name": "Password Changed",
+    "description": "Indicates a changed password",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "PW-CHANGED",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "post_parameter",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            }
+          ]
+        },
+        {
+          "type": "multival",
+          "field": "post_parameter",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "CC-VAL-ATTEMPT",
+    "name": "CC-VAL-ATTEMPT",
+    "display_name": "Credit Card Attempt",
+    "long_name": "Credit Card Validation Attempt",
+    "description": "Indicates an attempt to validate a credit card number",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "CC-VAL-ATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "CC-VAL-FAILURE",
+    "name": "CC-VAL-FAILURE",
+    "display_name": "Credit Card Failure",
+    "long_name": "Credit Card Validation Failure",
+    "description": "Indicates a failed attempt to validate a credit card number",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "CC-VAL-FAILURE",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "CC-VAL-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "CC-VAL-SUCCESS",
+    "name": "CC-VAL-SUCCESS",
+    "display_name": "Credit Card Success",
+    "long_name": "Credit Card Validation Success",
+    "description": "Indicates a successful attempt to validate a credit card number",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "CC-VAL-SUCCESS",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "CC-VAL-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "GC-VAL-ATTEMPT",
+    "name": "GC-VAL-ATTEMPT",
+    "display_name": "Gift Card Attempt",
+    "long_name": "Gift Card Validation Attempt",
+    "description": "Indicates an attempt to validate a gift card number",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "GC-VAL-ATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "post_parameter",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            },
+            {
+              "type": "single",
+              "field": "value",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "GC-VAL-FAILURE",
+    "name": "GC-VAL-FAILURE",
+    "display_name": "Gift Card Failure",
+    "long_name": "Gift Card Validation Failure",
+    "description": "Indicates a failed attempt to validate a gift card number",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "GC-VAL-FAILURE",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "GC-VAL-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "GC-VAL-SUCCESS",
+    "name": "GC-VAL-SUCCESS",
+    "display_name": "Gift Card Success",
+    "long_name": "Gift Card Validation Success",
+    "description": "Indicates a successful attempt to validate a gift card number",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "GC-VAL-SUCCESS",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "GC-VAL-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "INVITE-ATTEMPT",
+    "name": "INVITE-ATTEMPT",
+    "display_name": "Invite Sent",
+    "long_name": "Invite Sent",
+    "description": "Indicates an attempt to send an invitation",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "INVITE-ATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "INVITE-FAILURE",
+    "name": "INVITE-FAILURE",
+    "display_name": "Invite Failure",
+    "long_name": "Invite Failure",
+    "description": "Indicates a failed attempt to send an invitation",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "INVITE-FAILURE",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "INVITE-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "INVITE-SUCCESS",
+    "name": "INVITE-SUCCESS",
+    "display_name": "Invite Success",
+    "long_name": "Invite Success",
+    "description": "Indicates a successful attempt to send an invitation",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "INVITE-SUCCESS",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "INVITE-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "PW-RESET-ATTEMPT",
+    "name": "PW-RESET-ATTEMPT",
+    "display_name": "Password Reset Attempt",
+    "long_name": "Password Reset Attempt",
+    "description": "Indicates a password reset attempt",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "PW-RESET-ATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "method",
+          "operator": "equals"
+        },
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        },
+        {
+          "type": "multival",
+          "field": "request_header",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "name",
+              "operator": "equals"
+            }
+          ]
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "PW-RESET-FAILURE",
+    "name": "PW-RESET-FAILURE",
+    "display_name": "Password Reset Failure",
+    "long_name": "Password Reset Failure",
+    "description": "Indicates a failed password reset",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "PW-RESET-FAILURE",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "PW-RESET-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "PW-RESET-SUCCESS",
+    "name": "PW-RESET-SUCCESS",
+    "display_name": "Password Reset Success",
+    "long_name": "Password Reset Success",
+    "description": "Indicates a successful password reset",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "ATO"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "PW-RESET-SUCCESS",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "PW-RESET-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "RSRC-ID-ENUM-ATTEMPT",
+    "name": "RSRC-ID-ENUM-ATTEMPT",
+    "display_name": "Resource ID Enum Attempt",
+    "long_name": "Resource ID Access Attempt",
+    "description": "Indicates a request for a resource ID",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "RSRC-ID-ENUM-ATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "RSRC-ID-ENUM-FAILURE",
+    "name": "RSRC-ID-ENUM-FAILURE",
+    "display_name": "Resource ID Enum Failure",
+    "long_name": "Resource ID Access Failure",
+    "description": "Indicates a failed request for a resource ID",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "RSRC-ID-ENUM-FAILURE",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "RSRC-ID-ENUM-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "RSRC-ID-ENUM-SUCCESS",
+    "name": "RSRC-ID-ENUM-SUCCESS",
+    "display_name": "Resource ID Enum Success",
+    "long_name": "Resource ID Access Success",
+    "description": "Indicates a successful request for a resource ID",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "RSRC-ID-ENUM-SUCCESS",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "RSRC-ID-ENUM-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "USER-ID-ENUM-ATTEMPT",
+    "name": "USER-ID-ENUM-ATTEMPT",
+    "display_name": "User ID Enum Attempt",
+    "long_name": "User ID Access Attempt",
+    "description": "Indicates a request for a user ID",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "USER-ID-ENUM-ATTEMPT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "USER-ID-ENUM-FAILURE",
+    "name": "USER-ID-ENUM-FAILURE",
+    "display_name": "User ID Enum Failure",
+    "long_name": "User ID Access Failure",
+    "description": "Indicates a failed request for a user ID",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "USER-ID-ENUM-FAILURE",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "USER-ID-ENUM-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "USER-ID-ENUM-SUCCESS",
+    "name": "USER-ID-ENUM-SUCCESS",
+    "display_name": "User ID Enum Success",
+    "long_name": "User ID Access Success",
+    "description": "Indicates a successful request for a user ID",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "USER-ID-ENUM-SUCCESS",
+      "conditions": [
+        {
+          "type": "multival",
+          "field": "signal",
+          "operator": "exists",
+          "group_operator": "all",
+          "conditions": [
+            {
+              "type": "single",
+              "field": "signal_id",
+              "operator": "equals",
+              "value": "USER-ID-ENUM-ATTEMPT"
+            }
+          ]
+        },
+        {
+          "type": "single",
+          "field": "response_code",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "JSON-ERROR",
+    "name": "JSON-ERROR",
+    "display_name": "JSON Encoding Error",
+    "long_name": "JSON Encoding Error",
+    "description": "Indicates a request body that includes json when a different content type is specified in the request header",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": [],
+    "signal_template": {
+      "name": "JSON-ERROR",
+      "conditions": [],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "XML-ERROR",
+    "name": "XML-ERROR",
+    "display_name": "XML Encoding Error",
+    "long_name": "XML Encoding Error",
+    "description": "Indicates a request body that includes xml when a different content type is specified in the request header",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": [],
+    "signal_template": {
+      "name": "XML-ERROR",
+      "conditions": [],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "WRONG-API-CLIENT",
+    "name": "WRONG-API-CLIENT",
+    "display_name": "Unexpected API client",
+    "long_name": "Unexpected API client",
+    "description": "Indicates an API request from an unexpected user agent",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "WRONG-API-CLIENT",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "equals"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "GRAPHQL-DEPTH",
+    "name": "GRAPHQL-DEPTH",
+    "display_name": "GraphQL Max Depth",
+    "long_name": "GraphQL Max Depth",
+    "description": "Indicates a request includes a GraphQL operation that exceeds the maximum depth allowed",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "GRAPHQL-IDE",
+    "name": "GRAPHQL-IDE",
+    "display_name": "GraphQL IDE",
+    "long_name": "GraphQL IDE",
+    "description": "Indicates a request for a GraphQL Interactive Development Environment",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "GRAPHQL-IDE",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "contains",
+          "value": "graphiql"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "GRAPHQL-API",
+    "name": "GRAPHQL-API",
+    "display_name": "GraphQL API Query",
+    "long_name": "GraphQL API Query",
+    "description": "Indicates a GraphQL API request",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "templated",
+    "metrics": [],
+    "signal_template": {
+      "name": "GRAPHQL-API",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "matches",
+          "value": "/graphi{0,1}ql"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "GRAPHQL-INTROSPECTION",
+    "name": "GRAPHQL-INTROSPECTION",
+    "display_name": "GraphQL Introspection",
+    "long_name": "GraphQL Introspection",
+    "description": "Indicates a GraphQL request is an Introspection query",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "GRAPHQL-SYNTAX",
+    "name": "GRAPHQL-SYNTAX",
+    "display_name": "GraphQL Syntax Error",
+    "long_name": "GraphQL Syntax Error",
+    "description": "Indicates a request includes incorrect GraphQL Syntax and might not be fully parsed",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "GRAPHQL-UNDEFINED-VARIABLES",
+    "name": "GRAPHQL-UNDEFINED-VARIABLES",
+    "display_name": "GraphQL Undefined Variable",
+    "long_name": "GraphQL Undefined Variable",
+    "description": "Indicates a request includes undefined string substitution variables",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "GRAPHQL-DUPLICATE-VARIABLES",
+    "name": "GRAPHQL-DUPLICATE-VARIABLES",
+    "display_name": "GraphQL Duplicate Variable",
+    "long_name": "GraphQL Duplicate Variable",
+    "description": "Indicates a request includes duplicated string substitution variable names",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "GRAPHQL-MISSING-REQUIRED-OPERATION-NAME",
+    "name": "GRAPHQL-MISSING-REQUIRED-OPERATION-NAME",
+    "display_name": "GraphQL Missing Required Operation Name",
+    "long_name": "GraphQL Missing Required Operation Name",
+    "description": "Indicates a request has multiple graphql operations but does not define which operation to execute.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "API"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SITE-FLAGGED-IP",
+    "name": "SITE-FLAGGED-IP",
+    "display_name": "Site Flagged IP",
+    "long_name": "Site Flagged IP",
+    "description": "Site Flagged IP indicates that a request was received from an IP that was flagged for exceeding attack thresholds for a specific site.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "FAIL-OPEN",
+    "name": "FAIL-OPEN",
+    "display_name": "Fail Open",
+    "long_name": "Fail Open",
+    "description": "Indicates an internal fail open",
+    "type": "informational",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "FASTLY-UNKNOWN-BACKEND",
+    "name": "FASTLY-UNKNOWN-BACKEND",
+    "display_name": "Fastly Unknown Backend",
+    "long_name": "Fastly Unknown Backend",
+    "description": "Fastly Unknown Backend indicates that the delivery service is sending to an unknown backend, perhaps one defined in VCL, which is not supported by the edge security service.",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "DECEPTION",
+    "name": "DECEPTION",
+    "display_name": "Deception Response",
+    "long_name": "Deception Response",
+    "description": "Indicates a request that was issued a deception response",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  }
+]
