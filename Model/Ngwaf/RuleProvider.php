@@ -47,7 +47,8 @@ class RuleProvider extends AbstractHelper
             'conditions' => $this->getConditionOptions(),
             'actions' => $this->getActionOptions(),
             'rate_limit_identifiers' => $this->getRateLimitIdentifiers(),
-            'request_logging' => $this->getRequestLoggingOptions()
+            'request_logging' => $this->getRequestLoggingOptions(),
+            'multival_parameters' => $this->getMultivalParameters()
         ];
 
         return json_encode($payload);
@@ -228,6 +229,7 @@ class RuleProvider extends AbstractHelper
             "post_parameter" => [
                 'name' => 'Post Parameter',
                 'type' => 'multival',
+                'multival_options' => ['name', 'value', 'value_int'],
                 'conditions' => [
                     "exists" => 'Exist where',
                     "does_not_exist" => 'Does Not Exist where',
@@ -236,6 +238,7 @@ class RuleProvider extends AbstractHelper
             "query_parameter" => [
                 'name' => 'Query Parameter',
                 'type' => 'multival',
+                'multival_options' => ['name', 'value', 'value_int'],
                 'conditions' => [
                     "exists" => 'Exist where',
                     "does_not_exist" => 'Does Not Exist where',
@@ -244,6 +247,7 @@ class RuleProvider extends AbstractHelper
             "request_cookie" => [
                 'name' => 'Request Cookie',
                 'type' => 'multival',
+                'multival_options' => ['name', 'value', 'value_int'],
                 'conditions' => [
                     "exists" => 'Exist where',
                     "does_not_exist" => 'Does Not Exist where',
@@ -252,6 +256,7 @@ class RuleProvider extends AbstractHelper
             "request_header" => [
                 'name' => 'Request Header',
                 'type' => 'multival',
+                'multival_options' => ['name', 'value_string', 'value_int', 'value_ip'],
                 'conditions' => [
                     "exists" => 'Exist where',
                     "does_not_exist" => 'Does Not Exist where',
@@ -260,6 +265,7 @@ class RuleProvider extends AbstractHelper
             "response_header" => [
                 'name' => 'Response Header',
                 'type' => 'multival',
+                'multival_options' => ['name', 'value_string'],
                 'conditions' => [
                     "exists" => 'Exist where',
                     "does_not_exist" => 'Does Not Exist where',
@@ -268,12 +274,139 @@ class RuleProvider extends AbstractHelper
             "signal" => [
                 'name' => 'Signal',
                 'type' => 'multival',
+                'multival_options' => ['parameter_name', 'parameter_value', 'signal_id'],
                 'options' => 'signal_list_options',
                 'conditions' => [
                     "exists" => 'Exist where',
                     "does_not_exist" => 'Does Not Exist where',
                 ]
             ]
+        ];
+    }
+
+    public function getMultivalParameters()
+    {
+        return [
+            "name" => [
+                'name' => 'Name',
+                'type' => 'single',
+                'options' => 'text_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "contains" => 'Contains',
+                    "does_not_contain" => 'Does Not Contain',
+                    "like" => 'Like (wildcard)',
+                    "not_like" => 'Not Like (wildcard)',
+                    "matches" => 'Matches (regexp)',
+                    "does_not_match" => 'Does Not Match (regexp)',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
+            "value" => [
+                'name' => 'Value',
+                'type' => 'single',
+                'options' => 'text_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "contains" => 'Contains',
+                    "does_not_contain" => 'Does Not Contain',
+                    "like" => 'Like (wildcard)',
+                    "not_like" => 'Not Like (wildcard)',
+                    "matches" => 'Matches (regexp)',
+                    "does_not_match" => 'Does Not Match (regexp)',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
+            "value_string" => [
+                'name' => 'Value (string)',
+                'type' => 'single',
+                'options' => 'text_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "contains" => 'Contains',
+                    "does_not_contain" => 'Does Not Contain',
+                    "like" => 'Like (wildcard)',
+                    "not_like" => 'Not Like (wildcard)',
+                    "matches" => 'Matches (regexp)',
+                    "does_not_match" => 'Does Not Match (regexp)',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
+            "value_ip" => [
+                'name' => 'Value (IP)',
+                'type' => 'single',
+                'options' => 'ip_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "contains" => 'Contains',
+                    "does_not_contain" => 'Does Not Contain',
+                    "like" => 'Like (wildcard)',
+                    "not_like" => 'Not Like (wildcard)',
+                    "matches" => 'Matches (regexp)',
+                    "does_not_match" => 'Does Not Match (regexp)',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
+            "value_int" => [
+                'name' => 'Value (Integer)',
+                'type' => 'single',
+                'options' => 'text_list_options',
+                'conditions' => [
+                    "greater_equal" => 'Greater Than or Equal To',
+                    "lesser_equal" => 'Less Than or Equal To',
+                ]
+            ],
+            "parameter_name" => [
+                'name' => 'Parameter Name',
+                'type' => 'single',
+                'options' => 'signal_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "contains" => 'Contains',
+                    "does_not_contain" => 'Does Not Contain',
+                    "like" => 'Like (wildcard)',
+                    "not_like" => 'Not Like (wildcard)',
+                    "matches" => 'Matches (regexp)',
+                    "does_not_match" => 'Does Not Match (regexp)',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
+            "parameter_value" => [
+                'name' => 'Parameter Value',
+                'type' => 'single',
+                'options' => 'signal_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "contains" => 'Contains',
+                    "does_not_contain" => 'Does Not Contain',
+                    "like" => 'Like (wildcard)',
+                    "not_like" => 'Not Like (wildcard)',
+                    "matches" => 'Matches (regexp)',
+                    "does_not_match" => 'Does Not Match (regexp)',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
+            "signal_id" => [
+                'name' => 'Signal ID',
+                'type' => 'single',
+                'options' => 'signal_list_options',
+                'conditions' => [
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
         ];
     }
 
@@ -380,8 +513,8 @@ class RuleProvider extends AbstractHelper
 
         try {
 
-            $workspaceSignals = $this->api->getSignals();
-            $workspaceLists = $this->api->getWorkspaceLists();
+            $workspaceSignals = []; //$this->api->getSignals();
+            $workspaceLists = []; //$this->api->getWorkspaceLists();
 
             $sortedSignals = [];
 

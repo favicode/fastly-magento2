@@ -89,7 +89,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
 
             <h2><?php /* @noEscape */ echo __("Conditions") ?></h2>
             <div class="ngwaf-conditions">
-                <div class="ngwaf-condition" style="display: flex">
+                <div class="ngwaf-condition" style="display: flex; flex-wrap: wrap">
                     <div class="admin__field field _required" style="flex: 1">
                         <label class="admin__field-label">
                             <span><?php /* @noEscape */ echo __("Field") ?></span>
@@ -108,7 +108,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                             </select>
                         </div>
                     </div>
-                    <div class="admin__field field _required" style="flex: 1">
+                    <div class="admin__field field _required ngwaf-condition-value-section" style="flex: 1">
                         <label class="admin__field-label">
                             <span><?php /* @noEscape */ echo __("Value") ?></span>
                         </label>
