@@ -261,6 +261,7 @@ define([
             let ruleTypeSelectElement = $('#fastly_ngwaf_rule_type');
 
             let ruleActionsElement = $('#fastly_ngwaf_rule_action_field');
+            let ruleActionsValueBlock = $('.fastly_ngwaf_rule_action_value_block');
             let ruleActionsValueElement = $('#fastly_ngwaf_rule_action_value');
 
             let rateLimitActionsElement = $('#fastly_ngwaf_rule_rate_limit_action_field');
@@ -290,8 +291,8 @@ define([
             $(document).on("click", '.ngwaf-fastly-add-multival-rule-condition-action', function () {
 
                 let elementToInsert = $(
-                    `<div class="ngwaf-condition" style="display: flex; flex-wrap: wrap">
-                        <div class="admin__field field _required" style="flex: 1">
+                    `<div class="ngwaf-condition">
+                        <div class="field _required condition-element">
                             <label class="admin__field-label">
                                 <span>Field</span>
                             </label>
@@ -300,7 +301,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="admin__field field _required" style="flex: 1">
+                        <div class="field _required condition-element">
                             <label class="admin__field-label">
                                 <span>Operator</span>
                             </label>
@@ -309,7 +310,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="admin__field field _required" style="flex: 1">
+                        <div class="field _required condition-element">
                             <label class="admin__field-label">
                                 <span>Value</span>
                             </label>
@@ -326,7 +327,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <button class='action-delete fastly-delete-snippet-icon ngwaf-fastly-delete-multival-rule-condition-action'
+                        <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-multival-rule-condition-action'
                                 title='Delete Condition'
                                 type='button'></button>
                     </div>`
@@ -354,8 +355,8 @@ define([
             $(document).on("click", '.ngwaf-fastly-add-rule-condition-action',function () {
 
                 let elementToInsert = $(
-                    `<div class="ngwaf-condition" style="display: flex; flex-wrap: wrap">
-                        <div class="admin__field field _required" style="flex: 1">
+                    `<div class="ngwaf-condition">
+                        <div class="field _required condition-element">
                             <label class="admin__field-label">
                                 <span>Field</span>
                             </label>
@@ -364,7 +365,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="admin__field field _required" style="flex: 1">
+                        <div class="field _required condition-element">
                             <label class="admin__field-label">
                                 <span>Operator</span>
                             </label>
@@ -373,7 +374,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="admin__field field _required" style="flex: 1">
+                        <div class="field _required condition-element">
                             <label class="admin__field-label">
                                 <span>Value</span>
                             </label>
@@ -390,7 +391,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <button class='action-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
+                        <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
                                 title='Delete Condition'
                                 type='button'></button>
                     </div>`
@@ -428,8 +429,8 @@ define([
             $(document).on("click", '.ngwaf-fastly-add-rule-condition-group-action',function () {
 
                 let elementToInsert = $(
-                    `<div class="ngwaf-condition-group" style="width: 80%; margin: auto">
-                            <div class="admin__field field _required">
+                    `<div class="ngwaf-condition-group">
+                            <div class="admin__field field _required fastly-ngwaf-rule-group-operator-block">
                                 <label class="admin__field-label">
                                     <span>Rule applies if X conditions are true</span>
                                 </label>
@@ -440,13 +441,13 @@ define([
                                     </select>
                                 </div>
                             </div>
-                            <button class='action-delete fastly-delete-snippet-icon ngwaf-fastly-delete-condition-group-action'
+                            <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-condition-group-action'
                                     title='Delete Group'
                                     type='button'>Delete Group</button>
 
                             <div class="ngwaf-group-conditions">
-                                <div class="ngwaf-condition" style="display: flex; flex-wrap: wrap">
-                                    <div class="admin__field field _required" style="flex: 1">
+                                <div class="ngwaf-condition">
+                                    <div class="field _required condition-element">
                                         <label class="admin__field-label">
                                             <span>Field</span>
                                         </label>
@@ -455,7 +456,7 @@ define([
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="admin__field field _required" style="flex: 1">
+                                    <div class="field _required condition-element">
                                         <label class="admin__field-label">
                                             <span>Operator</span>
                                         </label>
@@ -464,7 +465,7 @@ define([
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="admin__field field _required" style="flex: 1">
+                                    <div class="field _required condition-element">
                                         <label class="admin__field-label">
                                             <span>Value</span>
                                         </label>
@@ -481,13 +482,13 @@ define([
                                             </select>
                                         </div>
                                     </div>
-                                    <button class='action-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
+                                    <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
                                             title='Delete Condition'
                                             type='button'></button>
                                 </div>
                             </div>
 
-                           <button class='ngwaf-fastly-add-rule-condition-action'
+                           <button class='ngwaf-rule-button ngwaf-fastly-add-rule-condition-action'
                                     title='Add Condition'
                                     type='button'>Add condition</button>
                     </div>`
@@ -524,6 +525,7 @@ define([
                 }
 
                 if (!optionsForAction.length) {
+                    ruleActionsValueBlock.hide()
                     ruleActionsValueElement.empty().hide()
                 } else {
 
@@ -536,6 +538,7 @@ define([
                         );
                     });
 
+                    ruleActionsValueBlock.show()
                     ruleActionsValueElement.show()
 
                 }
@@ -868,8 +871,8 @@ define([
         function displayMultivalForm(parentElement, conditionMultivalOptions) {
 
             let elementToInsert = $(
-                `<div class="ngwaf-condition-multival" style="max-width: 95%; flex-basis: 100%; margin: auto">
-                    <div class="admin__field field _required">
+                `<div class="ngwaf-condition-multival">
+                    <div class="admin__field field _required fastly-ngwaf-rule-multival-operator-block">
                         <label class="admin__field-label">
                             <span>Rule applies if X conditions are true</span>
                         </label>
@@ -882,8 +885,8 @@ define([
                     </div>
 
                     <div class="ngwaf-multival-conditions">
-                        <div class="ngwaf-condition" style="display: flex; flex-wrap: wrap">
-                            <div class="admin__field field _required" style="flex: 1">
+                        <div class="ngwaf-condition">
+                            <div class="field _required condition-element">
                                 <label class="admin__field-label">
                                     <span>Field</span>
                                 </label>
@@ -892,7 +895,7 @@ define([
                                     </select>
                                 </div>
                             </div>
-                            <div class="admin__field field _required" style="flex: 1">
+                            <div class="field _required condition-element">
                                 <label class="admin__field-label">
                                     <span>Operator</span>
                                 </label>
@@ -901,7 +904,7 @@ define([
                                     </select>
                                 </div>
                             </div>
-                            <div class="admin__field field _required" style="flex: 1">
+                            <div class="field _required condition-element">
                                 <label class="admin__field-label">
                                     <span>Value</span>
                                 </label>
@@ -918,13 +921,13 @@ define([
                                     </select>
                                 </div>
                             </div>
-                            <button class='action-delete fastly-delete-snippet-icon ngwaf-fastly-delete-multival-rule-condition-action'
+                            <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-multival-rule-condition-action'
                                     title='Delete Condition'
                                     type='button'></button>
                         </div>
                     </div>
 
-                   <button class='ngwaf-fastly-add-multival-rule-condition-action'
+                   <button class='ngwaf-rule-button ngwaf-fastly-add-multival-rule-condition-action'
                             title='Add Condition'
                             type='button'>Add condition</button>
             </div>`

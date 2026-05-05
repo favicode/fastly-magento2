@@ -65,7 +65,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
           class="form-inline"
           enctype="multipart/form-data">
 
-        <fieldset class="admin__fieldset form-list question">
+        <fieldset class="admin__fieldset form-list question ngwaf-rule-fieldset">
             <div class="admin__field field _required">
                 <label for="fastly_ngwaf_rule_type" class="admin__field-label">
                     <span><?php /* @noEscape */ echo __("Rule type") ?></span>
@@ -89,8 +89,8 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
 
             <h2><?php /* @noEscape */ echo __("Conditions") ?></h2>
             <div class="ngwaf-conditions">
-                <div class="ngwaf-condition" style="display: flex; flex-wrap: wrap">
-                    <div class="admin__field field _required" style="flex: 1">
+                <div class="ngwaf-condition">
+                    <div class="field _required condition-element">
                         <label class="admin__field-label">
                             <span><?php /* @noEscape */ echo __("Field") ?></span>
                         </label>
@@ -99,7 +99,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                             </select>
                         </div>
                     </div>
-                    <div class="admin__field field _required" style="flex: 1">
+                    <div class="field _required condition-element">
                         <label class="admin__field-label">
                             <span><?php /* @noEscape */ echo __("Operator") ?></span>
                         </label>
@@ -108,7 +108,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                             </select>
                         </div>
                     </div>
-                    <div class="admin__field field _required ngwaf-condition-value-section" style="flex: 1">
+                    <div class="field _required condition-element ngwaf-condition-value-section">
                         <label class="admin__field-label">
                             <span><?php /* @noEscape */ echo __("Value") ?></span>
                         </label>
@@ -125,16 +125,16 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                             </select>
                         </div>
                     </div>
-                    <button class='action-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
+                    <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
                             title='Delete Condition'
                             type='button'></button>
                 </div>
 
-                <button class='ngwaf-fastly-add-rule-condition-action'
+                <button class='ngwaf-rule-button ngwaf-fastly-add-rule-condition-action'
                         title='Add Condition'
                         type='button'>Add condition</button>
 
-                <button class='ngwaf-fastly-add-rule-condition-group-action'
+                <button class='ngwaf-rule-button ngwaf-fastly-add-rule-condition-group-action'
                         title='Add Group'
                         type='button'>Add Group</button>
 
@@ -151,7 +151,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                         </select>
                     </div>
                 </div>
-                <div class="admin__field field _required">
+                <div class="admin__field field _required fastly_ngwaf_rule_action_value_block">
                     <label class="admin__field-label">
                         <span><?php /* @noEscape */ echo __("Value") ?></span>
                     </label>
@@ -214,7 +214,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
 
                     <div class="admin__field field _required fastly-ngwaf-rule-rate-limit-client-identifier-value">
                         <label class="admin__field-label">
-                            <span><?php /* @noEscape */ echo __("Value") ?></span>
+                            <span><?php /* @noEscape */ echo __("Client Value") ?></span>
                         </label>
                         <div class="admin__field-control condition-input">
                             <input type="text"
@@ -238,6 +238,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                         <input type="text"
                                name="fastly_ngwaf_rule_rate_limit_threshold"
                                required="required"
+                               value="100"
                                id="fastly_ngwaf_rule_rate_limit_threshold"
                                class="admin__control-text required-entry">
                     </div>
@@ -328,9 +329,62 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
 
 <style>
 
-    .fastly-delete-snippet-icon::before {
+    .ngwaf-delete::before {
         content: '\e630';
         font-size: 2rem;
+    }
+
+    .fastly-ngwaf-rule-actions, .rule-details, .fastly-ngwaf-rule-rate-limit-actions, .fastly-ngwaf-rule-rate-limit-details {
+        max-width: 50%;
+    }
+
+    .ngwaf-rule-fieldset h2, .ngwaf-rule-fieldset h3 {
+        margin-top: 3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .ngwaf-condition {
+        display: flex;
+        flex-wrap: wrap
+    }
+
+    .condition-element {
+        flex: 1;
+        max-width: 25%;
+        margin: 5px 10px;
+    }
+
+    .ngwaf-condition-multival {
+        max-width: 95%;
+        flex-basis: 100%;
+        margin: auto
+    }
+    .ngwaf-condition-group {
+        width: 95%;
+        margin: auto;
+        margin-top: 1rem;
+        border-top: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .condition-select, .rate-limit-action-value-option {
+        margin-top: 0 !important;
+    }
+
+    .fastly-ngwaf-rule-multival-operator-block, .fastly-ngwaf-rule-group-operator-block {
+        max-width: 33%;
+        margin: 1rem 0;
+    }
+
+    .ngwaf-rule-button {
+        margin: 1rem;
+    }
+
+    .ngwaf-condition-group, .ngwaf-condition-multival {
+        border-left: 5px solid rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+    }
+    .rate-limit-action-value-selection {
+        gap: 2rem;
     }
 
 </style>
