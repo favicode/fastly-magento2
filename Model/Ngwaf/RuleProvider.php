@@ -85,10 +85,9 @@ class RuleProvider extends AbstractHelper
                 ]
             ],
             "country" => [
-                'name' => 'Country',
+                'name' => 'Country (capitalized two-letter country codes)',
                 'type' => 'single',
                 'options' => 'country_list_options',
-                'comment' => 'Use capitalized two-letter country codes',
                 'conditions' => [
                     "equals" => 'Equals',
                     "does_not_equal" => 'Does Not Equal',

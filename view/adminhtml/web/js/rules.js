@@ -292,7 +292,7 @@ define([
 
                 let elementToInsert = $(
                     `<div class="ngwaf-condition">
-                        <div class="field _required condition-element">
+                        <div class="field condition-element">
                             <label class="admin__field-label">
                                 <span>Field</span>
                             </label>
@@ -301,7 +301,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="field _required condition-element">
+                        <div class="field condition-element">
                             <label class="admin__field-label">
                                 <span>Operator</span>
                             </label>
@@ -310,7 +310,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="field _required condition-element">
+                        <div class="field condition-element ngwaf-condition-value-section">
                             <label class="admin__field-label">
                                 <span>Value</span>
                             </label>
@@ -356,7 +356,7 @@ define([
 
                 let elementToInsert = $(
                     `<div class="ngwaf-condition">
-                        <div class="field _required condition-element">
+                        <div class="field   condition-element">
                             <label class="admin__field-label">
                                 <span>Field</span>
                             </label>
@@ -365,7 +365,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="field _required condition-element">
+                        <div class="field   condition-element">
                             <label class="admin__field-label">
                                 <span>Operator</span>
                             </label>
@@ -374,7 +374,7 @@ define([
                                 </select>
                             </div>
                         </div>
-                        <div class="field _required condition-element">
+                        <div class="field condition-element ngwaf-condition-value-section">
                             <label class="admin__field-label">
                                 <span>Value</span>
                             </label>
@@ -430,7 +430,7 @@ define([
 
                 let elementToInsert = $(
                     `<div class="ngwaf-condition-group">
-                            <div class="admin__field field _required fastly-ngwaf-rule-group-operator-block">
+                            <div class="admin__field field   fastly-ngwaf-rule-group-operator-block">
                                 <label class="admin__field-label">
                                     <span>Rule applies if X conditions are true</span>
                                 </label>
@@ -447,7 +447,7 @@ define([
 
                             <div class="ngwaf-group-conditions">
                                 <div class="ngwaf-condition">
-                                    <div class="field _required condition-element">
+                                    <div class="field   condition-element">
                                         <label class="admin__field-label">
                                             <span>Field</span>
                                         </label>
@@ -456,7 +456,7 @@ define([
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="field _required condition-element">
+                                    <div class="field   condition-element">
                                         <label class="admin__field-label">
                                             <span>Operator</span>
                                         </label>
@@ -465,7 +465,7 @@ define([
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="field _required condition-element">
+                                    <div class="field condition-element ngwaf-condition-value-section">
                                         <label class="admin__field-label">
                                             <span>Value</span>
                                         </label>
@@ -701,8 +701,8 @@ define([
             $(document).on("change", '.fastly_ngwaf_multival_rule_condition_field',function() {
 
                 let selectedValue = $(this).val();
-                let conditionInputValue = $(this).parents('.ngwaf-condition').find("input[name='fastly_ngwaf_multival_rule_condition_value[]']")
-                let conditionInputSelect = $(this).parents('.ngwaf-condition').find("select[name='fastly_ngwaf_multival_rule_condition_value[]']")
+                let conditionInputValue = $(this).closest('.ngwaf-condition').find("input[name='fastly_ngwaf_multival_rule_condition_value[]']")
+                let conditionInputSelect = $(this).closest('.ngwaf-condition').find("select[name='fastly_ngwaf_multival_rule_condition_value[]']")
 
                 let conditionOptions = config.rulePayload?.multival_parameters[selectedValue]?.conditions ?? [];
 
@@ -716,6 +716,8 @@ define([
 
                 let selectOptionValues = config.rulePayload?.conditions[selectedValue]?.multival_options ?? []
                 toggleInputElementForRuleValue(selectedValue, conditionInputValue, conditionInputSelect, selectOptionValues);
+
+                ruleConditionOperator.trigger('change')
 
             });
 
@@ -872,7 +874,7 @@ define([
 
             let elementToInsert = $(
                 `<div class="ngwaf-condition-multival">
-                    <div class="admin__field field _required fastly-ngwaf-rule-multival-operator-block">
+                    <div class="admin__field field   fastly-ngwaf-rule-multival-operator-block">
                         <label class="admin__field-label">
                             <span>Rule applies if X conditions are true</span>
                         </label>
@@ -886,7 +888,7 @@ define([
 
                     <div class="ngwaf-multival-conditions">
                         <div class="ngwaf-condition">
-                            <div class="field _required condition-element">
+                            <div class="field   condition-element">
                                 <label class="admin__field-label">
                                     <span>Field</span>
                                 </label>
@@ -895,7 +897,7 @@ define([
                                     </select>
                                 </div>
                             </div>
-                            <div class="field _required condition-element">
+                            <div class="field   condition-element">
                                 <label class="admin__field-label">
                                     <span>Operator</span>
                                 </label>
@@ -904,7 +906,7 @@ define([
                                     </select>
                                 </div>
                             </div>
-                            <div class="field _required condition-element">
+                            <div class="field condition-element ngwaf-condition-value-section">
                                 <label class="admin__field-label">
                                     <span>Value</span>
                                 </label>
