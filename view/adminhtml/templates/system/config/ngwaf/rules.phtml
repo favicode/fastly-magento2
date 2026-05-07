@@ -231,6 +231,16 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                     </div>
                 </div>
                 <div class="admin__field field ">
+                    <div class="admin__field-control">
+                        <label for="fastly_ngwaf_rule_rate_limit_threshold_signal" class="admin__field-label">
+                            <span><?php /* @noEscape */ echo __("Threshold Signal") ?></span>
+                        </label>
+                        <select id="fastly_ngwaf_rule_rate_limit_threshold_signal"
+                                name="fastly_ngwaf_rule_rate_limit_threshold_signal" class="admin__control-text">
+                        </select>
+                    </div>
+                </div>
+                <div class="admin__field field ">
                     <label for="fastly_ngwaf_rule_rate_limit_threshold" class="admin__field-label">
                         <span><?php /* @noEscape */ echo __("Threshold") ?></span>
                     </label>
@@ -248,7 +258,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                         <span><?php /* @noEscape */ echo __("Interval") ?></span>
                     </label>
                     <div class="admin__field-control">
-                        <select name="fastly_ngwaf_rule_rate_limit_interval" class="admin__control-text">
+                        <select id="fastly_ngwaf_rule_rate_limit_interval" name="fastly_ngwaf_rule_rate_limit_interval" class="admin__control-text">
                             <option value="60" selected>1 minute</option>
                             <option value="600">10 minutes</option>
                             <option value="3600">60 minutes</option>
@@ -260,7 +270,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                         <span><?php /* @noEscape */ echo __("Duration") ?></span>
                     </label>
                     <div class="admin__field-control">
-                        <select name="fastly_ngwaf_rule_rate_limit_duration" class="admin__control-text">
+                        <select id="fastly_ngwaf_rule_rate_limit_duration" name="fastly_ngwaf_rule_rate_limit_duration" class="admin__control-text">
                             <option value="300" selected>5 minutes</option>
                             <option value="3600">1 hour</option>
                             <option value="21600">6 hours</option>
@@ -288,7 +298,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
                         <span><?php /* @noEscape */ echo __("Is Rule Enabled") ?></span>
                     </label>
                     <div class="admin__field-control">
-                        <select name="fastly_ngwaf_rule_rate_limit_duration" class="admin__control-text">
+                        <select id="fastly_ngwaf_rule_enabled" name="fastly_ngwaf_rule_enabled" class="admin__control-text">
                             <option value="true" selected>Yes</option>
                             <option value="false">No</option>
                         </select>
@@ -332,7 +342,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
     .ngwaf-delete::before {
         content: '\e630';
         font-size: 1.7rem;
-        font-family: 'Admin Icons';
+        font-family: 'Admin Icons', serif;
     }
 
     .ngwaf-delete{

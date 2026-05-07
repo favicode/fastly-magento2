@@ -222,8 +222,202 @@ define([
 
         function createRule(ruleId = null) {
 
-            let ruleDescription = $('#custom_rule_description').val();
+            let ruleForm = $('#fastly-rule-modal-content fieldset');
 
+            let conditions = [];
+            let groupConditions = [];
+            let multivalConditions = [];
+            let conditionsObject;
+
+            ruleForm.children('.ngwaf-conditions').children('.ngwaf-condition').each(function () {
+
+                if ($(this).find('.ngwaf-condition-multival').length) {
+
+                    multivalConditions = [];
+
+                    $(this).find('.ngwaf-condition-multival .ngwaf-condition').each(function() {
+
+                        multivalConditions.push({
+                            'field': $(this).find('.fastly_ngwaf_multival_rule_condition_field').val(),
+                            'operator': $(this).find('.fastly_ngwaf_multival_rule_condition_operator').val(),
+                            'value': $(this).find('.fastly_ngwaf_multival_rule_condition_value:visible').val(),
+                            'type': 'single'
+                        })
+                    })
+
+                    conditions.push({
+                        'field': $(this).find('.fastly_ngwaf_rule_condition_field').val(),
+                        'operator': $(this).find('.fastly_ngwaf_rule_condition_operator').val(),
+                        'group_operator': $(this).find("select[name='fastly_ngwaf_rule_multival_condition_operator']").val(),
+                        'type': 'multival',
+                        'conditions': multivalConditions
+                    })
+
+                } else {
+
+                    conditions.push({
+                        'field': $(this).find('.fastly_ngwaf_rule_condition_field').val(),
+                        'operator': $(this).find('.fastly_ngwaf_rule_condition_operator').val(),
+                        'value': $(this).find('.fastly_ngwaf_rule_condition_value:visible').val(),
+                        'type': 'single'
+                    })
+                }
+            })
+
+            ruleForm.children('.ngwaf-conditions').children('.ngwaf-condition-group').each(function () {
+
+                groupConditions = [];
+
+                $(this).children('.ngwaf-group-conditions').children('.ngwaf-condition').each(function() {
+
+                    if ($(this).find('.ngwaf-condition-multival').length) {
+
+                        multivalConditions = [];
+
+                        $(this).find('.ngwaf-condition-multival .ngwaf-condition').each(function() {
+
+                            multivalConditions.push({
+                                'field': $(this).find('.fastly_ngwaf_multival_rule_condition_field').val(),
+                                'operator': $(this).find('.fastly_ngwaf_multival_rule_condition_operator').val(),
+                                'value': $(this).find('.fastly_ngwaf_multival_rule_condition_value:visible').val(),
+                                'type': 'single'
+                            })
+                        })
+
+                        groupConditions.push({
+                            'field': $(this).find('.fastly_ngwaf_rule_condition_field').val(),
+                            'operator': $(this).find('.fastly_ngwaf_rule_condition_operator').val(),
+                            'group_operator': $(this).find("select[name='fastly_ngwaf_rule_multival_condition_operator']").val(),
+                            'type': 'multival',
+                            'conditions': multivalConditions
+                        })
+
+                    } else {
+
+                        groupConditions.push({
+                            'field': $(this).find('.fastly_ngwaf_rule_condition_field').val(),
+                            'operator': $(this).find('.fastly_ngwaf_rule_condition_operator').val(),
+                            'value': $(this).find('.fastly_ngwaf_rule_condition_value:visible').val(),
+                            'type': 'single'
+                        })
+                    }
+                });
+
+                conditionsObject = {
+                    'type': 'group',
+                    'group_operator': $(this).find("select[name='fastly_ngwaf_rule_group_condition_operator']").val(),
+                    'conditions': groupConditions
+                }
+
+                conditions.push(conditionsObject);
+
+            })
+
+            let ruleType = ruleForm.find('#fastly_ngwaf_rule_type').val()
+
+            let payload = {
+                'conditions': conditions,
+                'description': ruleForm.find('#fastly_ngwaf_rule_description').val(),
+                'enabled': ruleForm.find('#fastly_ngwaf_rule_enabled').val() === 'true',
+                'group_operator': ruleForm.find('#fastly_ngwaf_rule_condition_match_operator').val(),
+                'type': ruleForm.find('#fastly_ngwaf_rule_type').val(),
+            };
+
+            let actions = [];
+
+            if (ruleType === 'request') {
+                payload.request_logging = ruleForm.find('#fastly_ngwaf_rule_request_logging').val()
+
+                let actionType = ruleForm.find('#fastly_ngwaf_rule_action_field').val();
+
+                if (actionType === 'deception') {
+
+                    actions.push({
+                        'type': actionType,
+                        'deception_type': ruleForm.find('#fastly_ngwaf_rule_action_value').val()
+                    })
+
+                } else if (actionType === 'add_signal') {
+                    actions.push({
+                        'type': actionType,
+                        'signal': ruleForm.find('#fastly_ngwaf_rule_action_value').val()
+                    })
+                } else {
+                    actions.push({
+                        'type': actionType,
+                    })
+                }
+
+            } else if (ruleType === 'signal') {
+
+                actions.push({
+                    'signal': ruleForm.find('#fastly_ngwaf_rule_action_field').val(),
+                    'type': ruleForm.find('#fastly_ngwaf_rule_action_value').val(),
+                })
+
+            } else if (ruleType === 'rate_limit') {
+
+                let rateLimitActionMatch = ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_match_type').val();
+                let rateLimitFormType = ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_field').val();
+
+                if (rateLimitActionMatch === 'OTHER-SIGNAL') {
+
+                    actions.push({
+                        'type': rateLimitFormType,
+                        'signal': ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_other_signal_type').val()
+                    })
+
+                } else if (rateLimitActionMatch === 'ALL-REQUESTS') {
+
+                    actions.push({
+                        'type': rateLimitFormType,
+                        'signal': rateLimitActionMatch
+                    })
+
+                } else if (rateLimitActionMatch === 'RULE-CONDITION') {
+
+                    actions.push({
+                        'type': rateLimitFormType,
+                        'signal': ruleForm.find('#fastly_ngwaf_rule_rate_limit_threshold_signal').val()
+                    })
+                }
+
+                let clientIdentifierKey = ruleForm.find('#fastly_ngwaf_rule_rate_limit_client_identifier').val()
+                let clientIdentifiers = [];
+
+                if (clientIdentifierKey === 'signal_payload') {
+
+                    clientIdentifiers.push({
+                        'type': clientIdentifierKey,
+                        'signal':  ruleForm.find("select[name='fastly_ngwaf_rule_rate_limit_client_identifier_select_value']").val()
+                    })
+
+                } else if (clientIdentifierKey === 'ip') {
+
+                    clientIdentifiers.push({
+                        'type': clientIdentifierKey
+                    })
+
+                } else {
+                    clientIdentifiers.push({
+                        'type': clientIdentifierKey,
+                        'name':  ruleForm.find("input[name='fastly_ngwaf_rule_rate_limit_client_identifier_input_value']").val()
+                    })
+                }
+
+                payload.rate_limit = {
+                    'duration': ruleForm.find('#fastly_ngwaf_rule_rate_limit_duration').val(),
+                    'interval': ruleForm.find('#fastly_ngwaf_rule_rate_limit_interval').val(),
+                    'signal': ruleForm.find('#fastly_ngwaf_rule_rate_limit_threshold_signal').val(),
+                    'threshold': ruleForm.find('#fastly_ngwaf_rule_rate_limit_threshold').val(),
+                    'client_identifiers': clientIdentifiers
+                }
+
+            }
+
+            payload.actions = actions;
+
+            /*
             $.ajax({
                 type: 'POST',
                 url: config.editRuleUrl,
@@ -253,6 +447,8 @@ define([
             })
 
             ruleModal.modal('closeModal');
+
+             */
         }
 
         function populateFormOptions() {
@@ -269,26 +465,34 @@ define([
             let rateLimitActionsValueElement = $('#fastly_ngwaf_rule_rate_limit_action_other_signal_type');
             let rateLimitClientIdentifier = $('#fastly_ngwaf_rule_rate_limit_client_identifier');
             let rateLimitClientIdentifierValueBlock = $('.fastly-ngwaf-rule-rate-limit-client-identifier-value');
+            let rateLimitThresholdSignal = $('#fastly_ngwaf_rule_rate_limit_threshold_signal');
 
             let requestRuleLogging = $('.rule-request-logging');
             let ruleActionsSection = $('.fastly-ngwaf-rule-actions');
             let rateLimitActionsSection = $('.fastly-ngwaf-rule-rate-limit-actions');
             let rateLimitDetailsSection = $('.fastly-ngwaf-rule-rate-limit-details');
 
-            $(document).on("click", '.ngwaf-fastly-delete-rule-condition-action', function() {
+            $(document).off("click", '.ngwaf-fastly-delete-rule-condition-action')
+                .on("click", '.ngwaf-fastly-delete-rule-condition-action', function() {
+
                 deleteCondition($(this).parents('.ngwaf-condition'));
             })
 
-            $(document).on("click", '.ngwaf-fastly-delete-multival-rule-condition-action', function() {
+            $(document).off("click", '.ngwaf-fastly-delete-multival-rule-condition-action')
+                .on("click", '.ngwaf-fastly-delete-multival-rule-condition-action', function() {
+
                 deleteCondition($(this).parent('.ngwaf-condition'));
             })
 
 
-            $(document).on("click", '.ngwaf-fastly-delete-condition-group-action', function() {
+            $(document).off("click", '.ngwaf-fastly-delete-condition-group-action')
+                .on("click", '.ngwaf-fastly-delete-condition-group-action', function() {
+
                 deleteCondition($(this).parents('.ngwaf-condition-group'));
             })
 
-            $(document).on("click", '.ngwaf-fastly-add-multival-rule-condition-action', function () {
+            $(document).off("click", '.ngwaf-fastly-add-multival-rule-condition-action')
+                .on("click", '.ngwaf-fastly-add-multival-rule-condition-action', function () {
 
                 let elementToInsert = $(
                     `<div class="ngwaf-condition">
@@ -352,7 +556,8 @@ define([
 
             })
 
-            $(document).on("click", '.ngwaf-fastly-add-rule-condition-action',function () {
+            $(document).off("click", '.ngwaf-fastly-add-rule-condition-action')
+                .on("click", '.ngwaf-fastly-add-rule-condition-action',function () {
 
                 let elementToInsert = $(
                     `<div class="ngwaf-condition">
@@ -426,7 +631,8 @@ define([
 
             })
 
-            $(document).on("click", '.ngwaf-fastly-add-rule-condition-group-action',function () {
+            $(document).off("click", '.ngwaf-fastly-add-rule-condition-group-action')
+                .on("click", '.ngwaf-fastly-add-rule-condition-group-action',function () {
 
                 let elementToInsert = $(
                     `<div class="ngwaf-condition-group">
@@ -521,7 +727,7 @@ define([
                 let optionsForAction = config.rulePayload?.actions[selectedRuleType][selectedActionType]?.options ?? [];
 
                 if (typeof optionsForAction === 'string') {
-                    optionsForAction = selectOptions[optionsForAction] ?? [];
+                    optionsForAction = selectOptions?.[optionsForAction] ?? [];
                 }
 
                 if (!optionsForAction.length) {
@@ -563,7 +769,7 @@ define([
 
 
                 if (typeof optionsForAction === 'string') {
-                    optionsForAction = selectOptions[optionsForAction] ?? [];
+                    optionsForAction = selectOptions?.[optionsForAction] ?? [];
                 }
 
 
@@ -594,6 +800,18 @@ define([
                     rateLimitActionsSection.show();
                     rateLimitDetailsSection.show();
 
+                    if(!rateLimitThresholdSignal.find('option').length) {
+
+                        let options = selectOptions?.['custom_signal_options'] ?? [];
+
+                        $.each(options, function(key, value) {
+                            rateLimitThresholdSignal.append(
+                                $(`<option value='${value.id}'>${value.display_name}</option>"`)
+                            );
+                        });
+
+                    }
+
                     actionsElement = rateLimitActionsElement;
                 } else {
                     ruleActionsSection.show();
@@ -623,7 +841,8 @@ define([
 
             })
 
-            $(document).on("change", '.fastly_ngwaf_multival_rule_condition_operator',function() {
+            $(document).off("change", '.fastly_ngwaf_multival_rule_condition_operator')
+                .on("change", '.fastly_ngwaf_multival_rule_condition_operator',function() {
 
                 let selectedValue = $(this).val();
 
@@ -635,13 +854,13 @@ define([
 
                 if (selectedValue === 'in_list' || selectedValue === 'not_in_list') {
 
-                    selectOptionValues = selectOptions[selectOptionValues] ?? [];
+                    selectOptionValues = selectOptions?.[selectOptionValues] ?? [];
                     conditionInputValue.empty().hide()
                     conditionInputSelect.empty()
 
                     $.each(selectOptionValues, function(key, value) {
                         conditionInputSelect.append(
-                            $(`<option value='${value.id}' >${value.name}</option>"`)
+                            $(`<option value='${value.reference_id}' >${value.name}</option>"`)
                         );
                     });
 
@@ -655,7 +874,8 @@ define([
 
             })
 
-            $(document).on("change", '.fastly_ngwaf_rule_condition_operator',function() {
+            $(document).off("change", '.fastly_ngwaf_rule_condition_operator')
+                .on("change", '.fastly_ngwaf_rule_condition_operator',function() {
 
                 let selectedValue = $(this).val();
 
@@ -668,14 +888,14 @@ define([
                 if (selectedValue === 'in_list' || selectedValue === 'not_in_list') {
 
                     conditionValueSection.show()
-                    selectOptionValues = selectOptions[selectOptionValues] ?? [];
+                    selectOptionValues = selectOptions?.[selectOptionValues] ?? [];
                     $(this).parents('.ngwaf-condition').find(".ngwaf-condition-multival").remove()
                     conditionInputValue.empty().hide()
                     conditionInputSelect.empty()
 
                     $.each(selectOptionValues, function(key, value) {
                         conditionInputSelect.append(
-                            $(`<option value='${value.id}' >${value.name}</option>"`)
+                            $(`<option value='${value.reference_id}' >${value.name}</option>"`)
                         );
                     });
 
@@ -698,7 +918,8 @@ define([
 
             })
 
-            $(document).on("change", '.fastly_ngwaf_multival_rule_condition_field',function() {
+            $(document).off("change", '.fastly_ngwaf_multival_rule_condition_field')
+                .on("change", '.fastly_ngwaf_multival_rule_condition_field',function() {
 
                 let selectedValue = $(this).val();
                 let conditionInputValue = $(this).closest('.ngwaf-condition').find("input[name='fastly_ngwaf_multival_rule_condition_value[]']")
@@ -721,7 +942,8 @@ define([
 
             });
 
-            $(document).on("change", '.fastly_ngwaf_rule_condition_field',function() {
+            $(document).off("change", '.fastly_ngwaf_rule_condition_field')
+                .on("change", '.fastly_ngwaf_rule_condition_field',function() {
 
                 let selectedValue = $(this).val();
                 let conditionInputValue = $(this).parents('.ngwaf-condition').find("input[name='fastly_ngwaf_rule_condition_value[]']")
@@ -784,7 +1006,7 @@ define([
                     rateLimitClientIdentifierValueBlock.show()
                     inputValueElement.empty().hide()
 
-                    let options = selectOptions[clientIdentifier.options] ?? [];
+                    let options = selectOptions?.[clientIdentifier.options] ?? [];
                     selectValueElement.empty()
 
                     $.each(options, function(key, value) {
@@ -948,7 +1170,7 @@ define([
 
         function toggleInputElementForRuleValue(selectedValue, conditionInputValue, conditionInputSelect, selectOptionValues) {
 
-            if (!selectOptionValues || !selectOptionValues.length) {
+            if (!selectOptionValues || !Object.keys(selectOptionValues).length) {
                 conditionInputValue.empty().show()
                 conditionInputSelect.empty().hide()
             } else {

@@ -1961,6 +1961,7 @@ class Api
                 'id' => $list->id,
                 'name' => $list->name,
                 'description' => $list->description ?? '',
+                'reference_id' => $list->reference_id ?? '',
                 'type' => $list->type,
                 'entries' => $list->entries,
             ];

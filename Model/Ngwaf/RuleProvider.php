@@ -144,7 +144,16 @@ class RuleProvider extends AbstractHelper
             "method" => [
                 'name' => 'Method',
                 'type' => 'single',
-                'select_options' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'TRACE', 'PROPFIND'],
+                'select_options' => [
+                    'GET' => 'GET',
+                    'POST' => 'POST',
+                    'PUT' => 'PUT',
+                    'PATCH' => 'PATCH',
+                    'DELETE' => 'DELETE',
+                    'HEAD' => 'HEAD',
+                    'TRACE' => 'TRACE',
+                    'PROPFIND' => 'PROPFIND'
+                ],
                 'conditions' => [
                     "equals" => 'Equals',
                     "does_not_equal" => 'Does Not Equal'
@@ -196,7 +205,7 @@ class RuleProvider extends AbstractHelper
             "scheme" => [
                 'name' => 'Scheme',
                 'type' => 'single',
-                'select_options' => ['HTTP', 'HTTPS'],
+                'select_options' => ['HTTP' => 'HTTP', 'HTTPS' => 'HTTPS'],
                 'conditions' => [
                     "equals" => 'Equals',
                     "does_not_equal" => 'Does Not Equal'
@@ -512,8 +521,8 @@ class RuleProvider extends AbstractHelper
 
         try {
 
-            $workspaceSignals = []; //$this->api->getSignals();
-            $workspaceLists = []; //$this->api->getWorkspaceLists();
+            $workspaceSignals = $this->api->getSignals();
+            $workspaceLists = $this->api->getWorkspaceLists();
 
             $sortedSignals = [];
 
