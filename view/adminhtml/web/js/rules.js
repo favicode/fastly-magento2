@@ -417,13 +417,14 @@ define([
 
             payload.actions = actions;
 
-            /*
+            let errorMessageDivRuleEdit = $('#fastly-error-ngwaf-rule-edit-form');
+
             $.ajax({
                 type: 'POST',
                 url: config.editRuleUrl,
                 data: {
                     'rule_id': ruleId,
-                    'rule_description': ruleDescription
+                    'rule_payload': payload
                 },
                 showLoader: true,
 
@@ -431,24 +432,29 @@ define([
 
                     if ( (response.status ?? false) === false) {
                         let errorMessage = response.msg ?? 'Error while updating custom rule';
-                        displayError(errorMessage);
+
+                        errorMessageDivRuleEdit.show()
+                        errorMessageDivRuleEdit.html('')
+                        errorMessageDivRuleEdit.html(errorMessage)
                         successMessageDiv.hide()
                     }  else {
-                        errorMessageDiv.hide()
+
+                        errorMessageDivRuleEdit.hide()
                         fetchRules()
                         displaySuccess('Custom rule updated')
+
+                        ruleModal.modal('closeModal');
 
                     }
 
                 },
                 error: function (request, error) {
-                    displayError("Something went wrong while updating the rule, please try again");
+                    errorMessageDivRuleEdit.show()
+                    errorMessageDivRuleEdit.html('')
+                    errorMessageDivRuleEdit.html('Something went wrong while updating the rule, please try again')
                 }
             })
 
-            ruleModal.modal('closeModal');
-
-             */
         }
 
         function populateFormOptions() {

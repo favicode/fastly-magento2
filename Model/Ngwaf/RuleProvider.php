@@ -205,7 +205,7 @@ class RuleProvider extends AbstractHelper
             "scheme" => [
                 'name' => 'Scheme',
                 'type' => 'single',
-                'select_options' => ['HTTP' => 'HTTP', 'HTTPS' => 'HTTPS'],
+                'select_options' => ['http' => 'HTTP', 'https' => 'HTTPS'],
                 'conditions' => [
                     "equals" => 'Equals',
                     "does_not_equal" => 'Does Not Equal'

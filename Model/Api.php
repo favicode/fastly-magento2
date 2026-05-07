@@ -1864,7 +1864,7 @@ class Api
         return $response;
     }
 
-    public function createRule(string $ruleName, string $ruleDescription, ?string $ruleId = null)
+    public function createRule(array $payload, ?string $ruleId = null)
     {
         $workspaceId = $this->config->getWorkspaceId();
 
@@ -1872,10 +1872,7 @@ class Api
             throw new \Exception('Workspace ID is missing');
         }
 
-        $body = json_encode([
-            'name' => $ruleName,
-            'description' => $ruleDescription
-        ]);
+        $body = json_encode($payload);
 
         if ($ruleId) {
             $uri = sprintf(self::EDIT_RULE_URI, urlencode($workspaceId), urlencode($ruleId));
@@ -1886,6 +1883,10 @@ class Api
             $uri = sprintf(self::GET_RULES_URI, urlencode($workspaceId));
             $requestUrl = $this->config->getApiEndpoint() . $uri;
             $response = $this->_fetch($requestUrl,  Request::METHOD_POST, $body);
+        }
+
+        if (!$response) {
+            throw new \Exception('Error while creating rule ' . $this->errorMessage ?? '');
         }
 
         return $response;

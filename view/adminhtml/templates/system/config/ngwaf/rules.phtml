@@ -59,6 +59,11 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
 <!-- Custom Rule creation/edit template -->
 <script type="text/x-magento-template" id="fastly-custom-rule-template">
 
+    <div class="message message-error fastly-button-messages"
+         id="fastly-error-ngwaf-rule-edit-form"
+         style="display: none; margin-bottom: 2em">
+    </div>
+
     <form action="<?= $editRuleUrl?>"
           method="POST"
           id="fastly-custom-rule-form"

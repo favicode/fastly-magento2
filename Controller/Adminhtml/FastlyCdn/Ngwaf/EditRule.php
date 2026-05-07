@@ -21,6 +21,17 @@ class EditRule extends Action
      */
     private $api;
 
+    private $payloadParameters = [
+        'conditions',
+        'actions',
+        'type',
+        'enabled',
+        'description',
+        'group_operator',
+        'request_logging',
+        'rate_limit'
+    ];
+
 
     public function __construct(
         Context $context,
@@ -38,25 +49,63 @@ class EditRule extends Action
         $result = $this->resultJsonFactory->create();
 
         $ruleId = $this->getRequest()->getParam('rule_id');
-        $ruleName = $this->getRequest()->getParam('rule_name');
-        $ruleDescription = $this->getRequest()->getParam('rule_description');
+        $rulePayload = $this->getRequest()->getParam('rule_payload');
 
-        if (empty($ruleName)) {
+        if (empty($rulePayload['conditions'])) {
             return $result->setData([
                 'status' => false,
-                'msg' => 'Rule Name is missing.',
+                'msg' => 'Rule Conditions are missing.',
             ]);
         }
 
-        if (empty($ruleDescription)) {
+        if (empty($rulePayload['actions'])) {
             return $result->setData([
                 'status' => false,
-                'msg' => 'Rule Description is missing.',
+                'msg' => 'Rule Actions are missing.',
             ]);
+        }
+
+        if (empty($rulePayload['type'])) {
+            return $result->setData([
+                'status' => false,
+                'msg' => 'Rule type is missing.',
+            ]);
+        }
+
+        if (!isset($rulePayload['enabled'])) {
+            return $result->setData([
+                'status' => false,
+                'msg' => 'Rule enabled status is missing.',
+            ]);
+        }
+
+        if (empty($rulePayload['description'])) {
+            return $result->setData([
+                'status' => false,
+                'msg' => 'Rule description is missing.',
+            ]);
+        }
+
+        if (empty($rulePayload['group_operator'])) {
+            return $result->setData([
+                'status' => false,
+                'msg' => 'Rule group operator is missing.',
+            ]);
+        }
+
+        $rulePayload['enabled'] = $rulePayload['enabled'] === 'true'; // need to cast to bool for API call
+
+        $sanitizedPayload = [];
+
+        foreach ($this->payloadParameters as $parameter) {
+
+            if (isset($rulePayload[$parameter])) {
+                $sanitizedPayload[$parameter] = $rulePayload[$parameter];
+            }
         }
 
         try {
-            $response = $this->api->createRule($ruleName, $ruleDescription, $ruleId);
+            $response = $this->api->createRule($sanitizedPayload, $ruleId);
 
             return $result->setData([
                 'status' => $response
