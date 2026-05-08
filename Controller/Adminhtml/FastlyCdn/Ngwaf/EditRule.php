@@ -95,6 +95,18 @@ class EditRule extends Action
 
         $rulePayload['enabled'] = $rulePayload['enabled'] === 'true'; // need to cast to bool for API call
 
+        if (isset($rulePayload['rate_limit']['threshold'])) {
+            $rulePayload['rate_limit']['threshold'] = (int) $rulePayload['rate_limit']['threshold'];
+        }
+
+        if (isset($rulePayload['rate_limit']['interval'])) {
+            $rulePayload['rate_limit']['interval'] = (int) $rulePayload['rate_limit']['interval'];
+        }
+
+        if (isset($rulePayload['rate_limit']['duration'])) {
+            $rulePayload['rate_limit']['duration'] = (int) $rulePayload['rate_limit']['duration'];
+        }
+
         $sanitizedPayload = [];
 
         foreach ($this->payloadParameters as $parameter) {

@@ -351,8 +351,8 @@ define([
             } else if (ruleType === 'signal') {
 
                 actions.push({
-                    'signal': ruleForm.find('#fastly_ngwaf_rule_action_field').val(),
-                    'type': ruleForm.find('#fastly_ngwaf_rule_action_value').val(),
+                    'type': ruleForm.find('#fastly_ngwaf_rule_action_field').val(),
+                    'signal': ruleForm.find('#fastly_ngwaf_rule_action_value').val(),
                 })
 
             } else if (ruleType === 'rate_limit') {
@@ -360,27 +360,35 @@ define([
                 let rateLimitActionMatch = ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_match_type').val();
                 let rateLimitFormType = ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_field').val();
 
+                let rateLimitAction;
+
                 if (rateLimitActionMatch === 'OTHER-SIGNAL') {
 
-                    actions.push({
+                    rateLimitAction = {
                         'type': rateLimitFormType,
                         'signal': ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_other_signal_type').val()
-                    })
+                    }
 
                 } else if (rateLimitActionMatch === 'ALL-REQUESTS') {
 
-                    actions.push({
+                    rateLimitAction = {
                         'type': rateLimitFormType,
                         'signal': rateLimitActionMatch
-                    })
+                    }
 
                 } else if (rateLimitActionMatch === 'RULE-CONDITION') {
 
-                    actions.push({
+                    rateLimitAction = {
                         'type': rateLimitFormType,
                         'signal': ruleForm.find('#fastly_ngwaf_rule_rate_limit_threshold_signal').val()
-                    })
+                    }
                 }
+
+                if (rateLimitFormType === 'deception') {
+                    rateLimitAction.deception_type = 'invalid_login_response';
+                }
+
+                actions.push(rateLimitAction);
 
                 let clientIdentifierKey = ruleForm.find('#fastly_ngwaf_rule_rate_limit_client_identifier').val()
                 let clientIdentifiers = [];
