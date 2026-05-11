@@ -68,15 +68,15 @@ define([
         function displayError(errorMessage) {
             loader.hide()
             errorMessageDiv.show()
-            errorMessageDiv.html('')
-            errorMessageDiv.html(errorMessage)
+            errorMessageDiv.text('')
+            errorMessageDiv.text(errorMessage)
         }
 
         function displaySuccess(successMessage) {
             loader.hide()
             successMessageDiv.show()
-            successMessageDiv.html('')
-            successMessageDiv.html(successMessage)
+            successMessageDiv.text('')
+            successMessageDiv.text(successMessage)
         }
 
         function renderRuleList(rules) {
@@ -86,7 +86,7 @@ define([
 
             $.each(rules, function (index, rule) {
                 html += template(
-                    `<tr id='fastly_<%- ruleId %>"'>
+                    `<tr id='fastly_<%- ruleId %>'>
                             <td>
                                 <input data-ruleId="<%- ruleId %>" id='rule_<%- ruleId %>' value="<%- ruleDescription %>" disabled='disabled' class='input-text' type='text'>
                             </td>
@@ -227,7 +227,6 @@ define([
             let conditions = [];
             let groupConditions = [];
             let multivalConditions = [];
-            let conditionsObject;
 
             ruleForm.children('.ngwaf-conditions').children('.ngwaf-condition').each(function () {
 
@@ -303,13 +302,11 @@ define([
                     }
                 });
 
-                conditionsObject = {
+                conditions.push({
                     'type': 'group',
                     'group_operator': $(this).find("select[name='fastly_ngwaf_rule_group_condition_operator']").val(),
                     'conditions': groupConditions
-                }
-
-                conditions.push(conditionsObject);
+                });
 
             })
 
@@ -320,7 +317,7 @@ define([
                 'description': ruleForm.find('#fastly_ngwaf_rule_description').val(),
                 'enabled': ruleForm.find('#fastly_ngwaf_rule_enabled').val() === 'true',
                 'group_operator': ruleForm.find('#fastly_ngwaf_rule_condition_match_operator').val(),
-                'type': ruleForm.find('#fastly_ngwaf_rule_type').val(),
+                'type': ruleType,
             };
 
             let actions = [];
@@ -360,7 +357,7 @@ define([
                 let rateLimitActionMatch = ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_match_type').val();
                 let rateLimitFormType = ruleForm.find('#fastly_ngwaf_rule_rate_limit_action_field').val();
 
-                let rateLimitAction;
+                let rateLimitAction = {};
 
                 if (rateLimitActionMatch === 'OTHER-SIGNAL') {
 
@@ -442,8 +439,8 @@ define([
                         let errorMessage = response.msg ?? 'Error while updating custom rule';
 
                         errorMessageDivRuleEdit.show()
-                        errorMessageDivRuleEdit.html('')
-                        errorMessageDivRuleEdit.html(errorMessage)
+                        errorMessageDivRuleEdit.text('')
+                        errorMessageDivRuleEdit.text(errorMessage)
                         successMessageDiv.hide()
                     }  else {
 
@@ -458,8 +455,8 @@ define([
                 },
                 error: function (request, error) {
                     errorMessageDivRuleEdit.show()
-                    errorMessageDivRuleEdit.html('')
-                    errorMessageDivRuleEdit.html('Something went wrong while updating the rule, please try again')
+                    errorMessageDivRuleEdit.text('')
+                    errorMessageDivRuleEdit.text('Something went wrong while updating the rule, please try again')
                 }
             })
 
@@ -754,7 +751,7 @@ define([
                     $.each(optionsForAction, function(key, value) {
 
                         ruleActionsValueElement.append(
-                            $(`<option value='${value.id}' >${value.display_name}</option>"`)
+                            $('<option>', { value: value.id, text: value.display_name })
                         );
                     });
 
@@ -796,7 +793,7 @@ define([
                     $.each(optionsForAction, function(key, value) {
 
                         rateLimitActionsValueElement.append(
-                            $(`<option value='${value.id}' >${value.display_name}</option>"`)
+                            $('<option>', { value: value.id, text: value.display_name })
                         );
                     });
 
@@ -820,7 +817,7 @@ define([
 
                         $.each(options, function(key, value) {
                             rateLimitThresholdSignal.append(
-                                $(`<option value='${value.id}'>${value.display_name}</option>"`)
+                                $('<option>', { value: value.id, text: value.display_name })
                             );
                         });
 
@@ -847,7 +844,7 @@ define([
                 actionsElement.empty()
                 $.each(actionOptions, function(key, value) {
                     actionsElement.append(
-                        $(`<option value='${key}' >${value.name}</option>"`)
+                        $('<option>', { value: key, text: value.name })
                     );
                 });
 
@@ -874,7 +871,7 @@ define([
 
                     $.each(selectOptionValues, function(key, value) {
                         conditionInputSelect.append(
-                            $(`<option value='${value.reference_id}' >${value.name}</option>"`)
+                            $('<option>', { value: value.reference_id, text: value.name })
                         );
                     });
 
@@ -909,7 +906,7 @@ define([
 
                     $.each(selectOptionValues, function(key, value) {
                         conditionInputSelect.append(
-                            $(`<option value='${value.reference_id}' >${value.name}</option>"`)
+                            $('<option>', { value: value.reference_id, text: value.name })
                         );
                     });
 
@@ -945,7 +942,7 @@ define([
                 ruleConditionOperator.empty()
                 $.each(conditionOptions, function(key, value) {
                     ruleConditionOperator.append(
-                        $(`<option value='${key}' >${value}</option>"`)
+                        $('<option>', { value: key, text: value })
                     );
                 });
 
@@ -970,7 +967,7 @@ define([
                 ruleConditionOperator.empty()
                 $.each(conditionOptions, function(key, value) {
                     ruleConditionOperator.append(
-                        $(`<option value='${key}' >${value}</option>"`)
+                        $('<option>', { value: key, text: value })
                     );
                 });
 
@@ -1025,7 +1022,7 @@ define([
 
                     $.each(options, function(key, value) {
                         selectValueElement.append(
-                            $(`<option value='${value.id}'>${value.display_name}</option>"`)
+                            $('<option>', { value: value.id, text: value.display_name })
                         );
                     });
 
@@ -1038,7 +1035,7 @@ define([
                 ruleTypeSelectElement.empty()
                 $.each(config.rulePayload.rule_types, function(key, value) {
                     ruleTypeSelectElement.append(
-                        $(`<option value='${key}'>${value}</option>"`)
+                        $('<option>', { value: key, text: value })
                     );
                 });
 
@@ -1053,7 +1050,8 @@ define([
 
                 $.each(config.rulePayload?.rate_limit_identifiers, function(key, value) {
                     rateLimitClientIdentifier.append(
-                        $(`<option value='${key}' data-rate-lmit-identifier-type="${value.input_parameter_name}">${value.name}</option>"`)
+                        //$(`<option value='${key}' data-rate-lmit-identifier-type="${value.input_parameter_name}">${value.name}</option>"`)
+                        $('<option>', { value: key, text: value.name, 'data-rate-lmit-identifier-type': value.input_parameter_name })
                     );
                 });
 
@@ -1067,7 +1065,8 @@ define([
                 ruleConditionField.empty()
                 $.each(config.rulePayload.conditions, function(key, value) {
                     ruleConditionField.append(
-                        $(`<option value='${key}' data-rule-condition-type="${value.type}">${value.name}</option>"`)
+                        //$(`<option value='${key}' data-rule-condition-type="${value.type}">${value.name}</option>"`)
+                        $('<option>', { value: key, text: value.name, 'data-rule-condition-type': value.type })
                     );
                 });
 
@@ -1085,7 +1084,8 @@ define([
                     }
 
                     ruleConditionField.append(
-                        $(`<option value='${value}' data-rule-condition-type="${multivalConfig.type}">${multivalConfig.name}</option>"`)
+                        //$(`<option value='${value}' data-rule-condition-type="${multivalConfig.type}">${multivalConfig.name}</option>"`)
+                        $('<option>', { value: value, text: multivalConfig.name, 'data-rule-condition-type': multivalConfig.type })
                     );
                 });
             }
@@ -1194,7 +1194,7 @@ define([
 
                 $.each(selectOptionValues, function (key, value) {
                     conditionInputSelect.append(
-                        $(`<option value='${key}' >${value}</option>"`)
+                        $('<option>', { value: key, text: value })
                     );
                 });
 
