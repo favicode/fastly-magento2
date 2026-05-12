@@ -1840,6 +1840,12 @@ class Api
                 'id' => $rule->id,
                 'description' => $rule->description,
                 'type' => $rule->type,
+                'enabled' => $rule->enabled,
+                'group_operator' => $rule->group_operator,
+                'conditions' => $rule->conditions,
+                'actions' => $rule->actions,
+                'request_logging' => $rule->request_logging ?? '',
+                'rate_limit' => $rule->rate_limit ?? '',
             ];
         }
 

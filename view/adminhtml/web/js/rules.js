@@ -22,9 +22,9 @@ define([
         });
 
         newRuleButton.on('click', function () {
-            createRuleModal();
             populateSelectFieldOptions();
-            populateFormOptions();
+            createRuleModal();
+            //populateFormOptions();
         })
 
         function fetchRules() {
@@ -94,7 +94,17 @@ define([
                                 <input data-ruleId="<%- ruleId %>" id='rule_<%- ruleId %>' value="<%- ruleType %>" disabled='disabled' class='input-text' type='text'>
                             </td>
                             <td class='col-actions'>
-                                <button class='action-delete fastly-edit-snippet-icon fastly-edit-rule-action' data-rule-id="<%- ruleId %>" data-rule-description="<%- ruleDescription %>" id='fastly_edit_rule_<%- ruleId %>' title='Edit rule' type='button'/>
+                                <button class='action-delete fastly-edit-snippet-icon fastly-edit-rule-action'
+                                data-rule-id="<%- ruleId %>"
+                                data-rule-description="<%- ruleDescription %>"
+                                data-rule-type="<%- ruleType %>"
+                                data-rule-enabled="<%- ruleEnabled %>"
+                                data-rule-group-operator="<%- ruleGroupOperator %>"
+                                data-rule-conditions="<%- ruleConditions %>"
+                                data-rule-actions="<%- ruleActions %>"
+                                data-rule-rate-limit="<%- ruleRateLimit %>"
+                                data-rule-request-logging="<%- ruleRequestLogging %>"
+                                id='fastly_edit_rule_<%- ruleId %>' title='Edit rule' type='button'/>
                                 <span>&nbsp;&nbsp;</span>
                                 <button class='action-delete fastly-delete-snippet-icon fastly-delete-rule-action' data-rule-id="<%- ruleId %>" id='fastly_delete_rule_<%- ruleId %>' title='Delete rule' type='button'/>
                             </td>
@@ -103,6 +113,12 @@ define([
                         ruleType: rule.type,
                         ruleDescription: rule.description,
                         ruleId: rule.id,
+                        ruleEnabled: rule.enabled,
+                        ruleGroupOperator: rule.group_operator,
+                        ruleConditions: JSON.stringify(rule.conditions),
+                        ruleActions: JSON.stringify(rule.actions),
+                        ruleRateLimit: JSON.stringify(rule.rate_limit),
+                        ruleRequestLogging: rule.request_logging,
                     }
                 );
             });
@@ -178,13 +194,26 @@ define([
         $('body').on('click', 'button.fastly-edit-rule-action', function () {
 
             let ruleId = $(this).data('rule-id');
-            let ruleDescription = $(this).data('rule-description');
 
-            createRuleModal(ruleId, ruleDescription)
+            let ruleParameters = {
+                'id': $(this).data('rule-id'),
+                'description': $(this).data('rule-description'),
+                'type': $(this).data('rule-type'),
+                'enabled': $(this).data('rule-enabled'),
+                'group_operator': $(this).data('rule-group-operator'),
+                'conditions': $(this).data('rule-conditions'),
+                'actions': $(this).data('rule-actions'),
+                'rate_limit': $(this).data('rule-rate-limit'),
+                'request_logging': $(this).data('rule-request-logging'),
+            };
+
+            populateSelectFieldOptions();
+            createRuleModal(ruleId, ruleParameters);
+            //populateFormOptions();
 
         });
 
-        function createRuleModal(ruleId = null, ruleDescription = null) {
+        function createRuleModal(ruleId = null, ruleParameters = null) {
 
             let title = ruleId === null ? 'Create Rule' : 'Edit Rule';
             let buttonText = ruleId === null ? 'Create' : 'Update';
@@ -212,9 +241,168 @@ define([
             ruleModal.html($('#fastly-custom-rule-template').text());
             modal(createRuleOptions, ruleModal);
 
+            populateFormOptions();
 
-            if (ruleDescription) {
-                $('#custom_rule_description').val(ruleDescription);
+            if (ruleParameters?.description) {
+                $('#fastly_ngwaf_rule_description').val(ruleParameters.description);
+            }
+
+            if (ruleParameters?.type) {
+                $('#fastly_ngwaf_rule_type').val(ruleParameters.type);
+                $('#fastly_ngwaf_rule_type').prop("disabled", true);
+            }
+
+            if (ruleParameters?.hasOwnProperty('enabled')) {
+                $('#fastly_ngwaf_rule_enabled').val(ruleParameters.enabled.toString());
+            }
+
+            if (ruleParameters?.request_logging) {
+                $('#fastly_ngwaf_rule_request_logging').val(ruleParameters.request_logging);
+            }
+
+            if (ruleParameters?.group_operator) {
+                $('#fastly_ngwaf_rule_condition_match_operator').val(ruleParameters.group_operator);
+            }
+
+            let actionType = undefined;
+
+            if (ruleParameters?.rate_limit && typeof ruleParameters.rate_limit === 'object') {
+
+                $('.fastly-ngwaf-rule-actions').hide()
+                $('.fastly-ngwaf-rule-rate-limit-actions').show()
+                $('.fastly-ngwaf-rule-rate-limit-details').show()
+
+                actionType = $('#fastly_ngwaf_rule_rate_limit_action_field')
+
+
+                if (ruleParameters.rate_limit?.duration) {
+                    $('#fastly_ngwaf_rule_rate_limit_duration').val(ruleParameters.rate_limit.duration);
+                }
+
+                if (ruleParameters.rate_limit?.interval) {
+                    $('#fastly_ngwaf_rule_rate_limit_interval').val(ruleParameters.rate_limit.interval);
+
+                }
+
+                if (ruleParameters.rate_limit?.threshold) {
+                    $('#fastly_ngwaf_rule_rate_limit_threshold').val(ruleParameters.rate_limit.threshold);
+                }
+
+                if (ruleParameters.rate_limit?.signal) {
+                    $('#fastly_ngwaf_rule_rate_limit_threshold_signal').val(ruleParameters.rate_limit.signal);
+
+                }
+
+                if (ruleParameters.rate_limit?.client_identifiers && Array.isArray(ruleParameters.rate_limit.client_identifiers)) {
+
+                    let clientIdentifier = ruleParameters.rate_limit.client_identifiers[0];
+
+                    if (clientIdentifier?.type) {
+                        $('#fastly_ngwaf_rule_rate_limit_client_identifier').val(clientIdentifier.type);
+
+                        if (clientIdentifier.type !== 'ip') {
+                            $('.fastly-ngwaf-rule-rate-limit-client-identifier-value').show()
+                        }
+
+                        if (clientIdentifier.signal) {
+                            $("select[name='fastly_ngwaf_rule_rate_limit_client_identifier_select_value']").val(clientIdentifier.signal);
+                            $("input[name='fastly_ngwaf_rule_rate_limit_client_identifier_input_value']").hide()
+                        } else if (clientIdentifier.name) {
+                            $("input[name='fastly_ngwaf_rule_rate_limit_client_identifier_input_value']").val(clientIdentifier.name);
+                            $("select[name='fastly_ngwaf_rule_rate_limit_client_identifier_select_value']").hide()
+
+                        }
+                    }
+                }
+
+            } else if (ruleParameters?.rate_limit && typeof ruleParameters.rate_limit === 'string') {
+
+                actionType = $('#fastly_ngwaf_rule_action_field')
+
+                $('.fastly-ngwaf-rule-actions').show()
+                $('.fastly-ngwaf-rule-rate-limit-actions').hide()
+                $('.fastly-ngwaf-rule-rate-limit-details').hide()
+            }
+
+            if (ruleParameters?.actions && Array.isArray(ruleParameters.actions) && actionType) {
+
+                let action = ruleParameters.actions[0];
+
+                actionType.empty()
+                $.each(config.rulePayload?.actions[ruleParameters?.type] ?? [], function(key, value) {
+                    actionType.append(
+                        $('<option>', { value: key, text: value.name })
+                    );
+                });
+
+                actionType.val(action.type);
+
+                if (action.signal) {
+
+                    let optionsForAction = [];
+                    let ruleActionsValueElement = undefined;
+                    let ruleActionsBlock = undefined;
+                    let rateLimitMatchType = undefined;
+
+                    if (ruleParameters?.type === 'rate_limit') {
+
+                        ruleActionsValueElement = $('#fastly_ngwaf_rule_rate_limit_action_other_signal_type');
+                        rateLimitMatchType = $('#fastly_ngwaf_rule_rate_limit_action_match_type');
+                        optionsForAction = config.rulePayload?.actions[ruleParameters?.type]?.[action.type]?.options ?? [];
+
+                        if (action.signal === 'ALL-REQUESTS') {
+                            rateLimitMatchType.val(action.signal)
+
+                        } else if (action.signal !== ruleParameters.rate_limit?.signal) {
+                            rateLimitMatchType.val('OTHER-SIGNAL')
+                            $('.rate-limit-action-value-option').show()
+                        }
+
+
+                    } else {
+                        ruleActionsValueElement = $('#fastly_ngwaf_rule_action_value');
+                        ruleActionsBlock = $('.fastly_ngwaf_rule_action_value_block');
+                        optionsForAction = config.rulePayload?.actions[ruleParameters?.type]?.[action.type]?.options ?? [];
+
+                    }
+
+                    if (typeof optionsForAction === 'string') {
+                        optionsForAction = selectOptions?.[optionsForAction] ?? [];
+                    }
+
+                    ruleActionsValueElement.empty()
+
+                    $.each(optionsForAction, function(key, value) {
+
+                        ruleActionsValueElement.append(
+                            $('<option>', { value: value.id, text: value.display_name })
+                        );
+                    });
+
+                    if (ruleActionsBlock) {
+                        ruleActionsBlock.show()
+                    }
+
+                    ruleActionsValueElement.show()
+                    ruleActionsValueElement.val(action.signal);
+                }
+            }
+
+            if (ruleParameters?.conditions && Array.isArray(ruleParameters.conditions)) {
+
+
+                $.each(ruleParameters?.conditions, function(index, condition) {
+
+                    if (condition.type === 'simple') {
+
+                    } else if (condition.type === 'multival') {
+
+
+                    } else if (condition.type === 'group') {
+
+                    }
+
+                })
             }
 
             ruleModal.modal('openModal');
@@ -735,7 +923,7 @@ define([
                 let selectedRuleType = ruleTypeSelectElement.val();
                 let selectedActionType = $(this).val();
 
-                let optionsForAction = config.rulePayload?.actions[selectedRuleType][selectedActionType]?.options ?? [];
+                let optionsForAction = config.rulePayload?.actions[selectedRuleType]?.[selectedActionType]?.options ?? [];
 
                 if (typeof optionsForAction === 'string') {
                     optionsForAction = selectOptions?.[optionsForAction] ?? [];
@@ -776,8 +964,7 @@ define([
                 let selectedRuleType = ruleTypeSelectElement.val();
                 let selectedActionType = $(this).val();
 
-                let optionsForAction = config.rulePayload?.actions[selectedRuleType][selectedActionType]?.options ?? [];
-
+                let optionsForAction = config.rulePayload?.actions[selectedRuleType]?.[selectedActionType]?.options ?? [];
 
                 if (typeof optionsForAction === 'string') {
                     optionsForAction = selectOptions?.[optionsForAction] ?? [];
@@ -810,18 +997,6 @@ define([
                     ruleActionsSection.hide();
                     rateLimitActionsSection.show();
                     rateLimitDetailsSection.show();
-
-                    if(!rateLimitThresholdSignal.find('option').length) {
-
-                        let options = selectOptions?.['custom_signal_options'] ?? [];
-
-                        $.each(options, function(key, value) {
-                            rateLimitThresholdSignal.append(
-                                $('<option>', { value: value.id, text: value.display_name })
-                            );
-                        });
-
-                    }
 
                     actionsElement = rateLimitActionsElement;
                 } else {
@@ -1057,6 +1232,17 @@ define([
 
                 rateLimitClientIdentifier.trigger('change')
             }
+
+            if (rateLimitThresholdSignal) {
+
+                rateLimitThresholdSignal.empty()
+
+                $.each(selectOptions?.['custom_signal_options'] ?? [], function(key, value) {
+                    rateLimitThresholdSignal.append(
+                        $('<option>', { value: value.id, text: value.display_name })
+                    );
+                });
+            }
         }
 
         function initializeRuleConditionField(ruleConditionField, isMultival = false, multivalOptions = []) {
@@ -1210,7 +1396,8 @@ define([
                 $.ajax({
                     type: 'GET',
                     url: config.ruleSelectOptionsUrl,
-                    showLoader: false,
+                    showLoader: true,
+                    async: false,
                     success: function (response) {
 
 
