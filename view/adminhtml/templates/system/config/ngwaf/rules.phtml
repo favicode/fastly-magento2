@@ -71,6 +71,7 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
           enctype="multipart/form-data">
 
         <fieldset class="admin__fieldset form-list question ngwaf-rule-fieldset">
+            <input type="hidden" name="rule_id" id="fastly_ngwaf_rule_id">
             <div class="admin__field field ">
                 <label for="fastly_ngwaf_rule_type" class="admin__field-label">
                     <span><?php /* @noEscape */ echo __("Rule type") ?></span>

@@ -24,7 +24,6 @@ define([
         newRuleButton.on('click', function () {
             populateSelectFieldOptions();
             createRuleModal();
-            //populateFormOptions();
         })
 
         function fetchRules() {
@@ -209,7 +208,6 @@ define([
 
             populateSelectFieldOptions();
             createRuleModal(ruleId, ruleParameters);
-            //populateFormOptions();
 
         });
 
@@ -233,7 +231,7 @@ define([
                     text: $.mage.__(buttonText),
                     'class': 'action primary upload-button',
                     click: function () {
-                        createRule(ruleId);
+                        createRule();
                     }
                 }]
             };
@@ -242,6 +240,10 @@ define([
             modal(createRuleOptions, ruleModal);
 
             populateFormOptions();
+
+            if (ruleId) {
+                $('#fastly_ngwaf_rule_id').val(ruleId)
+            }
 
             if (ruleParameters?.description) {
                 $('#fastly_ngwaf_rule_description').val(ruleParameters.description);
@@ -273,7 +275,6 @@ define([
                 $('.fastly-ngwaf-rule-rate-limit-details').show()
 
                 actionType = $('#fastly_ngwaf_rule_rate_limit_action_field')
-
 
                 if (ruleParameters.rate_limit?.duration) {
                     $('#fastly_ngwaf_rule_rate_limit_duration').val(ruleParameters.rate_limit.duration);
@@ -390,15 +391,148 @@ define([
 
             if (ruleParameters?.conditions && Array.isArray(ruleParameters.conditions)) {
 
+                let conditionsElement = $('.ngwaf-conditions');
+                conditionsElement.children(".ngwaf-condition").remove()
+                let previousElement;
+                let currentElement;
+                let currentGroupElement;
+                let additionType = '';
+                let isFirstElement = false
+                let conditionMultivalOptions;
 
-                $.each(ruleParameters?.conditions, function(index, condition) {
+                $.each(ruleParameters.conditions, function(index, condition) {
 
-                    if (condition.type === 'simple') {
+                    if (condition.type === 'single') {
+
+                        if (conditionsElement.children('.ngwaf-condition, .ngwaf-condition-group').last().length) {
+                            previousElement = conditionsElement.children('.ngwaf-condition, .ngwaf-condition-group').last()
+                            additionType = 'after';
+
+                        } else {
+                            previousElement = conditionsElement;
+                            additionType = '';
+                        }
+
+                        addSingleCondition(previousElement, additionType)
+                        currentElement = conditionsElement.children('.ngwaf-condition').last()
+
+                        currentElement.find('.fastly_ngwaf_rule_condition_field')
+                            .val(condition.field).trigger('change');
+                        currentElement.find('.fastly_ngwaf_rule_condition_operator')
+                            .val(condition.operator).trigger('change');
+                        currentElement.find('.fastly_ngwaf_rule_condition_value:visible').val(condition.value);
+
 
                     } else if (condition.type === 'multival') {
 
+                        conditionMultivalOptions = config.rulePayload?.conditions[condition.field]?.multival_options ?? [];
+
+                        if (conditionsElement.children('.ngwaf-condition, .ngwaf-condition-group').last().length) {
+                            previousElement = conditionsElement.children('.ngwaf-condition, .ngwaf-condition-group').last()
+                            additionType = 'after';
+
+                        } else {
+                            previousElement = conditionsElement;
+                            additionType = '';
+                        }
+
+                        addSingleCondition(previousElement, additionType)
+                        currentElement = conditionsElement.children('.ngwaf-condition').last()
+
+                        currentElement.find('.fastly_ngwaf_rule_condition_field')
+                            .val(condition.field).trigger('change');
+
+                        currentElement.find('.fastly_ngwaf_rule_condition_field')
+                            .val(condition.field).trigger('change');
+                        currentElement.find('.fastly_ngwaf_rule_condition_operator')
+                            .val(condition.operator).trigger('change');
+
+                        if (condition.conditions && condition.conditions.length) {
+
+                            currentElement.find('[name="fastly_ngwaf_rule_multival_condition_operator"]')
+                                .val(condition.group_operator);
+
+                            let multivalConditions = currentElement.find('.ngwaf-multival-conditions');
+                            multivalConditions.find(".ngwaf-condition").remove()
+
+                            $.each(condition.conditions ?? [], function(index, multivalCondition) {
+
+                                addMultivalCondition(
+                                    multivalConditions,
+                                    config.rulePayload?.conditions[condition.field]?.multival_options ?? []
+                                )
+
+                                currentElement = multivalConditions.find('.ngwaf-condition').last()
+
+                                currentElement.find('.fastly_ngwaf_multival_rule_condition_field')
+                                    .val(multivalCondition.field).trigger('change');
+                                currentElement.find('.fastly_ngwaf_multival_rule_condition_operator')
+                                    .val(multivalCondition.operator).trigger('change');
+                                currentElement.find('.fastly_ngwaf_multival_rule_condition_value:visible')
+                                    .val(multivalCondition.value);
+
+                            })
+
+                        }
 
                     } else if (condition.type === 'group') {
+
+                        if (conditionsElement.children('.ngwaf-condition, .ngwaf-condition-group').last().length) {
+                            previousElement = conditionsElement.children('.ngwaf-condition, .ngwaf-condition-group').last();
+                        } else {
+                            previousElement = conditionsElement;
+                            isFirstElement = true;
+                        }
+
+                        addGroupCondition(previousElement, isFirstElement)
+
+                        currentGroupElement = conditionsElement.children('.ngwaf-condition-group').last()
+                        currentGroupElement.find('[name="fastly_ngwaf_rule_group_condition_operator"]').val(condition.group_operator);
+                        currentGroupElement.find('.ngwaf-group-conditions').find(".ngwaf-condition").remove()
+
+                        currentGroupElement = currentGroupElement.find('.ngwaf-group-conditions');
+                        additionType = 'append';
+
+                        $.each(condition.conditions ?? [], function(index, groupCondition) {
+
+                            addSingleCondition(currentGroupElement, additionType)
+                            currentElement = currentGroupElement.find('.ngwaf-condition').last()
+
+                            currentElement.find('.fastly_ngwaf_rule_condition_field')
+                                .val(groupCondition.field).trigger('change');
+                            currentElement.find('.fastly_ngwaf_rule_condition_operator')
+                                .val(groupCondition.operator).trigger('change');
+                            currentElement.find('.fastly_ngwaf_rule_condition_value:visible').val(groupCondition.value);
+
+                            if (groupCondition.conditions && groupCondition.conditions.length) {
+
+                                currentGroupElement.find('[name="fastly_ngwaf_rule_multival_condition_operator"]')
+                                    .val(groupCondition.group_operator);
+
+                                let multivalConditions = currentGroupElement.find('.ngwaf-multival-conditions');
+                                multivalConditions.find(".ngwaf-condition").remove()
+
+
+                                $.each(groupCondition.conditions ?? [], function(index, multivalCondition) {
+
+                                    addMultivalCondition(
+                                        multivalConditions,
+                                        config.rulePayload?.conditions[groupCondition.field]?.multival_options ?? []
+                                    )
+
+                                    currentElement = multivalConditions.find('.ngwaf-condition').last()
+
+                                    currentElement.find('.fastly_ngwaf_multival_rule_condition_field')
+                                        .val(multivalCondition.field).trigger('change');
+                                    currentElement.find('.fastly_ngwaf_multival_rule_condition_operator')
+                                        .val(multivalCondition.operator).trigger('change');
+                                    currentElement.find('.fastly_ngwaf_multival_rule_condition_value:visible')
+                                        .val(multivalCondition.value);
+
+                                })
+
+                            }
+                        })
 
                     }
 
@@ -408,13 +542,15 @@ define([
             ruleModal.modal('openModal');
         }
 
-        function createRule(ruleId = null) {
+        function createRule() {
 
             let ruleForm = $('#fastly-rule-modal-content fieldset');
 
             let conditions = [];
             let groupConditions = [];
             let multivalConditions = [];
+
+            let ruleId = ruleForm.find('#fastly_ngwaf_rule_id').val()
 
             ruleForm.children('.ngwaf-conditions').children('.ngwaf-condition').each(function () {
 
@@ -693,228 +829,82 @@ define([
             $(document).off("click", '.ngwaf-fastly-add-multival-rule-condition-action')
                 .on("click", '.ngwaf-fastly-add-multival-rule-condition-action', function () {
 
-                let elementToInsert = $(
-                    `<div class="ngwaf-condition">
-                        <div class="field condition-element">
-                            <label class="admin__field-label">
-                                <span>Field</span>
-                            </label>
-                            <div class="admin__field-control">
-                                <select name="fastly_ngwaf_multival_rule_condition_field[]" class="admin__control-text fastly_ngwaf_multival_rule_condition_field">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="field condition-element">
-                            <label class="admin__field-label">
-                                <span>Operator</span>
-                            </label>
-                            <div class="admin__field-control">
-                                <select name="fastly_ngwaf_multival_rule_condition_operator[]" class="admin__control-text fastly_ngwaf_multival_rule_condition_operator">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="field condition-element ngwaf-condition-value-section">
-                            <label class="admin__field-label">
-                                <span>Value</span>
-                            </label>
-                            <div class="admin__field-control condition-input">
-                                <input type="text"
-                                       name="fastly_ngwaf_multival_rule_condition_value[]"
-                                       required="required"
-                                       class="admin__control-text required-entry fastly_ngwaf_multival_rule_condition_value">
-                            </div>
-                            <div class="admin__field-control condition-select">
-                                <select name="fastly_ngwaf_multival_rule_condition_value[]"
-                                        class="admin__control-text required-entry fastly_ngwaf_multival_rule_condition_value"
-                                        required="required">
-                                </select>
-                            </div>
-                        </div>
-                        <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-multival-rule-condition-action'
-                                title='Delete Condition'
-                                type='button'></button>
-                    </div>`
-                );
+                    let multivalConditionsElement = $(this).siblings('.ngwaf-multival-conditions');
+                    let currentConditionType = $(this).parents('.ngwaf-condition').find("select[name='fastly_ngwaf_rule_condition_field[]']").val();
+                    let multivalOptions = config.rulePayload?.conditions[currentConditionType]?.multival_options ?? []
 
-                let numberOfConditions;
+                    addMultivalCondition(multivalConditionsElement, multivalOptions);
 
-                $(this).siblings('.ngwaf-multival-conditions').append(elementToInsert);
-                numberOfConditions = $(this).siblings('.ngwaf-multival-conditions').children('.ngwaf-condition').length || 0;
+                    let numberOfConditions = $(this).siblings('.ngwaf-multival-conditions').children('.ngwaf-condition').length || 0;
 
-                let currentConditionType = $(this).parents('.ngwaf-condition').find("select[name='fastly_ngwaf_rule_condition_field[]']").val();
-                let multivalOptions = config.rulePayload?.conditions[currentConditionType]?.multival_options ?? []
-
-
-                let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_multival_rule_condition_field");
-                initializeRuleConditionField(newRuleConditionField, true, multivalOptions);
-
-                if (numberOfConditions >= 10) {
-                    $(this).prop('disabled', true);
-                    $(this).siblings('.ngwaf-fastly-add-rule-condition-group-action').prop('disabled', true);
-                }
-
+                    if (numberOfConditions >= 10) {
+                        $(this).prop('disabled', true);
+                        $(this).siblings('.ngwaf-fastly-add-rule-condition-group-action').prop('disabled', true);
+                    }
             })
 
             $(document).off("click", '.ngwaf-fastly-add-rule-condition-action')
                 .on("click", '.ngwaf-fastly-add-rule-condition-action',function () {
 
-                let elementToInsert = $(
-                    `<div class="ngwaf-condition">
-                        <div class="field   condition-element">
-                            <label class="admin__field-label">
-                                <span>Field</span>
-                            </label>
-                            <div class="admin__field-control">
-                                <select name="fastly_ngwaf_rule_condition_field[]" class="admin__control-text fastly_ngwaf_rule_condition_field">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="field   condition-element">
-                            <label class="admin__field-label">
-                                <span>Operator</span>
-                            </label>
-                            <div class="admin__field-control">
-                                <select name="fastly_ngwaf_rule_condition_operator[]" class="admin__control-text fastly_ngwaf_rule_condition_operator">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="field condition-element ngwaf-condition-value-section">
-                            <label class="admin__field-label">
-                                <span>Value</span>
-                            </label>
-                            <div class="admin__field-control condition-input">
-                                <input type="text"
-                                       name="fastly_ngwaf_rule_condition_value[]"
-                                       required="required"
-                                       class="admin__control-text required-entry fastly_ngwaf_rule_condition_value">
-                            </div>
-                            <div class="admin__field-control condition-select">
-                                <select name="fastly_ngwaf_rule_condition_value[]"
-                                        class="admin__control-text required-entry fastly_ngwaf_rule_condition_value"
-                                        required="required">
-                                </select>
-                            </div>
-                        </div>
-                        <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
-                                title='Delete Condition'
-                                type='button'></button>
-                    </div>`
-            );
+                    let numberOfConditions;
+                    let previousElement;
+                    let additionType;
 
-                let numberOfConditions;
+                    if ($(this).siblings('.ngwaf-condition, .ngwaf-condition-group').last().length) {
 
+                        previousElement = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').last();
+                        additionType = 'after';
 
-                if ($(this).siblings('.ngwaf-condition, .ngwaf-condition-group').last().length) {
+                        addSingleCondition(previousElement, additionType);
 
-                    $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').last().after(elementToInsert);
-                    numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
+                        numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
 
-                } else if ($(this).siblings('.ngwaf-group-conditions').length) {
+                    } else if ($(this).siblings('.ngwaf-group-conditions').length) {
 
-                    $(this).siblings('.ngwaf-group-conditions').append(elementToInsert);
-                    numberOfConditions = $(this).siblings('.ngwaf-group-conditions').children('.ngwaf-condition').length || 0;
+                        previousElement = $(this).siblings('.ngwaf-group-conditions');
+                        additionType = 'append';
 
-                } else {
+                        addSingleCondition(previousElement, additionType);
 
-                    $(this).parent().prepend(elementToInsert);
-                    numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
-                }
+                        numberOfConditions = $(this).siblings('.ngwaf-group-conditions').children('.ngwaf-condition').length || 0;
 
-                let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_rule_condition_field");
-                initializeRuleConditionField(newRuleConditionField);
+                    } else {
 
-                if (numberOfConditions >= 10) {
-                    $(this).prop('disabled', true);
-                    $(this).siblings('.ngwaf-fastly-add-rule-condition-group-action').prop('disabled', true);
-                }
+                        previousElement = $(this).parent();
+                        additionType = 'prepend';
+                        addSingleCondition(previousElement, additionType);
+
+                        numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
+                    }
+
+                    if (numberOfConditions >= 10) {
+                        $(this).prop('disabled', true);
+                        $(this).siblings('.ngwaf-fastly-add-rule-condition-group-action').prop('disabled', true);
+                    }
 
             })
 
             $(document).off("click", '.ngwaf-fastly-add-rule-condition-group-action')
                 .on("click", '.ngwaf-fastly-add-rule-condition-group-action',function () {
 
-                let elementToInsert = $(
-                    `<div class="ngwaf-condition-group">
-                            <div class="admin__field field   fastly-ngwaf-rule-group-operator-block">
-                                <label class="admin__field-label">
-                                    <span>Rule applies if X conditions are true</span>
-                                </label>
-                                <div class="admin__field-control">
-                                    <select name="fastly_ngwaf_rule_group_condition_operator" class="admin__control-text">
-                                        <option value="all" selected>All</option>
-                                        <option value="any">Any</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-condition-group-action'
-                                    title='Delete Group'
-                                    type='button'>Delete Group</button>
+                    let previousElement;
+                    let isFirstElement = false;
 
-                            <div class="ngwaf-group-conditions">
-                                <div class="ngwaf-condition">
-                                    <div class="field   condition-element">
-                                        <label class="admin__field-label">
-                                            <span>Field</span>
-                                        </label>
-                                        <div class="admin__field-control">
-                                            <select name="fastly_ngwaf_rule_condition_field[]" class="admin__control-text fastly_ngwaf_rule_condition_field">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="field   condition-element">
-                                        <label class="admin__field-label">
-                                            <span>Operator</span>
-                                        </label>
-                                        <div class="admin__field-control">
-                                            <select name="fastly_ngwaf_rule_condition_operator[]" class="admin__control-text fastly_ngwaf_rule_condition_operator">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="field condition-element ngwaf-condition-value-section">
-                                        <label class="admin__field-label">
-                                            <span>Value</span>
-                                        </label>
-                                        <div class="admin__field-control condition-input">
-                                            <input type="text"
-                                                   name="fastly_ngwaf_rule_condition_value[]"
-                                                   required="required"
-                                                   class="admin__control-text required-entry fastly_ngwaf_rule_condition_value">
-                                        </div>
-                                        <div class="admin__field-control condition-select">
-                                            <select name="fastly_ngwaf_rule_condition_value[]"
-                                                    class="admin__control-text required-entry fastly_ngwaf_rule_condition_value"
-                                                    required="required">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
-                                            title='Delete Condition'
-                                            type='button'></button>
-                                </div>
-                            </div>
+                    if ($(this).siblings('.ngwaf-condition').last().length) {
+                        previousElement = $(this).siblings('.ngwaf-condition').last();
+                    } else {
+                        previousElement = $(this).parent();
+                        isFirstElement = true;
+                    }
 
-                           <button class='ngwaf-rule-button ngwaf-fastly-add-rule-condition-action'
-                                    title='Add Condition'
-                                    type='button'>Add condition</button>
-                    </div>`
-                );
+                    addGroupCondition(previousElement, isFirstElement)
 
+                    let numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
 
-                if ($(this).siblings('.ngwaf-condition').last().length) {
-                    $(this).siblings('.ngwaf-condition').last().after(elementToInsert);
-                } else {
-                    $(this).parent().prepend(elementToInsert);
-                }
-
-                let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_rule_condition_field");
-                initializeRuleConditionField(newRuleConditionField);
-
-                let numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
-
-                if (numberOfConditions >= 10) {
-                    $(this).prop('disabled', true);
-                    $(this).siblings('.ngwaf-fastly-add-rule-condition-action').prop('disabled', true);
-                }
+                    if (numberOfConditions >= 10) {
+                        $(this).prop('disabled', true);
+                        $(this).siblings('.ngwaf-fastly-add-rule-condition-action').prop('disabled', true);
+                    }
 
             })
 
@@ -1387,6 +1377,197 @@ define([
                 conditionInputSelect.show()
 
             }
+        }
+
+        function addMultivalCondition(multivalConditionsElement, multivalOptions) {
+
+        let elementToInsert = $(
+                `<div class="ngwaf-condition">
+                        <div class="field condition-element">
+                            <label class="admin__field-label">
+                                <span>Field</span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select name="fastly_ngwaf_multival_rule_condition_field[]" class="admin__control-text fastly_ngwaf_multival_rule_condition_field">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field condition-element">
+                            <label class="admin__field-label">
+                                <span>Operator</span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select name="fastly_ngwaf_multival_rule_condition_operator[]" class="admin__control-text fastly_ngwaf_multival_rule_condition_operator">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field condition-element ngwaf-condition-value-section">
+                            <label class="admin__field-label">
+                                <span>Value</span>
+                            </label>
+                            <div class="admin__field-control condition-input">
+                                <input type="text"
+                                       name="fastly_ngwaf_multival_rule_condition_value[]"
+                                       required="required"
+                                       class="admin__control-text required-entry fastly_ngwaf_multival_rule_condition_value">
+                            </div>
+                            <div class="admin__field-control condition-select">
+                                <select name="fastly_ngwaf_multival_rule_condition_value[]"
+                                        class="admin__control-text required-entry fastly_ngwaf_multival_rule_condition_value"
+                                        required="required">
+                                </select>
+                            </div>
+                        </div>
+                        <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-multival-rule-condition-action'
+                                title='Delete Condition'
+                                type='button'></button>
+                    </div>`
+            );
+
+            multivalConditionsElement.append(elementToInsert);
+
+            let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_multival_rule_condition_field");
+
+            initializeRuleConditionField(newRuleConditionField, true, multivalOptions);
+
+        }
+
+        function addSingleCondition(previousElement, additionType) {
+
+            let elementToInsert = $(
+                `<div class="ngwaf-condition">
+                        <div class="field   condition-element">
+                            <label class="admin__field-label">
+                                <span>Field</span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select name="fastly_ngwaf_rule_condition_field[]" class="admin__control-text fastly_ngwaf_rule_condition_field">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field   condition-element">
+                            <label class="admin__field-label">
+                                <span>Operator</span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select name="fastly_ngwaf_rule_condition_operator[]" class="admin__control-text fastly_ngwaf_rule_condition_operator">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="field condition-element ngwaf-condition-value-section">
+                            <label class="admin__field-label">
+                                <span>Value</span>
+                            </label>
+                            <div class="admin__field-control condition-input">
+                                <input type="text"
+                                       name="fastly_ngwaf_rule_condition_value[]"
+                                       required="required"
+                                       class="admin__control-text required-entry fastly_ngwaf_rule_condition_value">
+                            </div>
+                            <div class="admin__field-control condition-select">
+                                <select name="fastly_ngwaf_rule_condition_value[]"
+                                        class="admin__control-text required-entry fastly_ngwaf_rule_condition_value"
+                                        required="required">
+                                </select>
+                            </div>
+                        </div>
+                        <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
+                                title='Delete Condition'
+                                type='button'></button>
+                    </div>`
+            );
+
+
+            if (additionType === 'after') {
+                previousElement.after(elementToInsert)
+            } else if (additionType === 'append') {
+                previousElement.append(elementToInsert);
+            } else {
+                previousElement.prepend(elementToInsert);
+            }
+
+            let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_rule_condition_field");
+            initializeRuleConditionField(newRuleConditionField);
+
+        }
+
+        function addGroupCondition(previousElement, isFirstElement) {
+
+            let elementToInsert = $(
+                `<div class="ngwaf-condition-group">
+                            <div class="admin__field field   fastly-ngwaf-rule-group-operator-block">
+                                <label class="admin__field-label">
+                                    <span>Rule applies if X conditions are true</span>
+                                </label>
+                                <div class="admin__field-control">
+                                    <select name="fastly_ngwaf_rule_group_condition_operator" class="admin__control-text">
+                                        <option value="all" selected>All</option>
+                                        <option value="any">Any</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-condition-group-action'
+                                    title='Delete Group'
+                                    type='button'>Delete Group</button>
+
+                            <div class="ngwaf-group-conditions">
+                                <div class="ngwaf-condition">
+                                    <div class="field   condition-element">
+                                        <label class="admin__field-label">
+                                            <span>Field</span>
+                                        </label>
+                                        <div class="admin__field-control">
+                                            <select name="fastly_ngwaf_rule_condition_field[]" class="admin__control-text fastly_ngwaf_rule_condition_field">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="field   condition-element">
+                                        <label class="admin__field-label">
+                                            <span>Operator</span>
+                                        </label>
+                                        <div class="admin__field-control">
+                                            <select name="fastly_ngwaf_rule_condition_operator[]" class="admin__control-text fastly_ngwaf_rule_condition_operator">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="field condition-element ngwaf-condition-value-section">
+                                        <label class="admin__field-label">
+                                            <span>Value</span>
+                                        </label>
+                                        <div class="admin__field-control condition-input">
+                                            <input type="text"
+                                                   name="fastly_ngwaf_rule_condition_value[]"
+                                                   required="required"
+                                                   class="admin__control-text required-entry fastly_ngwaf_rule_condition_value">
+                                        </div>
+                                        <div class="admin__field-control condition-select">
+                                            <select name="fastly_ngwaf_rule_condition_value[]"
+                                                    class="admin__control-text required-entry fastly_ngwaf_rule_condition_value"
+                                                    required="required">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-condition-action'
+                                            title='Delete Condition'
+                                            type='button'></button>
+                                </div>
+                            </div>
+
+                           <button class='ngwaf-rule-button ngwaf-fastly-add-rule-condition-action'
+                                    title='Add Condition'
+                                    type='button'>Add condition</button>
+                    </div>`
+            );
+
+
+            if (isFirstElement) {
+                previousElement.prepend(elementToInsert)
+            } else {
+                previousElement.after(elementToInsert);
+            }
+
+            let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_rule_condition_field");
+            initializeRuleConditionField(newRuleConditionField);
         }
 
         function populateSelectFieldOptions() {

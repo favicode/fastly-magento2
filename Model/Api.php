@@ -1878,6 +1878,13 @@ class Api
             throw new \Exception('Workspace ID is missing');
         }
 
+        if ($ruleId) {
+            $payload['scope'] = [
+                'type' => 'workspace',
+                'applies_to' => [$workspaceId],
+            ];
+        }
+
         $body = json_encode($payload);
 
         if ($ruleId) {
