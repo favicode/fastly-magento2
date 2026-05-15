@@ -1878,7 +1878,7 @@ class Api
             throw new \Exception('Workspace ID is missing');
         }
 
-        if ($ruleId) {
+        if ($ruleId && !isset($payload['scope'])) {
             $payload['scope'] = [
                 'type' => 'workspace',
                 'applies_to' => [$workspaceId],
