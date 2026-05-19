@@ -11,14 +11,14 @@ $editVirtualPatchUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editVirtualPatc
 ?>
 
 <div id="grid<?= $escaper->escapeHtmlAttr($_htmlId); ?>">
-    <div class="admin__control-table-wrapper">
+    <div class="admin__control-table-wrapper virtual-patches-listing">
         <table class="admin__control-table" id="<?= $escaper->escapeHtmlAttr($block->getElement()->getId()); ?>">
             <thead>
             <tr>
                 <?php foreach ($block->getColumns() as $columnName => $column) : ?>
-                    <th><?= $escaper->escapeHtml($column['label']); ?></th>
+                    <th class="virtual-patches-listing-header"><?= $escaper->escapeHtml($column['label']); ?></th>
                 <?php endforeach;?>
-                <th class="col-actions" colspan="<?= $escaper->escapeHtmlAttr($_colspan); ?>">Action</th>
+                <th class="col-actions virtual-patches-listing-header" colspan="<?= $escaper->escapeHtmlAttr($_colspan); ?>">Action</th>
             </tr>
             </thead>
             <tbody id="fastly-virtual-patches-list"></tbody>
@@ -126,4 +126,17 @@ $editVirtualPatchUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editVirtualPatc
         }
     }
 </script>
+
+<style>
+    .virtual-patches-listing {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .virtual-patches-listing-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+</style>
 
