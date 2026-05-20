@@ -1,0 +1,112 @@
+<?php
+/** @var $escaper \Magento\Framework\Escaper */
+?>
+
+<?php
+
+$getThresholdsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getAttackSignalThresholds');
+$editThresholdsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/editAttackSignalThresholds');
+?>
+
+<?= $block->getButtonHtml(); ?>
+
+
+<div id="fastly-attack-signal-tresholds-modal-content">
+    <div class="modal-inner-content">
+    </div>
+</div>
+
+<div class="message message-error fastly-button-messages"
+     id="fastly-error-ngwaf-attack-signal-thresholds"
+     style="display: none">
+</div>
+<div class="message message-success fastly-button-messages"
+     id="fastly-success-ngwaf-attack-signal-thresholds"
+     style="display: none">
+</div>
+
+<!-- Attack Signal Threshold creation/edit template -->
+<script type="text/x-magento-template" id="fastly-attack-signal-thresholds-template">
+
+    <form action="<?= $editThresholdsUrl?>"
+          method="POST"
+          id="fastly-attack-signal-thresholds-form"
+          class="form-inline"
+          enctype="multipart/form-data">
+
+        <fieldset class="admin__fieldset form-list question">
+
+            <div class="admin__field field">
+                <label for="immediate_blocking" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("Immediate Blocking") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <select name="immediate_blocking" id="immediate_blocking" class="admin__control-text">
+                        <option value="false" selected>Off</option>
+                        <option value="true">On</option>
+                    </select>
+                    <div class="admin__field-note">
+                        Turning this on will disable thresholding and instantly block malicious traffic.
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin__field field ">
+                <label for="one_minute_interval_threshold" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("1 minute interval") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="one_minute_interval_threshold"
+                           id="one_minute_interval_threshold"
+                           class="admin__control-text">
+                    <div class="admin__field-note">
+                        Default: 50. Setting to 1 results in an instant block.
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin__field field">
+                <label for="ten_minute_interval_threshold" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("10 minute interval") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="ten_minute_interval_threshold"
+                           id="ten_minute_interval_threshold"
+                           class="admin__control-text">
+                    <div class="admin__field-note">
+                        Default: 350. Setting to 1 results in an instant block.
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin__field field">
+                <label for="one_hour_interval_threshold" class="admin__field-label">
+                    <span><?php /* @noEscape */ echo __("1 hour interval") ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text"
+                           name="one_hour_interval_threshold"
+                           id="one_hour_interval_threshold"
+                           class="admin__control-text">
+                    <div class="admin__field-note">
+                        Default: 1800. Setting to 1 results in an instant block.
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "ngwafAttackSignalThreshold": {
+                "getThresholdsUrl": "<?= $escaper->escapeJs($getThresholdsUrl);?>",
+                "editThresholdsUrl": "<?= $escaper->escapeJs($editThresholdsUrl);?>"
+            }
+        }
+    }
+</script>
+

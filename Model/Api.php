@@ -54,6 +54,7 @@ class Api
     public const EDIT_VIRTUAL_PATCHES_URI  = 'security/workspaces/%s/virtual-patches/%s';
     public const GET_WORKSPACE_LISTS_URI  = 'security/workspaces/%s/lists';
     public const EDIT_WORKSPACE_LIST_URI  = 'security/workspaces/%s/lists/%s';
+    public const ATTACK_SIGNAL_THRESHOLDS_URI  = 'ngwaf/v1/workspaces/%s';
 
     /**
      * @var Config
@@ -2036,6 +2037,54 @@ class Api
 
         if (!$response) {
             throw new \Exception('Error while creating list: ' . $this->errorMessage ?? '');
+        }
+
+        return $response;
+    }
+
+    public function getAttackSignalThresholds()
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $uri = sprintf(self::ATTACK_SIGNAL_THRESHOLDS_URI, urlencode($workspaceId));
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl);
+
+        if (empty($response->attack_signal_thresholds)) {
+            throw new \Exception('No attack signal thresholds found');
+        }
+
+        $thresholds = [
+            'immediate' => $response->attack_signal_thresholds->immediate ?? false,
+            'one_minute' => $response->attack_signal_thresholds->one_minute ?? '',
+            'ten_minutes' => $response->attack_signal_thresholds->ten_minutes ?? '',
+            'one_hour' => $response->attack_signal_thresholds->one_hour ?? '',
+        ];
+
+        return $thresholds;
+    }
+
+    public function editThresholds(array $payload)
+    {
+        $workspaceId = $this->config->getWorkspaceId();
+
+        if (empty($workspaceId)) {
+            throw new \Exception('Workspace ID is missing');
+        }
+
+        $body = json_encode($payload);
+
+        $uri = sprintf(self::ATTACK_SIGNAL_THRESHOLDS_URI, urlencode($workspaceId));
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+        $response = $this->_fetch($requestUrl, Request::METHOD_PATCH, $body);
+
+        if (!$response) {
+            throw new \Exception('Error while updating thresholds: ' . $this->errorMessage ?? '');
         }
 
         return $response;

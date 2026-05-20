@@ -33,6 +33,7 @@ let config = {
             importExportRenderer: 'Fastly_Cdn/js/import-export-renderer',
             http3: 'Fastly_Cdn/js/http3',
             ngwafSignals: 'Fastly_Cdn/js/signals',
+            ngwafAttackSignalThreshold: 'Fastly_Cdn/js/attack-signal-thresholds',
             ngwafRules: 'Fastly_Cdn/js/rules',
             ngwafVirtualPatches: 'Fastly_Cdn/js/virtual-patches',
             ngwafWorkspaceLists: 'Fastly_Cdn/js/workspace-lists'
