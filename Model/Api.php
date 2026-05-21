@@ -46,14 +46,14 @@ class Api
     public const FASTLY_MAX_HEADER_KEY_SIZE = 256;
     public const UPSERT_ITEMS_MAX_COUNT = 200;
 
-    public const GET_SIGNALS_URI  = 'security/workspaces/%s/signals';
-    public const EDIT_SIGNAL_URI  = 'security/workspaces/%s/signals/%s';
-    public const GET_RULES_URI  = 'security/workspaces/%s/rules';
-    public const EDIT_RULE_URI  = 'security/workspaces/%s/rules/%s';
-    public const GET_VIRTUAL_PATCHES_URI  = 'security/workspaces/%s/virtual-patches';
-    public const EDIT_VIRTUAL_PATCHES_URI  = 'security/workspaces/%s/virtual-patches/%s';
-    public const GET_WORKSPACE_LISTS_URI  = 'security/workspaces/%s/lists';
-    public const EDIT_WORKSPACE_LIST_URI  = 'security/workspaces/%s/lists/%s';
+    public const GET_SIGNALS_URI  = 'ngwaf/v1/workspaces/%s/signals';
+    public const EDIT_SIGNAL_URI  = 'ngwaf/v1/workspaces/%s/signals/%s';
+    public const GET_RULES_URI  = 'ngwaf/v1/workspaces/%s/rules';
+    public const EDIT_RULE_URI  = 'ngwaf/v1/workspaces/%s/rules/%s';
+    public const GET_VIRTUAL_PATCHES_URI  = 'ngwaf/v1/workspaces/%s/virtual-patches';
+    public const EDIT_VIRTUAL_PATCHES_URI  = 'ngwaf/v1/workspaces/%s/virtual-patches/%s';
+    public const GET_WORKSPACE_LISTS_URI  = 'ngwaf/v1/workspaces/%s/lists';
+    public const EDIT_WORKSPACE_LIST_URI  = 'ngwaf/v1/workspaces/%s/lists/%s';
     public const ATTACK_SIGNAL_THRESHOLDS_URI  = 'ngwaf/v1/workspaces/%s';
 
     /**
