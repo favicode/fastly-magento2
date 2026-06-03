@@ -410,7 +410,10 @@ class RuleProvider extends AbstractHelper
                 'name' => 'Signal ID',
                 'type' => 'single',
                 'options' => 'signal_list_options',
+                'secondary_options' => 'signal_id_list_options',
                 'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
                     "in_list" => 'Is In List',
                     "not_in_list" => 'Is Not In List',
                 ]
@@ -565,6 +568,7 @@ class RuleProvider extends AbstractHelper
             $logRequestOptions = [];
             $blockSignalOptions = [];
             $deceptionOptions = [];
+            $signalIdOptions = [];
 
             foreach ($signalOptions as $option) {
 
@@ -587,18 +591,21 @@ class RuleProvider extends AbstractHelper
                     $logRequestOptions[] = $option;
                     $blockSignalOptions[] = $option;
                     $deceptionOptions[] = $option;
+                    $signalIdOptions[] = $option;
 
                 } else if ($option['type'] === 'attack') {
 
                     $excludeSignalOptions[] = $option;
                     $logRequestOptions[] = $option;
                     $deceptionOptions[] = $option;
+                    $signalIdOptions[] = $option;
 
                 } else if ($option['type'] === 'informational') {
 
                     $excludeSignalOptions[] = $option;
                     $logRequestOptions[] = $option;
                     $deceptionOptions[] = $option;
+                    $signalIdOptions[] = $option;
 
                 } else if ($option['type'] === 'anomaly' && $option['detection_type'] === 'templated') {
 
@@ -609,7 +616,7 @@ class RuleProvider extends AbstractHelper
                     $excludeSignalOptions[] = $option;
                     $logRequestOptions[] = $option;
                     $deceptionOptions[] = $option;
-
+                    $signalIdOptions[] = $option;
                 }
             }
 
@@ -645,6 +652,7 @@ class RuleProvider extends AbstractHelper
                 'ip_list_options' => $ipListOptions,
                 'signal_list_options' => $signalListOptions,
                 'text_list_options' => $textListOptions,
+                'signal_id_list_options' => $signalIdOptions,
             ];
 
         } catch (\Throwable $exception) {

@@ -1054,6 +1054,23 @@ define([
 
                     conditionInputSelect.show()
 
+                } else if (currentConditionType === 'signal_id' &&
+                    (selectedValue === 'equals' || selectedValue === 'does_not_equal'))
+                {
+
+                    selectOptionValues = config.rulePayload?.multival_parameters[currentConditionType]?.secondary_options ?? '';
+                    selectOptionValues = selectOptions?.[selectOptionValues] ?? [];
+                    conditionInputValue.empty().hide()
+                    conditionInputSelect.empty()
+
+                    $.each(selectOptionValues, function(key, value) {
+                        conditionInputSelect.append(
+                            $('<option>', { value: value.reference_id, text: value.name })
+                        );
+                    });
+
+                    conditionInputSelect.show()
+
                 } else {
 
                     let selectOptionValues = []; // no select options in multival fields
