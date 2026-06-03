@@ -38,6 +38,7 @@ class EditVirtualPatch extends Action
         $result = $this->resultJsonFactory->create();
 
         $patchId = $this->getRequest()->getParam('patch_id');
+        $workspaceId = $this->getRequest()->getParam('workspace_id', '');
         $patchStatus = $this->getRequest()->getParam('patch_status');
         $patchStatus = filter_var($patchStatus, FILTER_VALIDATE_BOOLEAN);
         $patchMode = $this->getRequest()->getParam('patch_mode');
@@ -57,7 +58,7 @@ class EditVirtualPatch extends Action
         }
 
         try {
-            $response = $this->api->editVirtualPatch($patchId, $patchMode, $patchStatus);
+            $response = $this->api->editVirtualPatch($workspaceId, $patchId, $patchMode, $patchStatus);
 
             return $result->setData([
                 'status' => $response

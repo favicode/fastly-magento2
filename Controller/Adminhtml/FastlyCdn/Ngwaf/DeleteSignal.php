@@ -47,8 +47,10 @@ class DeleteSignal extends Action
             ]);
         }
 
+        $workspaceId = $this->getRequest()->getParam('workspace_id', '');
+
         try {
-            $response = $this->api->deleteSignal($signalId);
+            $response = $this->api->deleteSignal($workspaceId, $signalId);
 
             return $result->setData([
                 'status' => is_null($response) // response body is null on successful delete signal request

@@ -49,6 +49,7 @@ class EditRule extends Action
         $result = $this->resultJsonFactory->create();
 
         $ruleId = $this->getRequest()->getParam('rule_id');
+        $workspaceId = $this->getRequest()->getParam('workspace_id', '');
         $rulePayload = $this->getRequest()->getParam('rule_payload');
 
         if (empty($rulePayload['conditions'])) {
@@ -117,7 +118,7 @@ class EditRule extends Action
         }
 
         try {
-            $response = $this->api->createRule($sanitizedPayload, $ruleId);
+            $response = $this->api->createRule($workspaceId, $sanitizedPayload, $ruleId);
 
             return $result->setData([
                 'status' => $response

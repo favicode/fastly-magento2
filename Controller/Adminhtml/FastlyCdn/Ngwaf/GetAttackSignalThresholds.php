@@ -37,7 +37,7 @@ class GetAttackSignalThresholds extends Action
         $result = $this->resultJsonFactory->create();
 
         try {
-            $thresholds = $this->api->getAttackSignalThresholds();
+            $thresholds = $this->api->getAttackSignalThresholds($this->_request->getParam('workspace_id', ''));
 
             return $result->setData([
                 'status' => true,

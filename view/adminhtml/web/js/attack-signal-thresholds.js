@@ -10,6 +10,7 @@ define([
         let successMessageDiv = $('#fastly-success-ngwaf-attack-signal-thresholds');
         let thresholdsModal = $('#fastly-attack-signal-tresholds-modal-content');
         let editThresholdButton = $('#fastly_ngwaf_attack_thresholds_edit_button');
+        let workspaceIdElement = $('#system_full_page_cache_fastly_fastly_next_gen_waf_fastly_next_gen_waf_workspace_id');
 
 
         editThresholdButton.on('click', function () {
@@ -33,6 +34,9 @@ define([
             $.ajax({
                 type: 'GET',
                 url: config.getThresholdsUrl,
+                data: {
+                    'workspace_id': workspaceIdElement.val()
+                },
                 showLoader: true,
                 success: function (response) {
 
@@ -112,6 +116,7 @@ define([
                 url: config.editThresholdsUrl,
                 data: {
                     'immediate': immediateBlocking,
+                    'workspace_id': workspaceIdElement.val(),
                     'one_minute': oneMinuteThreshold,
                     'ten_minutes': tenMinuteThreshold,
                     'one_hour': oneHourThreshold

@@ -44,7 +44,7 @@ class GetRuleSelectOptions extends Action
 
         try {
 
-            $options = $this->ruleProvider->getSelectOptions();
+            $options = $this->ruleProvider->getSelectOptions($this->_request->getParam('workspace_id', ''));
 
             return $result->setData([
                 'status' => true,

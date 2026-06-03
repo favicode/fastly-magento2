@@ -14,11 +14,16 @@ define([
         let successMessageDiv = $('#fastly-success-ngwaf-signal');
         let signalModal = $('#fastly-signal-modal-content');
         let newSignalButton = $('#fastly_ngwaf_signal_create_button');
+        let workspaceIdElement = $('#system_full_page_cache_fastly_fastly_next_gen_waf_fastly_next_gen_waf_workspace_id');
 
 
         ngWafHead.one('click', function () {
             fetchSignals();
         });
+
+        workspaceIdElement.on('change', function () {
+            fetchSignals()
+        })
 
         newSignalButton.on('click', function () {
             createSignalModal();
@@ -29,6 +34,9 @@ define([
             $.ajax({
                 type: 'GET',
                 url: config.getAllSignalsUrl,
+                data: {
+                    'workspace_id' : workspaceIdElement.val()
+                },
                 showLoader: false,
                 success: function (response) {
 
@@ -41,12 +49,13 @@ define([
                     }  else {
 
                         errorMessageDiv.hide()
+                        noSignalsFoundMessage.hide()
 
                         let signals = response.signals ?? null;
                         if (!signals || !signals.length) {
+                            signals = [];
                             loader.hide()
                             noSignalsFoundMessage.show()
-                            return;
                         }
 
                         renderSignalList(signals);
@@ -142,7 +151,8 @@ define([
                 type: 'POST',
                 url: config.deleteSignalUrl,
                 data: {
-                    'signal_id': signalId
+                    'signal_id': signalId,
+                    'workspace_id': workspaceIdElement.val()
                 },
                 showLoader: true,
 
@@ -231,7 +241,8 @@ define([
                 data: {
                     'signal_id': signalId,
                     'signal_name': signalName,
-                    'signal_description': signalDescription
+                    'signal_description': signalDescription,
+                    'workspace_id': workspaceIdElement.val()
                 },
                 showLoader: true,
 

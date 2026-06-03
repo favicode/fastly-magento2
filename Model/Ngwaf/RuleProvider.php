@@ -516,13 +516,13 @@ class RuleProvider extends AbstractHelper
         ];
     }
 
-    public function getSelectOptions()
+    public function getSelectOptions(string $workspaceId)
     {
 
         try {
 
-            $workspaceSignals = $this->api->getSignals();
-            $workspaceLists = $this->api->getWorkspaceLists();
+            $workspaceSignals = $this->api->getSignals($workspaceId);
+            $workspaceLists = $this->api->getWorkspaceLists($workspaceId);
 
             $sortedSignals = [];
 

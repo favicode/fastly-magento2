@@ -66,7 +66,7 @@ class EditAttackSignalThresholds extends Action
         ];
 
         try {
-            $response = $this->api->editThresholds($payload);
+            $response = $this->api->editThresholds($this->getRequest()->getParam('workspace_id', ''), $payload);
 
             return $result->setData([
                 'status' => $response

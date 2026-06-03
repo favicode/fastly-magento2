@@ -14,12 +14,18 @@ define([
         let successMessageDiv = $('#fastly-success-ngwaf-rule');
         let ruleModal = $('#fastly-rule-modal-content');
         let newRuleButton = $('#fastly_ngwaf_rule_create_button');
+        let workspaceIdElement = $('#system_full_page_cache_fastly_fastly_next_gen_waf_fastly_next_gen_waf_workspace_id');
+
 
         let selectOptions = undefined;
 
         ngWafHead.one('click', function () {
             fetchRules();
         });
+
+        workspaceIdElement.on('change', function () {
+            fetchRules()
+        })
 
         newRuleButton.on('click', function () {
             populateSelectFieldOptions();
@@ -31,6 +37,9 @@ define([
             $.ajax({
                 type: 'GET',
                 url: config.getAllRulesUrl,
+                data: {
+                    'workspace_id': workspaceIdElement.val()
+                },
                 showLoader: false,
                 success: function (response) {
 
@@ -43,12 +52,13 @@ define([
                     }  else {
 
                         errorMessageDiv.hide()
+                        noRulesFoundMessage.hide()
 
                         let rules = response.rules ?? null;
                         if (!rules || !rules.length) {
+                            rules = [];
                             loader.hide()
                             noRulesFoundMessage.show()
-                            return;
                         }
 
                         renderRuleList(rules);
@@ -163,7 +173,8 @@ define([
                 type: 'POST',
                 url: config.deleteRuleUrl,
                 data: {
-                    'rule_id': ruleId
+                    'rule_id': ruleId,
+                    'workspace_id': workspaceIdElement.val()
                 },
                 showLoader: true,
 
@@ -753,6 +764,7 @@ define([
                 url: config.editRuleUrl,
                 data: {
                     'rule_id': ruleId,
+                    'workspace_id': workspaceIdElement.val(),
                     'rule_payload': payload
                 },
                 showLoader: true,
@@ -1578,6 +1590,9 @@ define([
                     type: 'GET',
                     url: config.ruleSelectOptionsUrl,
                     showLoader: true,
+                    data: {
+                        'workspace_id': workspaceIdElement.val()
+                    },
                     async: false,
                     success: function (response) {
 

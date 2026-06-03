@@ -13,16 +13,25 @@ define([
         let errorMessageDiv = $('#fastly-error-ngwaf-virtual-patch');
         let successMessageDiv = $('#fastly-success-ngwaf-virtual-patch');
         let virtualPatchModal = $('#fastly-virtual-patch-modal-content');
+        let workspaceIdElement = $('#system_full_page_cache_fastly_fastly_next_gen_waf_fastly_next_gen_waf_workspace_id');
 
         ngWafHead.one('click', function () {
             fetchVirtualPatches();
         });
+
+        workspaceIdElement.on('change', function () {
+            fetchVirtualPatches()
+        })
+
 
         function fetchVirtualPatches() {
 
             $.ajax({
                 type: 'GET',
                 url: config.getAllVirtualPatchesUrl,
+                data: {
+                    'workspace_id': workspaceIdElement.val()
+                },
                 showLoader: false,
                 success: function (response) {
 
@@ -34,12 +43,13 @@ define([
                     }  else {
 
                         errorMessageDiv.hide()
+                        noVirtualPatchesFoundMessage.hide()
 
                         let patches = response.patches ?? null;
                         if (!patches || !patches.length) {
+                            patches = [];
                             loader.hide()
                             noVirtualPatchesFoundMessage.show()
-                            return;
                         }
 
                         renderVirtualPatchList(patches);
@@ -182,6 +192,7 @@ define([
                 url: config.editVirtualPatchUrl,
                 data: {
                     'patch_id': virtualPatchId,
+                    'workspace_id': workspaceIdElement.val(),
                     'patch_status': patchStatus,
                     'patch_mode': patchMode
                 },

@@ -41,7 +41,7 @@ class GetAllWorkspaceLists extends Action
         $result = $this->resultJsonFactory->create();
 
         try {
-            $workspaceLists = $this->api->getWorkspaceLists();
+            $workspaceLists = $this->api->getWorkspaceLists($this->_request->getParam('workspace_id', ''));
 
             return $result->setData([
                 'status' => true,

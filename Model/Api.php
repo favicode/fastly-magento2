@@ -46,6 +46,7 @@ class Api
     public const FASTLY_MAX_HEADER_KEY_SIZE = 256;
     public const UPSERT_ITEMS_MAX_COUNT = 200;
 
+    public const GET_WORKSPACE_IDS_URI = 'ngwaf/v1/workspaces';
     public const GET_SIGNALS_URI  = 'ngwaf/v1/workspaces/%s/signals';
     public const EDIT_SIGNAL_URI  = 'ngwaf/v1/workspaces/%s/signals/%s';
     public const GET_RULES_URI  = 'ngwaf/v1/workspaces/%s/rules';
@@ -1743,9 +1744,8 @@ class Api
         return $responseMessage;
     }
 
-    public function getSignals()
+    public function getSignals(string $workspaceId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1772,9 +1772,8 @@ class Api
 
     }
 
-    public function deleteSignal(string $signalId)
+    public function deleteSignal(string $workspaceId, string $signalId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1789,9 +1788,8 @@ class Api
         return $response;
     }
 
-    public function createSignal(string $signalName, string $signalDescription, ?string $signalId = null)
+    public function createSignal(string $workspaceId, string $signalName, string $signalDescription, ?string $signalId = null)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1820,9 +1818,8 @@ class Api
         return $response;
     }
 
-    public function getRules()
+    public function getRules(string $workspaceId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1854,9 +1851,8 @@ class Api
 
     }
 
-    public function deleteRule(string $ruleId)
+    public function deleteRule(string $workspaceId, string $ruleId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1871,9 +1867,8 @@ class Api
         return $response;
     }
 
-    public function createRule(array $payload, ?string $ruleId = null)
+    public function createRule(string $workspaceId, array $payload, ?string $ruleId = null)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1906,10 +1901,8 @@ class Api
         return $response;
     }
 
-    public function getVirtualPatches()
+    public function getVirtualPatches(string $workspaceId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
-
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
         }
@@ -1935,9 +1928,8 @@ class Api
 
     }
 
-    public function editVirtualPatch(string $patchId, string $mode, ?bool $isEnabled = false)
+    public function editVirtualPatch(string $workspaceId, string $patchId, string $mode, ?bool $isEnabled = false)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1955,9 +1947,8 @@ class Api
         return $response;
     }
 
-    public function getWorkspaceLists()
+    public function getWorkspaceLists(string $workspaceId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -1986,9 +1977,8 @@ class Api
 
     }
 
-    public function deleteWorkspaceList(string $listId)
+    public function deleteWorkspaceList(string $workspaceId, string $listId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -2004,13 +1994,13 @@ class Api
     }
 
     public function createWorkspaceList(
+        string $workspaceId,
         string $listName,
         string $listDescription,
         string $listType,
         array $listEntries,
         ?string $listId = null
     ) {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -2042,9 +2032,8 @@ class Api
         return $response;
     }
 
-    public function getAttackSignalThresholds()
+    public function getAttackSignalThresholds(string $workspaceId)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -2069,9 +2058,8 @@ class Api
         return $thresholds;
     }
 
-    public function editThresholds(array $payload)
+    public function editThresholds(string $workspaceId, array $payload)
     {
-        $workspaceId = $this->config->getWorkspaceId();
 
         if (empty($workspaceId)) {
             throw new \Exception('Workspace ID is missing');
@@ -2088,5 +2076,24 @@ class Api
         }
 
         return $response;
+    }
+
+    public function getWorkspaceIds()
+    {
+        $requestUrl = $this->config->getApiEndpoint() . self::GET_WORKSPACE_IDS_URI;
+
+        $response = $this->_fetch($requestUrl);
+
+        $workspaceIds = [];
+
+        foreach ($response->data ?? [] as $workspace) {
+
+            $workspaceIds[] = [
+                'id' => $workspace->id,
+                'name' => $workspace->name
+            ];
+        }
+
+        return $workspaceIds;
     }
 }

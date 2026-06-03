@@ -14,11 +14,17 @@ define([
         let successMessageDiv = $('#fastly-success-ngwaf-workspace-list');
         let workspaceListModal = $('#fastly-workspace-list-modal-content');
         let newWorkspaceListButton = $('#fastly_ngwaf_workspace_list_create_button');
+        let workspaceIdElement = $('#system_full_page_cache_fastly_fastly_next_gen_waf_fastly_next_gen_waf_workspace_id');
 
 
         ngWafHead.one('click', function () {
             fetchWorkspaceLists();
         });
+
+        workspaceIdElement.on('change', function () {
+            fetchWorkspaceLists()
+        })
+
 
         newWorkspaceListButton.on('click', function () {
             createWorkspaceListModal();
@@ -29,6 +35,9 @@ define([
             $.ajax({
                 type: 'GET',
                 url: config.getAllWorkspaceListsUrl,
+                data: {
+                    'workspace_id': workspaceIdElement.val()
+                },
                 showLoader: false,
                 success: function (response) {
 
@@ -41,12 +50,13 @@ define([
                     }  else {
 
                         errorMessageDiv.hide()
+                        noWorkspaceListsFoundMessage.hide()
 
                         let workspaceLists = response.workspaceLists ?? null;
                         if (!workspaceLists || !workspaceLists.length) {
+                            workspaceLists = [];
                             loader.hide()
                             noWorkspaceListsFoundMessage.show()
-                            return;
                         }
 
                         renderWorkspaceLists(workspaceLists);
@@ -155,7 +165,8 @@ define([
                 type: 'POST',
                 url: config.deleteWorkspaceListUrl,
                 data: {
-                    'workspace_list_id': workspaceListId
+                    'workspace_list_id': workspaceListId,
+                    'workspace_id': workspaceIdElement.val()
                 },
                 showLoader: true,
 
@@ -263,6 +274,7 @@ define([
                 url: config.editWorkspaceListUrl,
                 data: {
                     'workspace_list_id': workspaceListId,
+                    'workspace_id': workspaceIdElement.val(),
                     'workspace_list_name': workspaceListName,
                     'workspace_list_description': workspaceListDescription,
                     'workspace_list_type': workspaceListType,

@@ -41,7 +41,7 @@ class GetAllRules extends Action
         $result = $this->resultJsonFactory->create();
 
         try {
-            $rules = $this->api->getRules();
+            $rules = $this->api->getRules($this->_request->getParam('workspace_id', ''));
 
             return $result->setData([
                 'status' => true,

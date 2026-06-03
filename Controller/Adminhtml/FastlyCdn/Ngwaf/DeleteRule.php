@@ -47,8 +47,10 @@ class DeleteRule extends Action
             ]);
         }
 
+        $workspaceId = $this->getRequest()->getParam('workspace_id', '');
+
         try {
-            $response = $this->api->deleteRule($ruleId);
+            $response = $this->api->deleteRule($workspaceId, $ruleId);
 
             return $result->setData([
                 'status' => is_null($response) // response body is null on successful delete rule request

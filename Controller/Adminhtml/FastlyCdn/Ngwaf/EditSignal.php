@@ -38,6 +38,7 @@ class EditSignal extends Action
         $result = $this->resultJsonFactory->create();
 
         $signalId = $this->getRequest()->getParam('signal_id');
+        $workspaceId = $this->getRequest()->getParam('workspace_id', '');
         $signalName = $this->getRequest()->getParam('signal_name');
         $signalDescription = $this->getRequest()->getParam('signal_description');
 
@@ -56,7 +57,7 @@ class EditSignal extends Action
         }
 
         try {
-            $response = $this->api->createSignal($signalName, $signalDescription, $signalId);
+            $response = $this->api->createSignal($workspaceId, $signalName, $signalDescription, $signalId);
 
             return $result->setData([
                 'status' => $response

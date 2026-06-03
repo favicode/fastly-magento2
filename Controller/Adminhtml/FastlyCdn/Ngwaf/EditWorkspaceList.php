@@ -38,6 +38,7 @@ class EditWorkspaceList extends Action
         $result = $this->resultJsonFactory->create();
 
         $listId = $this->getRequest()->getParam('workspace_list_id');
+        $workspaceId = $this->getRequest()->getParam('workspace_id', '');
         $listName = $this->getRequest()->getParam('workspace_list_name');
         $listDescription = $this->getRequest()->getParam('workspace_list_description', '');
         $listType = $this->getRequest()->getParam('workspace_list_type');
@@ -66,7 +67,7 @@ class EditWorkspaceList extends Action
         }
 
         try {
-            $response = $this->api->createWorkspaceList($listName, $listDescription, $listType, $listEntries, $listId);
+            $response = $this->api->createWorkspaceList($workspaceId, $listName, $listDescription, $listType, $listEntries, $listId);
 
             return $result->setData([
                 'status' => $response

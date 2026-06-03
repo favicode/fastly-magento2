@@ -41,7 +41,7 @@ class GetAllSignals extends Action
         $result = $this->resultJsonFactory->create();
 
         try {
-            $signals = $this->api->getSignals();
+            $signals = $this->api->getSignals($this->_request->getParam('workspace_id', ''));
 
             return $result->setData([
                 'status' => true,

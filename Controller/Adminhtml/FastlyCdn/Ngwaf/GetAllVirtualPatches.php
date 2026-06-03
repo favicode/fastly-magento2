@@ -40,7 +40,7 @@ class GetAllVirtualPatches extends Action
         $result = $this->resultJsonFactory->create();
 
         try {
-            $patches = $this->api->getVirtualPatches();
+            $patches = $this->api->getVirtualPatches($this->_request->getParam('workspace_id', ''));
 
             return $result->setData([
                 'status' => true,

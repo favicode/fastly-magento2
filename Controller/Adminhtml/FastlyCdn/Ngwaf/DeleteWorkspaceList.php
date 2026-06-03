@@ -39,6 +39,7 @@ class DeleteWorkspaceList extends Action
         $result = $this->resultJsonFactory->create();
 
         $listId = $this->getRequest()->getParam('workspace_list_id');
+        $workspaceId = $this->getRequest()->getParam('workspace_id', '');
 
         if (empty($listId)) {
             return $result->setData([
@@ -48,7 +49,7 @@ class DeleteWorkspaceList extends Action
         }
 
         try {
-            $response = $this->api->deleteWorkspaceList($listId);
+            $response = $this->api->deleteWorkspaceList($workspaceId, $listId);
 
             return $result->setData([
                 'status' => is_null($response) // response body is null on successful delete workspace list request
