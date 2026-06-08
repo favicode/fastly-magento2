@@ -46,6 +46,7 @@ class Api
     public const FASTLY_MAX_HEADER_KEY_SIZE = 256;
     public const UPSERT_ITEMS_MAX_COUNT = 200;
 
+    public const CHECK_BOT_MANAGEMENT_STATUS_URL = 'enabled-products/v1/bot_management/services/%s';
     public const GET_WORKSPACE_IDS_URI = 'ngwaf/v1/workspaces';
     public const GET_SIGNALS_URI  = 'ngwaf/v1/workspaces/%s/signals';
     public const EDIT_SIGNAL_URI  = 'ngwaf/v1/workspaces/%s/signals/%s';
@@ -2095,5 +2096,22 @@ class Api
         }
 
         return $workspaceIds;
+    }
+
+    public function getBotManagementStatus()
+    {
+
+        $serviceId = $this->config->getServiceId();
+
+        if (empty($serviceId)) {
+            throw new \Exception('Service ID is missing');
+        }
+
+        $uri = sprintf(self::CHECK_BOT_MANAGEMENT_STATUS_URL, urlencode($serviceId));
+        $requestUrl = $this->config->getApiEndpoint() . $uri;
+
+        $response = $this->_fetch($requestUrl);
+
+        return $response;
     }
 }

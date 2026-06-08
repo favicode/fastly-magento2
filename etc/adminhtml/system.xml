@@ -667,6 +667,7 @@
                          Next-Gen Web Application Firewall (NGWAF)
                     =================================== -->
                     <group id="fastly_next_gen_waf" sortOrder="495" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
+                        <frontend_model>Fastly\Cdn\Block\System\Config\Ngwaf\NgwafFieldset</frontend_model>
                         <label>Next-Gen Web Application Firewall (NGWAF)</label>
                         <field id="fastly_next_gen_waf_workspace_id" type="select" translate="label comment" showInDefault="1" showInWebsite="0" showInStore="0">
                             <label>Workspace ID</label>
