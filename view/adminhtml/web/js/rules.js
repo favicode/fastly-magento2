@@ -6,6 +6,9 @@ define([
 
     return function (config) {
 
+        const NUMBER_OF_CONDITIONS_LIMIT = 10;
+        const NUMBER_OF_ACTIONS_LIMIT = 2
+
         let ngWafHead = $('#system_full_page_cache_fastly_fastly_next_gen_waf-head');
         let noRulesFoundMessage = $('#ngwaf-no-rules');
         let loader = $('#ngwaf-loading-rules');
@@ -329,14 +332,16 @@ define([
 
             } else if (ruleParameters?.rate_limit && typeof ruleParameters.rate_limit === 'string') {
 
-                actionType = $('#fastly_ngwaf_rule_action_field')
+                actionType = $('.fastly_ngwaf_rule_action_field')
 
                 $('.fastly-ngwaf-rule-actions').show()
                 $('.fastly-ngwaf-rule-rate-limit-actions').hide()
                 $('.fastly-ngwaf-rule-rate-limit-details').hide()
             }
 
-            if (ruleParameters?.actions && Array.isArray(ruleParameters.actions) && actionType) {
+            let actionsExists = ruleParameters?.actions && Array.isArray(ruleParameters.actions) && actionType;
+
+            if (actionsExists && ruleParameters?.type !== 'request') {
 
                 let action = ruleParameters.actions[0];
 
@@ -372,7 +377,7 @@ define([
 
 
                     } else {
-                        ruleActionsValueElement = $('#fastly_ngwaf_rule_action_value');
+                        ruleActionsValueElement = $('.fastly_ngwaf_rule_action_value');
                         ruleActionsBlock = $('.fastly_ngwaf_rule_action_value_block');
                         optionsForAction = config.rulePayload?.actions[ruleParameters?.type]?.[action.type]?.options ?? [];
 
@@ -398,6 +403,32 @@ define([
                     ruleActionsValueElement.show()
                     ruleActionsValueElement.val(action.signal);
                 }
+
+                displayAddActionButton($('#ngwaf-add-rule-action-button'), ruleParameters.type)
+
+            } else if (actionsExists && ruleParameters?.type === 'request') {
+
+                // Request is the only type which can have multiple actions
+
+                let actionsElement = $('.fastly-ngwaf-rule-actions');
+                actionsElement.children('.fastly-ngwaf-rule-action').remove();
+                let currentElement;
+
+                $.each(ruleParameters.actions, function(index, action) {
+
+                    addActionField(ruleParameters.type)
+
+                    currentElement = actionsElement.children('.fastly-ngwaf-rule-action').last()
+                    currentElement.find('.fastly_ngwaf_rule_action_field').val(action.type).trigger('change');
+
+                    if (action.signal) {
+                        currentElement.find('.fastly_ngwaf_rule_action_value').val(action.signal);
+                    } else if (action.deception_type) {
+                        currentElement.find('.fastly_ngwaf_rule_action_value').val(action.deception_type);
+                    }
+                })
+
+                displayAddActionButton($('#ngwaf-add-rule-action-button'), ruleParameters.type)
             }
 
             if (ruleParameters?.conditions && Array.isArray(ruleParameters.conditions)) {
@@ -660,31 +691,37 @@ define([
             if (ruleType === 'request') {
                 payload.request_logging = ruleForm.find('#fastly_ngwaf_rule_request_logging').val()
 
-                let actionType = ruleForm.find('#fastly_ngwaf_rule_action_field').val();
+                let actionFields = ruleForm.find('.fastly-ngwaf-rule-action');
 
-                if (actionType === 'deception') {
+                $.each(actionFields, function(key, element) {
 
-                    actions.push({
-                        'type': actionType,
-                        'deception_type': ruleForm.find('#fastly_ngwaf_rule_action_value').val()
-                    })
+                    let actionType = $(element).find('.fastly_ngwaf_rule_action_field').val();
 
-                } else if (actionType === 'add_signal') {
-                    actions.push({
-                        'type': actionType,
-                        'signal': ruleForm.find('#fastly_ngwaf_rule_action_value').val()
-                    })
-                } else {
-                    actions.push({
-                        'type': actionType,
-                    })
-                }
+                    if (actionType === 'deception') {
+
+                        actions.push({
+                            'type': actionType,
+                            'deception_type': $(element).find('.fastly_ngwaf_rule_action_value').val()
+                        })
+
+                    } else if (actionType === 'add_signal') {
+                        actions.push({
+                            'type': actionType,
+                            'signal': $(element).find('.fastly_ngwaf_rule_action_value').val()
+                        })
+
+                    } else {
+                        actions.push({
+                            'type': actionType,
+                        })
+                    }
+                })
 
             } else if (ruleType === 'signal') {
 
                 actions.push({
-                    'type': ruleForm.find('#fastly_ngwaf_rule_action_field').val(),
-                    'signal': ruleForm.find('#fastly_ngwaf_rule_action_value').val(),
+                    'type': ruleForm.find('.fastly_ngwaf_rule_action_field').val(),
+                    'signal': ruleForm.find('.fastly_ngwaf_rule_action_value').val(),
                 })
 
             } else if (ruleType === 'rate_limit') {
@@ -803,9 +840,7 @@ define([
             // NGWAF creation/edit rule form
             let ruleTypeSelectElement = $('#fastly_ngwaf_rule_type');
 
-            let ruleActionsElement = $('#fastly_ngwaf_rule_action_field');
-            let ruleActionsValueBlock = $('.fastly_ngwaf_rule_action_value_block');
-            let ruleActionsValueElement = $('#fastly_ngwaf_rule_action_value');
+            let ruleActionsAddButton = $('#ngwaf-add-rule-action-button');
 
             let rateLimitActionsElement = $('#fastly_ngwaf_rule_rate_limit_action_field');
             let rateLimitActionsMatchType = $('#fastly_ngwaf_rule_rate_limit_action_match_type');
@@ -838,6 +873,12 @@ define([
                 deleteCondition($(this).parents('.ngwaf-condition-group'));
             })
 
+            $(document).off("click", '.ngwaf-fastly-delete-rule-action')
+                .on("click", '.ngwaf-fastly-delete-rule-action', function() {
+
+                    deleteAction($(this).parents('.fastly-ngwaf-rule-action'));
+                })
+
             $(document).off("click", '.ngwaf-fastly-add-multival-rule-condition-action')
                 .on("click", '.ngwaf-fastly-add-multival-rule-condition-action', function () {
 
@@ -849,7 +890,7 @@ define([
 
                     let numberOfConditions = $(this).siblings('.ngwaf-multival-conditions').children('.ngwaf-condition').length || 0;
 
-                    if (numberOfConditions >= 10) {
+                    if (numberOfConditions >= NUMBER_OF_CONDITIONS_LIMIT) {
                         $(this).prop('disabled', true);
                         $(this).siblings('.ngwaf-fastly-add-rule-condition-group-action').prop('disabled', true);
                     }
@@ -889,7 +930,7 @@ define([
                         numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
                     }
 
-                    if (numberOfConditions >= 10) {
+                    if (numberOfConditions >= NUMBER_OF_CONDITIONS_LIMIT) {
                         $(this).prop('disabled', true);
                         $(this).siblings('.ngwaf-fastly-add-rule-condition-group-action').prop('disabled', true);
                     }
@@ -913,14 +954,15 @@ define([
 
                     let numberOfConditions = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').length || 0;
 
-                    if (numberOfConditions >= 10) {
+                    if (numberOfConditions >= NUMBER_OF_CONDITIONS_LIMIT) {
                         $(this).prop('disabled', true);
                         $(this).siblings('.ngwaf-fastly-add-rule-condition-action').prop('disabled', true);
                     }
 
             })
 
-            ruleActionsElement.on("change", function() {
+            $(document).off("change", '.fastly_ngwaf_rule_action_field')
+                .on("change", '.fastly_ngwaf_rule_action_field',function () {
 
                 let selectedRuleType = ruleTypeSelectElement.val();
                 let selectedActionType = $(this).val();
@@ -930,6 +972,11 @@ define([
                 if (typeof optionsForAction === 'string') {
                     optionsForAction = selectOptions?.[optionsForAction] ?? [];
                 }
+
+                let ruleActionsValueBlock = $(this).closest('.fastly-ngwaf-rule-action')
+                    .find('.fastly_ngwaf_rule_action_value_block');
+                let ruleActionsValueElement = $(this).closest('.fastly-ngwaf-rule-action')
+                    .find('.fastly_ngwaf_rule_action_value');
 
                 if (!optionsForAction.length) {
                     ruleActionsValueBlock.hide()
@@ -1006,7 +1053,7 @@ define([
                     rateLimitActionsSection.hide();
                     rateLimitDetailsSection.hide();
 
-                    actionsElement = ruleActionsElement;
+                    actionsElement = $('.fastly_ngwaf_rule_action_field').first();
 
                 }
 
@@ -1016,16 +1063,14 @@ define([
                     requestRuleLogging.hide()
                 }
 
-                let actionOptions = config.rulePayload?.actions[selectedValue] ?? [];
+                displayAddActionButton(ruleActionsAddButton, selectedValue)
+                populateActionsField(actionsElement, selectedValue);
 
-                actionsElement.empty()
-                $.each(actionOptions, function(key, value) {
-                    actionsElement.append(
-                        $('<option>', { value: key, text: value.name })
-                    );
-                });
+            })
 
-                actionsElement.trigger('change')
+            ruleActionsAddButton.on('click', function () {
+
+                addActionField(ruleTypeSelectElement.val());
 
             })
 
@@ -1309,6 +1354,12 @@ define([
             addConditionMultivalButton.prop('disabled', false);
             addConditionGroupButton.prop('disabled', false);
             addConditionInGroupButton.prop('disabled', false);
+        }
+
+        function deleteAction(currentAction) {
+
+            currentAction.remove()
+            $("#ngwaf-add-rule-action-button").prop('disabled', false);
         }
 
         function displayMultivalForm(parentElement, conditionMultivalOptions) {
@@ -1597,6 +1648,84 @@ define([
 
             let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_rule_condition_field");
             initializeRuleConditionField(newRuleConditionField);
+        }
+
+        function displayAddActionButton(addActionButtonElement, selectedRuleType) {
+
+            let deleteActionButtons = $('.ngwaf-fastly-delete-rule-action');
+
+            if (selectedRuleType !== 'request') {
+                addActionButtonElement.hide()
+                deleteActionButtons.hide()
+                $('.fastly-ngwaf-rule-action').not(':first').remove();
+                return
+            }
+
+            deleteActionButtons.show();
+            addActionButtonElement.show();
+
+            if ($('.fastly-ngwaf-rule-action').length >= NUMBER_OF_ACTIONS_LIMIT) {
+                addActionButtonElement.prop('disabled', true);
+            } else {
+                addActionButtonElement.prop('disabled', false);
+            }
+        }
+
+        function populateActionsField(actionsElement, selectedRuleType) {
+
+            let actionOptions = config.rulePayload?.actions[selectedRuleType] ?? [];
+
+            actionsElement.empty()
+            $.each(actionOptions, function(key, value) {
+                actionsElement.append(
+                    $('<option>', { value: key, text: value.name })
+                );
+            });
+
+            actionsElement.trigger('change')
+        }
+
+        function addActionField(selectedRuleType) {
+
+            let elementToInsert = $(
+                `<div class="fastly-ngwaf-rule-action">
+                        <div class="action-input-fields">
+                            <div class="admin__field field ">
+                                <label class="admin__field-label">
+                                    <span>Type</span>
+                                </label>
+                                <div class="admin__field-control">
+                                    <select name="fastly_ngwaf_rule_action_field" class="fastly_ngwaf_rule_action_field admin__control-text">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="admin__field field  fastly_ngwaf_rule_action_value_block">
+                                <label class="admin__field-label">
+                                    <span>Value</span>
+                                </label>
+                                <div class="admin__field-control">
+                                    <select name="fastly_ngwaf_rule_action_value" class="fastly_ngwaf_rule_action_value admin__control-text">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-action'
+                                title='Delete Action'
+                                type='button'></button>
+                    </div>`
+            );
+
+            let ruleActionsSection = $('.fastly-ngwaf-rule-actions');
+            ruleActionsSection.append(elementToInsert);
+
+            if (ruleActionsSection.find('.fastly-ngwaf-rule-action').length >= NUMBER_OF_ACTIONS_LIMIT) {
+                $('#ngwaf-add-rule-action-button').prop('disabled', true);
+            }
+
+            let actionType = elementToInsert.find(".fastly_ngwaf_rule_action_field");
+
+            populateActionsField(actionType, selectedRuleType)
         }
 
         function populateSelectFieldOptions() {

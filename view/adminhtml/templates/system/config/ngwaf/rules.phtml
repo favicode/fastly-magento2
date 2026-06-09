@@ -148,25 +148,40 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
 
             <h2><?php /* @noEscape */ echo __("Actions") ?></h2>
             <div class="fastly-ngwaf-rule-actions">
-                <div class="admin__field field ">
-                    <label class="admin__field-label">
-                        <span><?php /* @noEscape */ echo __("Type") ?></span>
-                    </label>
-                    <div class="admin__field-control">
-                        <select id="fastly_ngwaf_rule_action_field" name="fastly_ngwaf_rule_action_field" class="admin__control-text">
-                        </select>
+                <div class="fastly-ngwaf-rule-action">
+
+                    <div class="action-input-fields">
+                        <div class="admin__field field ">
+                            <label class="admin__field-label">
+                                <span><?php /* @noEscape */ echo __("Type") ?></span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select name="fastly_ngwaf_rule_action_field" class="fastly_ngwaf_rule_action_field admin__control-text">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="admin__field field  fastly_ngwaf_rule_action_value_block">
+                            <label class="admin__field-label">
+                                <span><?php /* @noEscape */ echo __("Value") ?></span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select name="fastly_ngwaf_rule_action_value" class="fastly_ngwaf_rule_action_value admin__control-text">
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="admin__field field  fastly_ngwaf_rule_action_value_block">
-                    <label class="admin__field-label">
-                        <span><?php /* @noEscape */ echo __("Value") ?></span>
-                    </label>
-                    <div class="admin__field-control">
-                        <select id="fastly_ngwaf_rule_action_value" name="fastly_ngwaf_rule_action_value" class="admin__control-text">
-                        </select>
-                    </div>
+
+                    <button class='action-delete ngwaf-delete fastly-delete-snippet-icon ngwaf-fastly-delete-rule-action'
+                            title='Delete Action'
+                            type='button'></button>
                 </div>
             </div>
+
+            <button class='ngwaf-rule-button ngwaf-fastly-add-rule-action-button'
+                    id="ngwaf-add-rule-action-button"
+                    title='Add Action'
+                    type='button'>Add action</button>
+
             <div class="fastly-ngwaf-rule-rate-limit-actions">
                 <div class="admin__field field ">
                     <label class="admin__field-label">
@@ -357,6 +372,25 @@ $getRuleSelectOptionsUrl = $block->getUrl('adminhtml/fastlyCdn_Ngwaf/getRuleSele
 
     .fastly-ngwaf-rule-actions, .rule-details, .fastly-ngwaf-rule-rate-limit-actions, .fastly-ngwaf-rule-rate-limit-details {
         max-width: 50%;
+    }
+
+    .fastly-ngwaf-rule-action {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+        border-left: 5px solid rgba(0, 0, 0, 0.1);
+        margin-bottom: 3rem;
+        padding-left: 1rem;
+
+    }
+
+    .action-input-fields {
+        width: 90%;
+    }
+
+    .ngwaf-fastly-delete-rule-action {
+        align-self: flex-start;
+        margin-top: 2em;
     }
 
     .ngwaf-rule-fieldset h2, .ngwaf-rule-fieldset h3 {
