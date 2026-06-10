@@ -442,6 +442,25 @@ class RuleProvider extends AbstractHelper
                     'options' => 'custom_signal_options', // Workspace signals
                     'parameter_name' => 'signal_name'
                 ],
+                'browser_challenge' => [
+                    'name' => 'Browser Challenge',
+                    'options' => [
+                        [
+                            'id' => 'true',
+                            'display_name' => 'Allow Interactive - On',
+                        ],
+                        [
+                            'id' => 'false',
+                            'display_name' => 'Allow Interactive - Off',
+                        ]
+                    ],
+                ],
+                'dynamic_challenge' => [
+                    'name' => 'Dynamic Challenge',
+                ],
+                'verify_token' => [
+                    'name' => 'Verify Token',
+                ],
                 'deception' => [
                     'name' => 'Deception',
                     'options' => [

@@ -436,6 +436,8 @@ define([
                         currentElement.find('.fastly_ngwaf_rule_action_value').val(action.signal);
                     } else if (action.deception_type) {
                         currentElement.find('.fastly_ngwaf_rule_action_value').val(action.deception_type);
+                    } else if (action.hasOwnProperty('allow_interactive')) {
+                        currentElement.find('.fastly_ngwaf_rule_action_value').val(action.allow_interactive.toString());
                     }
                 })
 
@@ -737,6 +739,12 @@ define([
                         actions.push({
                             'type': actionType,
                             'signal': $(element).find('.fastly_ngwaf_rule_action_value').val()
+                        })
+
+                    } else if (actionType === 'browser_challenge') {
+                        actions.push({
+                            'type': actionType,
+                            'allow_interactive': $(element).find('.fastly_ngwaf_rule_action_value').val()
                         })
 
                     } else {

@@ -108,6 +108,14 @@ class EditRule extends Action
             $rulePayload['rate_limit']['duration'] = (int) $rulePayload['rate_limit']['duration'];
         }
 
+        // need to cast to bool for API call
+        foreach ($rulePayload['actions'] as $key => $action) {
+
+            if (isset($action['allow_interactive'])) {
+                $rulePayload['actions'][$key]['allow_interactive'] = $action['allow_interactive'] === 'true';
+            }
+        }
+
         $sanitizedPayload = [];
 
         foreach ($this->payloadParameters as $parameter) {
