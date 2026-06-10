@@ -2012,7 +2012,7 @@ class Api
             'description' => $listDescription,
             'type' => $listType,
             'entries' => $listEntries,
-            'scope' => 'workspace',
+            'scope' => ['type' => 'workspace'],
         ]);
 
         if ($listId) {
