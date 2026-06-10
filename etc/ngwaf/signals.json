@@ -2052,11 +2052,51 @@
     "metrics": []
   },
   {
+    "id": "CVE-2026-9082",
+    "name": "CVE-2026-9082",
+    "display_name": "CVE-2026-9082",
+    "long_name": "CVE-2026-9082",
+    "description": "Unauthenticated SQL Injection in Drupal",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
     "id": "CVE-2026-23869",
     "name": "CVE-2026-23869",
     "display_name": "CVE-2026-23869",
     "long_name": "CVE-2026-23869",
     "description": "React Server Components Denial of Service",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": false,
+    "configurable": true,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "CVE"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": []
+  },
+  {
+    "id": "CVE-2026-42945",
+    "name": "CVE-2026-42945",
+    "display_name": "CVE-2026-42945",
+    "long_name": "CVE-2026-42945",
+    "description": "NGINX Rift Heap Buffer Overflow",
     "type": "anomaly",
     "namespace": "system",
     "enabled": false,
@@ -3627,6 +3667,498 @@
     "metrics": []
   },
   {
+    "id": "BOT-ANALYSIS",
+    "name": "BOT-ANALYSIS",
+    "display_name": "Bot Analysis",
+    "long_name": "Bot Analysis",
+    "description": "Indicates a request that was analyzed for bots",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": true,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "legacyTemplated",
+    "metrics": [],
+    "signal_template": {
+      "name": "BOT-ANALYSIS",
+      "conditions": [
+        {
+          "type": "single",
+          "field": "path",
+          "operator": "like",
+          "value": "*"
+        }
+      ],
+      "block_signal": ""
+    }
+  },
+  {
+    "id": "SUSPECTED-BAD-BOT",
+    "name": "SUSPECTED-BAD-BOT",
+    "display_name": "Suspected Bad Bot",
+    "long_name": "Suspected Bad Bot",
+    "description": "Identifies suspected malicious bot",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SUSPECTED-BAD-BOT.HEADLESS",
+    "name": "SUSPECTED-BAD-BOT.HEADLESS",
+    "display_name": "Suspected Bad Bot Headless",
+    "long_name": "Suspected Bad Bot Headless",
+    "description": "Identifies suspected malicious headless bots",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SUSPECTED-BOT",
+    "name": "SUSPECTED-BOT",
+    "display_name": "Suspected Bot",
+    "long_name": "Suspected Bot",
+    "description": "Identifies suspected bot",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SUSPECTED-BOT.AI-CRAWLER",
+    "name": "SUSPECTED-BOT.AI-CRAWLER",
+    "display_name": "Suspected Bot AI Crawler",
+    "long_name": "Suspected Bot AI Crawler",
+    "description": "Crawlers that extract content from websites for building AI models or indexes.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SUSPECTED-BOT.AI-FETCHER",
+    "name": "SUSPECTED-BOT.AI-FETCHER",
+    "display_name": "Suspected Bot AI Fetcher",
+    "long_name": "Suspected Bot AI Fetcher",
+    "description": "Bots that extract content from websites for enriching AI results in response to a user query.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "SUSPECTED-BOT.HEADLESS",
+    "name": "SUSPECTED-BOT.HEADLESS",
+    "display_name": "Suspected Bot Headless",
+    "long_name": "Suspected Bot Headless",
+    "description": "Identifies suspected headless bots",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT",
+    "name": "VERIFIED-BOT",
+    "display_name": "Verified Bot",
+    "long_name": "Verified Bot",
+    "description": "Indicates a request originating from a verified bot",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.ACCESSIBILITY",
+    "name": "VERIFIED-BOT.ACCESSIBILITY",
+    "display_name": "Accessibility",
+    "long_name": "Accessibility",
+    "description": "Tools which make content accessible, such as screen readers, etc.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.AI-CRAWLER",
+    "name": "VERIFIED-BOT.AI-CRAWLER",
+    "display_name": "AI Crawler",
+    "long_name": "AI Crawler",
+    "description": "Verified crawlers that extract content from websites for building AI models or indexes.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.AI-FETCHER",
+    "name": "VERIFIED-BOT.AI-FETCHER",
+    "display_name": "AI Fetcher",
+    "long_name": "AI Fetcher",
+    "description": "Verified bots that extract content from websites for enriching AI results in response to a user query.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.CONTENT-FETCHER",
+    "name": "VERIFIED-BOT.CONTENT-FETCHER",
+    "display_name": "Content Fetcher",
+    "long_name": "Content Fetcher",
+    "description": "Tools which extract content from websites to be used elsewhere.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.MONITORING-SITE-TOOLS",
+    "name": "VERIFIED-BOT.MONITORING-SITE-TOOLS",
+    "display_name": "Monitoring & Site Tools",
+    "long_name": "Monitoring & Site Tools",
+    "description": "Tools which access your site to monitor performance, uptime, proving domain control, etc.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.ONLINE-MARKETING",
+    "name": "VERIFIED-BOT.ONLINE-MARKETING",
+    "display_name": "Online Marketing",
+    "long_name": "Online Marketing",
+    "description": "Crawlers from online marketing platforms such as Facebook, Pinterest, etc.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.PAGE-PREVIEW",
+    "name": "VERIFIED-BOT.PAGE-PREVIEW",
+    "display_name": "Page Preview",
+    "long_name": "Page Preview",
+    "description": "Tools which access your site to show a preview of the page, in other online services, and social media platforms.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.PLATFORM-INTEGRATIONS",
+    "name": "VERIFIED-BOT.PLATFORM-INTEGRATIONS",
+    "display_name": "Platform Integration",
+    "long_name": "Platform Integration",
+    "description": "Integration with other platforms by accessing the website's API, notably WebHooks.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.RESEARCH",
+    "name": "VERIFIED-BOT.RESEARCH",
+    "display_name": "Research",
+    "long_name": "Research",
+    "description": "Commercial and academic tools which collect and analyze data for research purposes.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.SEARCH-ENGINE-CRAWLER",
+    "name": "VERIFIED-BOT.SEARCH-ENGINE-CRAWLER",
+    "display_name": "Search Engine Crawler",
+    "long_name": "Search Engine Crawler",
+    "description": "These are the crawlers which index your site for search engines.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.SEARCH-ENGINE-OPTIMIZATION",
+    "name": "VERIFIED-BOT.SEARCH-ENGINE-OPTIMIZATION",
+    "display_name": "Search Engine Optimization",
+    "long_name": "Search Engine Optimization",
+    "description": "Website which analyze page content for SEO purposes.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "VERIFIED-BOT.SECURITY-TOOLS",
+    "name": "VERIFIED-BOT.SECURITY-TOOLS",
+    "display_name": "Security Tools",
+    "long_name": "Security Tools",
+    "description": "Security analysis tools to inspect your site for vulnerabilities, misconfigurations and other security features.",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "CHALLENGED",
+    "name": "CHALLENGED",
+    "display_name": "Challenged Request",
+    "long_name": "Challenged Requests",
+    "description": "Indicates a request that was issued a bot challenge",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "CHALLENGE-TOKEN-INVALID",
+    "name": "CHALLENGE-TOKEN-INVALID",
+    "display_name": "Challenge Token Invalid",
+    "long_name": "Challenge Token Invalid",
+    "description": "Indicates a request that did not include a valid bot challenge token",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "CHALLENGE-TOKEN-VALID",
+    "name": "CHALLENGE-TOKEN-VALID",
+    "display_name": "Challenge Token Valid",
+    "long_name": "Challenge Token Valid",
+    "description": "Indicates a request that included a valid bot challenge token",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "COMPROMISED-PASSWORD",
+    "name": "COMPROMISED-PASSWORD",
+    "display_name": "Compromised Password",
+    "long_name": "Compromised Password",
+    "description": "Indicates a request body that includes a compromised password",
+    "type": "anomaly",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
     "id": "DECEPTION",
     "name": "DECEPTION",
     "display_name": "Deception Response",
@@ -3638,6 +4170,26 @@
     "configurable": false,
     "informational": false,
     "needs_response": true,
+    "created_at": "2015-01-01T00:00:00Z",
+    "updated_at": "2015-01-01T00:00:00Z",
+    "categories": [
+      "Bot"
+    ],
+    "detection_type": "system",
+    "metrics": []
+  },
+  {
+    "id": "CLIENTSIDE-COOKIE-VALID",
+    "name": "CLIENTSIDE-COOKIE-VALID",
+    "display_name": "Client-Side Cookie Valid",
+    "long_name": "Client-Side Cookie Valid",
+    "description": "Indicates a request has a valid client-side detection cookie",
+    "type": "bot",
+    "namespace": "system",
+    "enabled": true,
+    "configurable": false,
+    "informational": false,
+    "needs_response": false,
     "created_at": "2015-01-01T00:00:00Z",
     "updated_at": "2015-01-01T00:00:00Z",
     "categories": [

@@ -22,7 +22,7 @@ class RuleProvider extends AbstractHelper
         'rate_limit' => 'Rate Limit - rate limit requests',
     ];
 
-    private array $ruleSelectOptionTypes = ['anomaly', 'attack', 'informational'];
+    private array $ruleSelectOptionTypes = ['anomaly', 'attack', 'informational', 'bot'];
 
     private Api $api;
     private File $driverFile;
@@ -616,6 +616,10 @@ class RuleProvider extends AbstractHelper
                     $excludeSignalOptions[] = $option;
                     $logRequestOptions[] = $option;
                     $deceptionOptions[] = $option;
+                    $signalIdOptions[] = $option;
+
+                } else if ($option['type'] === 'bot') {
+
                     $signalIdOptions[] = $option;
                 }
             }
