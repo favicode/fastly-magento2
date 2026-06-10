@@ -26,6 +26,7 @@ define([
             fetchRules();
         });
 
+        // One token can be related to multiple Workspace IDs - fetch Rules for specific ID on change
         workspaceIdElement.on('change', function () {
             fetchRules()
         })
@@ -263,6 +264,7 @@ define([
                 $('#fastly_ngwaf_rule_description').val(ruleParameters.description);
             }
 
+            // Type can't be edited/changed on existing rule
             if (ruleParameters?.type) {
                 $('#fastly_ngwaf_rule_type').val(ruleParameters.type);
                 $('#fastly_ngwaf_rule_type').prop("disabled", true);
@@ -282,6 +284,7 @@ define([
 
             let actionType = undefined;
 
+            // If rate limit is object, rule is rate limit and it has rate limit info
             if (ruleParameters?.rate_limit && typeof ruleParameters.rate_limit === 'object') {
 
                 $('.fastly-ngwaf-rule-actions').hide()
@@ -315,10 +318,12 @@ define([
                     if (clientIdentifier?.type) {
                         $('#fastly_ngwaf_rule_rate_limit_client_identifier').val(clientIdentifier.type);
 
+                        // IP identifier doesn't have input value, its just IP
                         if (clientIdentifier.type !== 'ip') {
                             $('.fastly-ngwaf-rule-rate-limit-client-identifier-value').show()
                         }
 
+                        // Signal property is displayed in select element, other options have "name" as input value
                         if (clientIdentifier.signal) {
                             $("select[name='fastly_ngwaf_rule_rate_limit_client_identifier_select_value']").val(clientIdentifier.signal);
                             $("input[name='fastly_ngwaf_rule_rate_limit_client_identifier_input_value']").hide()
@@ -332,6 +337,7 @@ define([
 
             } else if (ruleParameters?.rate_limit && typeof ruleParameters.rate_limit === 'string') {
 
+                // String value is returned when rule is not Rate Limit type, usually empty value
                 actionType = $('.fastly_ngwaf_rule_action_field')
 
                 $('.fastly-ngwaf-rule-actions').show()
@@ -341,8 +347,10 @@ define([
 
             let actionsExists = ruleParameters?.actions && Array.isArray(ruleParameters.actions) && actionType;
 
+            // type "request" is the only one with multiple action options - others don't have to be iterated through
             if (actionsExists && ruleParameters?.type !== 'request') {
 
+                // Use first element, there are no others in these actions
                 let action = ruleParameters.actions[0];
 
                 actionType.empty()
@@ -361,12 +369,14 @@ define([
                     let ruleActionsBlock = undefined;
                     let rateLimitMatchType = undefined;
 
+                    // Rate limit has different block and elements, doesn't use the same as request and exclude signal
                     if (ruleParameters?.type === 'rate_limit') {
 
                         ruleActionsValueElement = $('#fastly_ngwaf_rule_rate_limit_action_other_signal_type');
                         rateLimitMatchType = $('#fastly_ngwaf_rule_rate_limit_action_match_type');
                         optionsForAction = config.rulePayload?.actions[ruleParameters?.type]?.[action.type]?.options ?? [];
 
+                        // Different combinations based on received responses in testing
                         if (action.signal === 'ALL-REQUESTS') {
                             rateLimitMatchType.val(action.signal)
 
@@ -383,6 +393,7 @@ define([
 
                     }
 
+                    // String is used for options which are loaded dynamically
                     if (typeof optionsForAction === 'string') {
                         optionsForAction = selectOptions?.[optionsForAction] ?? [];
                     }
@@ -455,6 +466,7 @@ define([
                             additionType = '';
                         }
 
+                        // Use existing method for addition, trigger event to ensure proper populate/display of elements
                         addSingleCondition(previousElement, additionType)
                         currentElement = conditionsElement.children('.ngwaf-condition').last()
 
@@ -478,6 +490,8 @@ define([
                             additionType = '';
                         }
 
+                        // Use existing method for addition, trigger event to ensure proper populate/display of elements
+
                         addSingleCondition(previousElement, additionType)
                         currentElement = conditionsElement.children('.ngwaf-condition').last()
 
@@ -489,6 +503,7 @@ define([
                         currentElement.find('.fastly_ngwaf_rule_condition_operator')
                             .val(condition.operator).trigger('change');
 
+                        // Simple conditions inside Multival - rendered under "main" multival condition
                         if (condition.conditions && condition.conditions.length) {
 
                             currentElement.find('[name="fastly_ngwaf_rule_multival_condition_operator"]')
@@ -498,6 +513,8 @@ define([
                             multivalConditions.find(".ngwaf-condition").remove()
 
                             $.each(condition.conditions ?? [], function(index, multivalCondition) {
+
+                                // Use existing method for addition, trigger event to ensure proper populate/display of elements
 
                                 addMultivalCondition(
                                     multivalConditions,
@@ -526,6 +543,8 @@ define([
                             isFirstElement = true;
                         }
 
+                        // Use existing method for addition, trigger event to ensure proper populate/display of elements
+
                         addGroupCondition(previousElement, isFirstElement)
 
                         currentGroupElement = conditionsElement.children('.ngwaf-condition-group').last()
@@ -535,7 +554,11 @@ define([
                         currentGroupElement = currentGroupElement.find('.ngwaf-group-conditions');
                         additionType = 'append';
 
+                        // Simple conditions inside Group - rendered under group element
+
                         $.each(condition.conditions ?? [], function(index, groupCondition) {
+
+                            // Use existing method for addition, trigger event to ensure proper populate/display of elements
 
                             addSingleCondition(currentGroupElement, additionType)
                             currentElement = currentGroupElement.find('.ngwaf-condition').last()
@@ -546,6 +569,7 @@ define([
                                 .val(groupCondition.operator).trigger('change');
                             currentElement.find('.fastly_ngwaf_rule_condition_value:visible').val(groupCondition.value);
 
+                            // Group condition can have multival condition as "child" - render it using existing logic
                             if (groupCondition.conditions && groupCondition.conditions.length) {
 
                                 currentGroupElement.find('[name="fastly_ngwaf_rule_multival_condition_operator"]')
@@ -596,6 +620,7 @@ define([
 
             ruleForm.children('.ngwaf-conditions').children('.ngwaf-condition').each(function () {
 
+                // Condition field has a similar structure like group - "conditions" subproperty
                 if ($(this).find('.ngwaf-condition-multival').length) {
 
                     multivalConditions = [];
@@ -633,6 +658,7 @@ define([
 
                 groupConditions = [];
 
+                // Break down all rules inside a group. Group can also contain multival conditions, hence double .each loop
                 $(this).children('.ngwaf-group-conditions').children('.ngwaf-condition').each(function() {
 
                     if ($(this).find('.ngwaf-condition-multival').length) {
@@ -688,7 +714,10 @@ define([
 
             let actions = [];
 
+            // Actions payload differs based on rule type and selected options, so adjustments are needed
             if (ruleType === 'request') {
+
+                // Request is the only type which can have multiple actions
                 payload.request_logging = ruleForm.find('#fastly_ngwaf_rule_request_logging').val()
 
                 let actionFields = ruleForm.find('.fastly-ngwaf-rule-action');
@@ -731,6 +760,7 @@ define([
 
                 let rateLimitAction = {};
 
+                // Rate limit action payload differs based on selected condition
                 if (rateLimitActionMatch === 'OTHER-SIGNAL') {
 
                     rateLimitAction = {
@@ -762,6 +792,7 @@ define([
                 let clientIdentifierKey = ruleForm.find('#fastly_ngwaf_rule_rate_limit_client_identifier').val()
                 let clientIdentifiers = [];
 
+                // Client identifier doesn't have universal payload, it needs to be adjusted for each type
                 if (clientIdentifierKey === 'signal_payload') {
 
                     clientIdentifiers.push({
@@ -854,12 +885,14 @@ define([
             let rateLimitActionsSection = $('.fastly-ngwaf-rule-rate-limit-actions');
             let rateLimitDetailsSection = $('.fastly-ngwaf-rule-rate-limit-details');
 
+            // Delete simple condition
             $(document).off("click", '.ngwaf-fastly-delete-rule-condition-action')
                 .on("click", '.ngwaf-fastly-delete-rule-condition-action', function() {
 
                 deleteCondition($(this).parents('.ngwaf-condition'));
             })
 
+            // Delete multival condition
             $(document).off("click", '.ngwaf-fastly-delete-multival-rule-condition-action')
                 .on("click", '.ngwaf-fastly-delete-multival-rule-condition-action', function() {
 
@@ -867,21 +900,25 @@ define([
             })
 
 
+            // Delete group condition
             $(document).off("click", '.ngwaf-fastly-delete-condition-group-action')
                 .on("click", '.ngwaf-fastly-delete-condition-group-action', function() {
 
                 deleteCondition($(this).parents('.ngwaf-condition-group'));
             })
 
+            // Delete action - visible when rule type is request
             $(document).off("click", '.ngwaf-fastly-delete-rule-action')
                 .on("click", '.ngwaf-fastly-delete-rule-action', function() {
 
                     deleteAction($(this).parents('.fastly-ngwaf-rule-action'));
                 })
 
+            // Adding simple condition inside multival condition type
             $(document).off("click", '.ngwaf-fastly-add-multival-rule-condition-action')
                 .on("click", '.ngwaf-fastly-add-multival-rule-condition-action', function () {
 
+                    // Fetch multival condition options and render new condition
                     let multivalConditionsElement = $(this).siblings('.ngwaf-multival-conditions');
                     let currentConditionType = $(this).parents('.ngwaf-condition').find("select[name='fastly_ngwaf_rule_condition_field[]']").val();
                     let multivalOptions = config.rulePayload?.conditions[currentConditionType]?.multival_options ?? []
@@ -896,6 +933,7 @@ define([
                     }
             })
 
+            // Add simple condition
             $(document).off("click", '.ngwaf-fastly-add-rule-condition-action')
                 .on("click", '.ngwaf-fastly-add-rule-condition-action',function () {
 
@@ -903,6 +941,7 @@ define([
                     let previousElement;
                     let additionType;
 
+                    // If condition is being added to already existing list, add it to the end
                     if ($(this).siblings('.ngwaf-condition, .ngwaf-condition-group').last().length) {
 
                         previousElement = $(this).siblings('.ngwaf-condition, .ngwaf-condition-group').last();
@@ -914,6 +953,7 @@ define([
 
                     } else if ($(this).siblings('.ngwaf-group-conditions').length) {
 
+                        // If condition is being added inside group, append it inside group conditions element
                         previousElement = $(this).siblings('.ngwaf-group-conditions');
                         additionType = 'append';
 
@@ -923,6 +963,7 @@ define([
 
                     } else {
 
+                        // If it is first condition on the list, add it to the beginning of parent
                         previousElement = $(this).parent();
                         additionType = 'prepend';
                         addSingleCondition(previousElement, additionType);
@@ -937,12 +978,14 @@ define([
 
             })
 
+            // Add group condition
             $(document).off("click", '.ngwaf-fastly-add-rule-condition-group-action')
                 .on("click", '.ngwaf-fastly-add-rule-condition-group-action',function () {
 
                     let previousElement;
                     let isFirstElement = false;
 
+                    // Determine the place where condition should be inserted
                     if ($(this).siblings('.ngwaf-condition').last().length) {
                         previousElement = $(this).siblings('.ngwaf-condition').last();
                     } else {
@@ -961,6 +1004,7 @@ define([
 
             })
 
+            // Action type change
             $(document).off("change", '.fastly_ngwaf_rule_action_field')
                 .on("change", '.fastly_ngwaf_rule_action_field',function () {
 
@@ -969,6 +1013,7 @@ define([
 
                 let optionsForAction = config.rulePayload?.actions[selectedRuleType]?.[selectedActionType]?.options ?? [];
 
+                // string is used instead of array in places where options are not fixed, instead they load dynamically
                 if (typeof optionsForAction === 'string') {
                     optionsForAction = selectOptions?.[optionsForAction] ?? [];
                 }
@@ -978,6 +1023,7 @@ define([
                 let ruleActionsValueElement = $(this).closest('.fastly-ngwaf-rule-action')
                     .find('.fastly_ngwaf_rule_action_value');
 
+                // Determine if select element should be displayed
                 if (!optionsForAction.length) {
                     ruleActionsValueBlock.hide()
                     ruleActionsValueElement.empty().hide()
@@ -998,6 +1044,7 @@ define([
                 }
             })
 
+            // If selected value has additional options, display select element in which those options can be selected
             rateLimitActionsMatchType.on("change", function() {
                 let hasOptions = $(this).find(':selected').data('has-options');
 
@@ -1008,6 +1055,7 @@ define([
                 }
             })
 
+            // Rate limit action tyep change
             rateLimitActionsElement.on("change", function() {
 
                 let selectedRuleType = ruleTypeSelectElement.val();
@@ -1015,11 +1063,12 @@ define([
 
                 let optionsForAction = config.rulePayload?.actions[selectedRuleType]?.[selectedActionType]?.options ?? [];
 
+                // string is used instead of array in places where options are not fixed, instead they load dynamically
                 if (typeof optionsForAction === 'string') {
                     optionsForAction = selectOptions?.[optionsForAction] ?? [];
                 }
 
-
+                // Determine if select element for "Action Signals" should be displayed
                 if (!optionsForAction.length) {
                     rateLimitActionsValueElement.empty().hide()
                 } else {
@@ -1038,10 +1087,12 @@ define([
                 }
             })
 
+            // Rule type, "main" select option
             ruleTypeSelectElement.on("change", function() {
                 let selectedValue = $(this).val();
                 let actionsElement;
 
+                // On rate limit, hide action sections related to signals and request
                 if (selectedValue === 'rate_limit') {
                     ruleActionsSection.hide();
                     rateLimitActionsSection.show();
@@ -1057,6 +1108,7 @@ define([
 
                 }
 
+                // Logging is specific for reuqest type
                 if (selectedValue === 'request') {
                     requestRuleLogging.show()
                 } else {
@@ -1074,6 +1126,7 @@ define([
 
             })
 
+            // Operator inside multival condition change
             $(document).off("change", '.fastly_ngwaf_multival_rule_condition_operator')
                 .on("change", '.fastly_ngwaf_multival_rule_condition_operator',function() {
 
@@ -1085,6 +1138,7 @@ define([
                 let conditionInputValue = $(this).closest('.ngwaf-condition').find("input[name='fastly_ngwaf_multival_rule_condition_value[]']")
                 let conditionInputSelect = $(this).closest('.ngwaf-condition').find("select[name='fastly_ngwaf_multival_rule_condition_value[]']")
 
+                // In list and Not in list operators have select options, so we render select element
                 if (selectedValue === 'in_list' || selectedValue === 'not_in_list') {
 
                     selectOptionValues = selectOptions?.[selectOptionValues] ?? [];
@@ -1103,6 +1157,9 @@ define([
                     (selectedValue === 'equals' || selectedValue === 'does_not_equal'))
                 {
 
+                    // Signal ID is the only condition type which has select options for Equals and Does not Equal options
+
+                    // secondary_options is custom property added for this - options property is already populated
                     selectOptionValues = config.rulePayload?.multival_parameters[currentConditionType]?.secondary_options ?? '';
                     selectOptionValues = selectOptions?.[selectOptionValues] ?? [];
                     conditionInputValue.empty().hide()
@@ -1124,6 +1181,7 @@ define([
 
             })
 
+            // Simple condition operator change
             $(document).off("change", '.fastly_ngwaf_rule_condition_operator')
                 .on("change", '.fastly_ngwaf_rule_condition_operator',function() {
 
@@ -1135,6 +1193,7 @@ define([
                 let conditionInputValue = $(this).parents('.ngwaf-condition').find("input[name='fastly_ngwaf_rule_condition_value[]']")
                 let conditionInputSelect = $(this).parents('.ngwaf-condition').find("select[name='fastly_ngwaf_rule_condition_value[]']")
 
+                // In list and Not in list operators have select options, so we render select element and hide input
                 if (selectedValue === 'in_list' || selectedValue === 'not_in_list') {
 
                     conditionValueSection.show()
@@ -1153,6 +1212,7 @@ define([
 
                 } else if (selectedValue === 'exists' || selectedValue === 'does_not_exist') {
 
+                    // These conditions are used only in multival conditions - render multival form
                     if(!$(this).parents('.ngwaf-condition').find(".ngwaf-condition-multival").length) {
                         let conditionMultivalOptions = config.rulePayload?.conditions[currentConditionType]?.multival_options ?? []
                         displayMultivalForm($(this).parents('.ngwaf-condition'), conditionMultivalOptions)
@@ -1168,6 +1228,7 @@ define([
 
             })
 
+            // Multival condition type
             $(document).off("change", '.fastly_ngwaf_multival_rule_condition_field')
                 .on("change", '.fastly_ngwaf_multival_rule_condition_field',function() {
 
@@ -1188,10 +1249,12 @@ define([
                 let selectOptionValues = config.rulePayload?.conditions[selectedValue]?.multival_options ?? []
                 toggleInputElementForRuleValue(selectedValue, conditionInputValue, conditionInputSelect, selectOptionValues);
 
+                // Trigger operator change to activate populate options of Value element
                 ruleConditionOperator.trigger('change')
 
             });
 
+            // Change of condition type field
             $(document).off("change", '.fastly_ngwaf_rule_condition_field')
                 .on("change", '.fastly_ngwaf_rule_condition_field',function() {
 
@@ -1202,6 +1265,7 @@ define([
 
                 let conditionOptions = config.rulePayload?.conditions[selectedValue]?.conditions ?? [];
 
+                // Populate Operator select element with values for current condition field
                 let ruleConditionOperator = $(this).parents('.ngwaf-condition').find("select[name='fastly_ngwaf_rule_condition_operator[]']")
                 ruleConditionOperator.empty()
                 $.each(conditionOptions, function(key, value) {
@@ -1212,6 +1276,7 @@ define([
 
                 if ($(this).parents('.ngwaf-multival-conditions').length) {
 
+                    // Condition inside multival element list
                     let originalConditionValue = $(this).parents('.ngwaf-condition-multival').
                     parent('.ngwaf-condition').
                     find('.fastly_ngwaf_rule_condition_field:first').val()
@@ -1220,12 +1285,14 @@ define([
                     displayMultivalForm($(this).parents('.ngwaf-condition'), conditionMultivalOptions)
                 } else if (conditionOptions['exists'] || conditionOptions['does_not_exist']) {
 
+                    // Element with these options is multival element - remove current form and rerender new one
                     multivalElement.remove()
                     let conditionMultivalOptions = config.rulePayload?.conditions[selectedValue]?.multival_options ?? []
                     displayMultivalForm($(this).parents('.ngwaf-condition'), conditionMultivalOptions)
 
                 } else  {
 
+                    // Simple condition is selected - remove multival element and render Value element
                     multivalElement.remove()
                     $(this).parents('.ngwaf-condition').find(".ngwaf-condition-value-section").show()
                     let selectOptionValues = config.rulePayload?.conditions[selectedValue]?.select_options ?? []
@@ -1233,6 +1300,7 @@ define([
                 }
             });
 
+            // Change on identifier element for rate limit
             rateLimitClientIdentifier.on("change", function() {
 
                 let selectedValue = $(this).val();
@@ -1245,14 +1313,17 @@ define([
 
                 let clientIdentifier = config.rulePayload?.rate_limit_identifiers[selectedValue] ?? [];
 
+                // If identifier doesn't have value, don't display that block
                 if (!clientIdentifier.has_value) {
                     rateLimitClientIdentifierValueBlock.hide();
                 } else if (!clientIdentifier.options) {
+                    // If there is no options, display input element
                     rateLimitClientIdentifierValueBlock.show()
                     inputValueElement.empty().show()
                     selectValueElement.empty().hide()
                 } else if (typeof clientIdentifier.options === 'string') {
 
+                    // Load and render select options
                     rateLimitClientIdentifierValueBlock.show()
                     inputValueElement.empty().hide()
 
@@ -1269,6 +1340,8 @@ define([
                 }
             })
 
+
+            // Populate rule type selection
             if (ruleTypeSelectElement && config.rulePayload?.rule_types) {
 
                 ruleTypeSelectElement.empty()
@@ -1284,12 +1357,12 @@ define([
             let ruleConditionField = $('.fastly_ngwaf_rule_condition_field')
             initializeRuleConditionField(ruleConditionField);
 
+            // Populate values for rate limit identifier options
             if (rateLimitClientIdentifier && config.rulePayload?.rate_limit_identifiers) {
                 rateLimitClientIdentifier.empty()
 
                 $.each(config.rulePayload?.rate_limit_identifiers, function(key, value) {
                     rateLimitClientIdentifier.append(
-                        //$(`<option value='${key}' data-rate-lmit-identifier-type="${value.input_parameter_name}">${value.name}</option>"`)
                         $('<option>', { value: key, text: value.name, 'data-rate-lmit-identifier-type': value.input_parameter_name })
                     );
                 });
@@ -1297,6 +1370,7 @@ define([
                 rateLimitClientIdentifier.trigger('change')
             }
 
+            // Populate values for "Threshold Signal" options
             if (rateLimitThresholdSignal) {
 
                 rateLimitThresholdSignal.empty()
@@ -1311,17 +1385,19 @@ define([
 
         function initializeRuleConditionField(ruleConditionField, isMultival = false, multivalOptions = []) {
 
+            // If current condition is "simple", render condition options from from rule provider
             if (ruleConditionField && !isMultival && config.rulePayload?.conditions) {
                 ruleConditionField.empty()
                 $.each(config.rulePayload.conditions, function(key, value) {
                     ruleConditionField.append(
-                        //$(`<option value='${key}' data-rule-condition-type="${value.type}">${value.name}</option>"`)
                         $('<option>', { value: key, text: value.name, 'data-rule-condition-type': value.type })
                     );
                 });
 
             } else if (ruleConditionField && isMultival && config.rulePayload?.multival_parameters) {
 
+                // If current condition is multival, load options from different property of rule provider and display
+                // them in condition field
                 ruleConditionField.empty()
                 let multivalConfig;
 
@@ -1334,7 +1410,6 @@ define([
                     }
 
                     ruleConditionField.append(
-                        //$(`<option value='${value}' data-rule-condition-type="${multivalConfig.type}">${multivalConfig.name}</option>"`)
                         $('<option>', { value: value, text: multivalConfig.name, 'data-rule-condition-type': multivalConfig.type })
                     );
                 });
@@ -1349,6 +1424,7 @@ define([
             let addConditionInGroupButton = currentCondition.parent().siblings('.ngwaf-fastly-add-rule-condition-action')
             let addConditionMultivalButton = currentCondition.parent().siblings('.ngwaf-fastly-add-multival-rule-condition-action')
 
+            // Remove current condition element and enable Add condition button (we are below rule limit after deletion)
             currentCondition.remove()
             addConditionButton.prop('disabled', false);
             addConditionMultivalButton.prop('disabled', false);
@@ -1358,6 +1434,7 @@ define([
 
         function deleteAction(currentAction) {
 
+            // Remove current action and enable Add action button (we are below action limit after deletion)
             currentAction.remove()
             $("#ngwaf-add-rule-action-button").prop('disabled', false);
         }
@@ -1427,12 +1504,14 @@ define([
             </div>`
             );
 
+            // Multival for doesn't have value - it has Field, Operator and the list of simple conditions
             parentElement.find(".ngwaf-condition-value-section").hide()
 
             if (!parentElement.find('.ngwaf-condition-multival').length) {
                 parentElement.append(elementToInsert)
             }
 
+            // Extract condition and insert it using separate method
             let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_multival_rule_condition_field");
             initializeRuleConditionField(newRuleConditionField, true, conditionMultivalOptions);
 
@@ -1440,6 +1519,7 @@ define([
 
         function toggleInputElementForRuleValue(selectedValue, conditionInputValue, conditionInputSelect, selectOptionValues) {
 
+            // Display either input element or select element
             if (!selectOptionValues || !Object.keys(selectOptionValues).length) {
                 conditionInputValue.empty().show()
                 conditionInputSelect.empty().hide()
@@ -1461,7 +1541,7 @@ define([
 
         function addMultivalCondition(multivalConditionsElement, multivalOptions) {
 
-        let elementToInsert = $(
+            let elementToInsert = $(
                 `<div class="ngwaf-condition">
                         <div class="field condition-element">
                             <label class="admin__field-label">
@@ -1504,6 +1584,7 @@ define([
                     </div>`
             );
 
+            // Append new simple condition to current multival element and initialize rule options
             multivalConditionsElement.append(elementToInsert);
 
             let newRuleConditionField = elementToInsert.find(".fastly_ngwaf_multival_rule_condition_field");
@@ -1654,6 +1735,7 @@ define([
 
             let deleteActionButtons = $('.ngwaf-fastly-delete-rule-action');
 
+            // Add action button is displayed only for "request" type of rules
             if (selectedRuleType !== 'request') {
                 addActionButtonElement.hide()
                 deleteActionButtons.hide()
@@ -1682,6 +1764,7 @@ define([
                 );
             });
 
+            // Trigger change to determine if value element should be displayed
             actionsElement.trigger('change')
         }
 
@@ -1728,6 +1811,10 @@ define([
             populateActionsField(actionType, selectedRuleType)
         }
 
+        /**
+         * Fetch values for all select options elements (different signals, lists, logs, etc) and store it in variable
+         * which is used inf different methods
+         */
         function populateSelectFieldOptions() {
 
             if (selectOptions === undefined) {
@@ -1739,7 +1826,7 @@ define([
                     data: {
                         'workspace_id': workspaceIdElement.val()
                     },
-                    async: false,
+                    async: false, // necessary to prepopulate options on elements before form is displayed
                     success: function (response) {
 
 
