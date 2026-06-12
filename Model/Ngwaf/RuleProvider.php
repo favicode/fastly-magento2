@@ -123,24 +123,26 @@ class RuleProvider extends AbstractHelper
                     "not_in_list" => 'Is Not In List',
                 ]
             ],
-            //"ja3_fingerprint" => [
-            //    'name' => 'JA3 Fingerprint',
-            //    'conditions' => [
-            //        "equals" => 'Equals',
-            //        "does_not_equal" => 'Does Not Equal',
-            //        "in_list" => 'Is In List',
-            //        "not_in_list" => 'Is Not In List',
-            //    ]
-            //],
-            //"ja4_fingerprint" => [
-            //    'name' => 'JA4 Fingerprint',
-            //    'conditions' => [
-            //        "equals" => 'Equals',
-            //        "does_not_equal" => 'Does Not Equal',
-            //        "in_list" => 'Is In List',
-            //        "not_in_list" => 'Is Not In List',
-            //    ]
-            //],
+            "ja3_fingerprint" => [
+                'name' => 'JA3 Fingerprint',
+                'options' => 'string_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
+            "ja4_fingerprint" => [
+                'name' => 'JA4 Fingerprint',
+                'options' => 'string_list_options',
+                'conditions' => [
+                    "equals" => 'Equals',
+                    "does_not_equal" => 'Does Not Equal',
+                    "in_list" => 'Is In List',
+                    "not_in_list" => 'Is Not In List',
+                ]
+            ],
             "method" => [
                 'name' => 'Method',
                 'type' => 'single',
@@ -644,6 +646,7 @@ class RuleProvider extends AbstractHelper
             }
 
             $textListOptions = [];
+            $stringListOptions = [];
             $countryListOptions = [];
             $ipListOptions = [];
             $signalListOptions = [];
@@ -660,7 +663,10 @@ class RuleProvider extends AbstractHelper
                     $ipListOptions[] = $option;
                 } elseif ($option['type'] === 'signal') {
                     $signalListOptions[] = $option;
-                } elseif ($option['type'] === 'wildcard' || $option['type'] === 'string') {
+                } elseif ($option['type'] === 'string') {
+                    $textListOptions[] = $option;
+                    $stringListOptions[] = $option;
+                } elseif ($option['type'] === 'wildcard') {
                     $textListOptions[] = $option;
                 }
             }
@@ -676,6 +682,7 @@ class RuleProvider extends AbstractHelper
                 'signal_list_options' => $signalListOptions,
                 'text_list_options' => $textListOptions,
                 'signal_id_list_options' => $signalIdOptions,
+                'string_list_options' => $stringListOptions
             ];
 
         } catch (\Throwable $exception) {
