@@ -1175,7 +1175,7 @@ define([
 
                     $.each(selectOptionValues, function(key, value) {
                         conditionInputSelect.append(
-                            $('<option>', { value: value.reference_id, text: value.display_name })
+                            $('<option>', { value: value.reference_id ?? value.id, text: value.display_name })
                         );
                     });
 
